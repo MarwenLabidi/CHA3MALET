@@ -1,0 +1,16 @@
+{
+  "name": "cha3malet",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite build&vite preview"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.5",
+    "postcss": "^8.4.13",
+    "postcss-preset-env": "^7.4.4",
+    "vite": "^2.9.5"
+  }
+}
