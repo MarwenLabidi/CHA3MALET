@@ -208,9 +208,32 @@ const createPageStructure = (() => {
 		APP.append(authPage)
 	}
 
+	function _newOrJoinMeeting(){
+		let newJoinMeetingPage = createElement('div', {
+			class: 'newJoinMeetingPage'
+		})
+		let iconAccount = createElement('img', {
+			class: 'iconAccount',
+			src: '/assets/icons/user-two.svg'
+		})
+		let newMeeting = createElement('button', {
+			class: 'newMeeting',
+			text: 'NEW MEETING'
+		})
+		let joinMeeting = createElement('button', {
+			class: 'joinMeeting',
+			text: 'JOIN MEETING'
+		})
+		newJoinMeetingPage.append(iconAccount)
+		newJoinMeetingPage.append(newMeeting)
+		newJoinMeetingPage.append(joinMeeting)
+		APP.append(newJoinMeetingPage)
+	}
+
 
 	return {
-		_authentication
+		_authentication,
+		_newOrJoinMeeting
 	}
 })()
 
@@ -242,4 +265,5 @@ const createPageFunctionality = (() => {
 
 
 
-createPageStructure._authentication()
+// createPageStructure._authentication()
+// createPageStructure._newOrJoinMeeting()
