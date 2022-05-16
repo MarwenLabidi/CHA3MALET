@@ -17,7 +17,6 @@ The designs were created to the following widths:
 - green :hsla(126, 100%, 79%, 1)
 - red : hsla(349, 91%, 54%, 0.93)
 - red-100 : hsla(0, 84%, 56%, 0.41)
-
 - linear_gradiant_blue_gray : rgba(66, 70, 163, 1)  , hsla(0, 0%, 41%, 0.68)
 
 ## Typography
