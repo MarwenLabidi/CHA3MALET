@@ -12,6 +12,7 @@ const APP = qs('#app')
 
 
 const createPageStructure = (() => {
+	//---> add back arrow to the top of elemet selected
 	function _addBackArrowToTheTopOfElements(element) {
 		let backArrow = createElement('img', {
 			class: 'backArrow',
@@ -20,6 +21,7 @@ const createPageStructure = (() => {
 		element.prepend(backArrow)
 
 	}
+	//---> brand name logo and name
 
 	function _brandName() {
 		let logo = createElement('img', {
@@ -39,6 +41,7 @@ const createPageStructure = (() => {
 		return brand
 
 	}
+	//---> 3 social media icons
 
 	function _socialMediaAuth() {
 		let groupFacebookGoogleMetaMask = createElement('div', {
@@ -62,6 +65,7 @@ const createPageStructure = (() => {
 		groupFacebookGoogleMetaMask.appendChild(iconMetaMask)
 		return groupFacebookGoogleMetaMask
 	}
+	//---> intro section logo and name 
 
 	function _introductionPart() {
 		let sectionOne = createElement('section', {
@@ -100,6 +104,7 @@ const createPageStructure = (() => {
 		return sectionOne
 
 	}
+	//---> register section
 
 	function _register() {
 		let registerSection = createElement('section', {
@@ -144,6 +149,7 @@ const createPageStructure = (() => {
 		return registerSection
 
 	}
+	//---> login section
 
 	function _login() {
 		let loginSection = createElement('section', {
@@ -193,7 +199,7 @@ const createPageStructure = (() => {
 		}
 		return loginSection
 	}
-
+	//---> authentification page
 	function _authentication() {
 		let authPage = createElement('div', {
 			class: 'authPage'
@@ -209,7 +215,7 @@ const createPageStructure = (() => {
 		APP.append(authPage)
 	}
 
-
+	//---> new and join meeting 
 	function _newOrJoinMeeting() {
 		let newJoinMeetingPage = createElement('div', {
 			class: 'newJoinMeetingPage'
@@ -231,7 +237,7 @@ const createPageStructure = (() => {
 		newJoinMeetingPage.append(joinMeeting)
 		APP.append(newJoinMeetingPage)
 	}
-
+	//---> create a meeting card
 	function _createMeetingCard(name, locked, ...profilePhotos) {
 		let card = createElement('div', {
 			class: 'card'
@@ -264,8 +270,8 @@ const createPageStructure = (() => {
 
 	}
 
-	
 
+	//---> create a room page
 	function _createRoomsPage() {
 		let roomPage = createElement('div', {
 			class: 'roomPage'
@@ -295,7 +301,8 @@ const createPageStructure = (() => {
 			autoplay: true,
 			playsinline: true
 		})
-		video.srcObject = mediaStream
+		//NOTE uncomment me 
+		// video.srcObject = mediaStream
 		videoCard.appendChild(video)
 		let hideCard = createElement('div', {
 			class: `hideCard${idName}`
@@ -519,6 +526,7 @@ const createPageStructure = (() => {
 })()
 
 const createPageFunctionality = (() => {
+	//---> add meeting card to the room page
 	function _addCardToRoomsPage(...rooms) {
 		let roomGroup = qs('.roomGroup')
 		rooms.forEach((roomCard) => {
