@@ -627,5 +627,5 @@ const createPageFunctionality = (() => {
 // createPageFunctionality._addVideoToVideoGroup(videoCard)
 
 // let account=createPageStructure._createAccountImageAndName(`helloMarwen`,`/assets/icons/google.svg`)
-// let message=createPageStructure._createMessageTemplate(`helloMarwen`,account,`2022`)
+// let message=createPageStructure._createMessageTemplate(`this is a message from idk how`,account,`2022`)
 // createPageFunctionality._addMessageToTheSectionMessages(message)
