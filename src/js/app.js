@@ -613,11 +613,11 @@ const createPageFunctionality = (() => {
 // let cardOne=createPageStructure._createMeetingCard('Meeting One',false,'/assets/icons/google.svg','/assets/icons/facebook.svg')
 // let cardTwo=createPageStructure._createMeetingCard('Meeting two',false,'/assets/icons/google.svg','/assets/icons/facebook.svg')
 
-// createPageStructure._addCardToRoomsPage(cardOne,cardTwo)
+// createPageFunctionality._addCardToRoomsPage(cardOne,cardTwo)
 // createPageStructure._createPageOfMeeting()
 // let videoCard =createPageStructure._createVideoCard(`marwen`,`true`)
-// createPageStructure._addVideoToVideoGroup(videoCard)
+// createPageFunctionality._addVideoToVideoGroup(videoCard)
 
 // let account=createPageStructure._createAccountImageAndName(`helloMarwen`,`/assets/icons/google.svg`)
 // let message=createPageStructure._createMessageTemplate(`helloMarwen`,account,`2022`)
-// createPageStructure._addMessageToTheSectionMessages(message)
+// createPageFunctionality._addMessageToTheSectionMessages(message)
