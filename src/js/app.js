@@ -207,6 +207,7 @@ const createPageStructure = (() => {
 		}
 		APP.append(authPage)
 	}
+	
 
 	function _newOrJoinMeeting(){
 		let newJoinMeetingPage = createElement('div', {
@@ -229,11 +230,70 @@ const createPageStructure = (() => {
 		newJoinMeetingPage.append(joinMeeting)
 		APP.append(newJoinMeetingPage)
 	}
+	function _createMeetingCard(name,locked,...profilePhotos){
+		let card=createElement('div',{
+			class:'card'
+		})
+		let title = createElement('h2', {
+			class: 'name',
+			text: name
+		})
+		let groupProfilePhotos = createElement('div', {
+			class: 'groupProfilePhotos',
+
+		})
+		profilePhotos.forEach((photo, index) => {
+			let profilePhoto = createElement('img', {
+				class: `profilePhoto${index}`,
+				src: photo
+			})
+			groupProfilePhotos.appendChild(profilePhoto)
+		})
+		card.appendChild(title)
+		card.appendChild(groupProfilePhotos)
+		if(locked){
+			let lockedIcon=createElement('img',{
+				class:'lockedIcon',
+				src:'/assets/icons/lock 1.svg'
+			})
+			card.prepend(lockedIcon)
+		}
+		return card
+
+	}
+	function _addCardToRoomsPage(...rooms){
+		let roomGroup=qs('.roomGroup')
+		rooms.forEach((roomCard)=>{
+			roomGroup.appendChild(roomCard)
+		})
+	}
+	function _createRoomsPage(){
+		let roomPage= createElement('div',{
+			class:'roomPage'
+		})
+		let inputSearcher= createElement('input',{
+			class:'inputSearcher',
+			placeholder:'Search'
+		})
+		let roomGroup= createElement('div',{
+			class:'roomGroup'
+		})
+		
+		roomPage.appendChild(inputSearcher)
+		roomPage.appendChild(roomGroup)
+		_addBackArrowToTheTopOfElements(inputSearcher)
+		APP.appendChild(roomPage) 
+	}
 
 
 	return {
+		_register,
+		_login,
 		_authentication,
-		_newOrJoinMeeting
+		_newOrJoinMeeting,
+		_createMeetingCard,
+		_addCardToRoomsPage,
+		_createRoomsPage,
 	}
 })()
 
@@ -267,3 +327,9 @@ const createPageFunctionality = (() => {
 
 // createPageStructure._authentication()
 // createPageStructure._newOrJoinMeeting()
+// createPageStructure._createRoomsPage();
+
+// let cardOne=createPageStructure._createMeetingCard('Meeting One',false,'/assets/icons/google.svg','/assets/icons/facebook.svg')
+// let cardTwo=createPageStructure._createMeetingCard('Meeting two',false,'/assets/icons/google.svg','/assets/icons/facebook.svg')
+
+// createPageStructure._addCardToRoomsPage(cardOne,cardTwo)
