@@ -43,6 +43,18 @@ export const createElement = (type, options = {}) => {
 			element.type = value
 			return
 		}
+		if (key === "id") {
+			element.setAttribute("id", value);
+			return
+		}
+		if (key === "autoplay") {
+			element.setAttribute("autoplay", "");
+			return
+		}
+		if (key === "playsinline") {
+			element.setAttribute("playsinline", "");
+			return
+		}
 
 		element.setAttribute(key, value)
 	})
