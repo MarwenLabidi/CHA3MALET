@@ -614,7 +614,7 @@ const createPageFunctionality = (() => {
 
 
 
-// createPageStructure._authentication()
+createPageStructure._authentication()
 // createPageStructure._newOrJoinMeeting()
 // createPageStructure._createRoomsPage();
 

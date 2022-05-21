@@ -1,0 +1,135 @@
+.authPage {
+	height: 100vh;
+	text-align: center;
+	& .sectionOne {
+		height: 100vh;
+		position: relative;
+		padding: 10%;
+		& img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 100%;
+			height: 100%;
+			min-width: 300px;
+			min-height: 150px;
+			max-width: 450px;
+			max-height: 225px;
+			object-fit: contain;
+		}
+	}
+	& .loginSection,
+	& .registerSection {
+		padding: 10%;
+	}
+	& .groupButton {
+		position: absolute;
+		bottom: 2%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		display: flex;
+		background-color: var(--clr_Purple);
+		border-radius: 25px;
+		& .registerButton {
+			background-color: var(--clr_White);
+			color: var(--clr_Dark);
+			border: none;
+			outline: none;
+			width: 150px;
+			height: 60px;
+			border-radius: 20px;
+			font-size: 23px;
+			font-family: var(--ff_Bebas);
+			letter-spacing: 1.2px;
+			transition: all 0.3s ease-in-out;
+		}
+		&.registerButton:focus {
+			opacity: 1;
+			cursor: pointer;
+		}
+		&.registerButton:focus+.loginButton {
+			background-color: var(--clr_Purple);
+			color: var(--clr_White);
+		}
+		& .registerButton:active {
+			transform: scale(0.9);
+			opacity: 0.9;
+		}
+		& .loginButton {
+			background-color: var(--clr_Purple);
+			color: var(--clr_White);
+			border: none;
+			outline: none;
+			width: 150px;
+			height: 60px;
+			border-radius: 20px;
+			font-size: 23px;
+			font-family: var(--ff_Bebas);
+			letter-spacing: 3px;
+			opacity: 0.8;
+			transition: all 0.3s ease-in-out;
+		}
+		& .loginButton:focus {
+			opacity: 1;
+			cursor: pointer;
+			color: var(--clr_Dark);
+			background-color: var(--clr_White);
+		}
+		& .loginButton:active {
+			transform: scale(0.9);
+			opacity: 0.9;
+		}
+	}
+	& .groupButton:focus-within>.registerButton {
+		background-color: var(--clr_Purple);
+		color: var(--clr_White);
+	}
+	& .registerButton:focus {
+		background-color: var(--clr_White) !important;
+		color: var(--clr_Dark) !important;
+	}
+}
+
+
+@media(--desktop) {
+	.authPage {
+		/* background-color: red; */
+		display: flex;
+		justify-content: space-around;
+		/* gap: 20px; */
+		& img {
+			top: 30% !important;
+		}
+		& .title {
+			font-family: var(--ff_Libre);
+			font-size: 55px;
+			margin-top: 65%;
+			margin-left: -3%;
+			margin-bottom: 25%;
+		}
+		& .registerButton {
+			background-color: var(--clr_White);
+			color: var(--clr_Dark);
+			border: none;
+			outline: none;
+			width: 160px;
+			height: 65px;
+			border-radius: 20px;
+			font-size: 30px;
+			font-family: var(--ff_Bebas);
+			letter-spacing: 1.2px;
+			opacity: 0.8;
+			transition: all 0.3s ease-in-out;
+		}
+		& .registerButton:hover,
+		& .registerButton:focus {
+			opacity: 1;
+			cursor: pointer;
+		}
+		& .registerButton:active {
+			transform: scale(0.9);
+			opacity: 0.9;
+		}
+	}
+}
