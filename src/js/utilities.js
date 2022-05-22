@@ -73,7 +73,7 @@ export const addGlobalEventListener = (type, selector, callback, options, parent
 	);
 };
 
-export const addEventListener = (type, callback,options, parent = document) => {
+export const addEventListener = (parent,type, callback,options=false) => {
 	parent.addEventListener(
 		type,
 		e=> {

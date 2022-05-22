@@ -315,7 +315,7 @@ const createPageStructure = (() => {
 		videoCard.appendChild(hideCard)
 		return videoCard
 	}
-	
+
 
 	//---> create a panel to controll the video callback
 	function _createPanel() {
@@ -340,7 +340,7 @@ const createPageStructure = (() => {
 		return panel
 
 	}
-	
+
 	//---> create a video page group
 	function _createVideoPageGroup() {
 		let videoPageGroup = createElement('div', {
@@ -412,7 +412,7 @@ const createPageStructure = (() => {
 		let typeAGeneralChatTemplate = createElement('div', {
 			class: 'typeAGeneralChatTemplate'
 		})
-		let typeAGeneralChatTemplateGifEmojiImage= createElement('div', {
+		let typeAGeneralChatTemplateGifEmojiImage = createElement('div', {
 			class: 'typeAGeneralChatTemplateGifEmojiImage'
 		})
 		let iconImage = createElement('img', {
@@ -434,7 +434,7 @@ const createPageStructure = (() => {
 			class: 'typeAGeneralChatTemplateInput',
 			placeholder: 'Type a message...'
 		})
-		
+
 		typeAGeneralChatTemplate.appendChild(typeAGeneralChatTemplateGifEmojiImage)
 		typeAGeneralChatTemplate.appendChild(typeAGeneralChatTemplateInput)
 		if (window.innerWidth < 900) {
@@ -454,7 +454,7 @@ const createPageStructure = (() => {
 		let messageSection = createElement('div', {
 			class: 'messageSection'
 		})
-		let inputMessageSection=_createInputAGeneralChatTemplate()
+		let inputMessageSection = _createInputAGeneralChatTemplate()
 		chatSection.appendChild(messageSection)
 		chatSection.appendChild(inputMessageSection)
 		return chatSection
@@ -467,8 +467,8 @@ const createPageStructure = (() => {
 		return participantSection
 	}
 
-	
-	
+
+
 
 
 	//---> create right side section and add groupbutton and group message and bar drag to it
@@ -492,11 +492,11 @@ const createPageStructure = (() => {
 		let pageOfMeeting = createElement('div', {
 			class: 'pageOfMeeting'
 		})
-		let videoSectionAndPanel=createElement('div', {
+		let videoSectionAndPanel = createElement('div', {
 			class: 'videoSectionAndPanel'
 		})
-		let panel= _createPanel()
-		let createVideoPageGroup=_createVideoPageGroup()
+		let panel = _createPanel()
+		let createVideoPageGroup = _createVideoPageGroup()
 		videoSectionAndPanel.appendChild(createVideoPageGroup)
 		videoSectionAndPanel.appendChild(panel)
 		pageOfMeeting.appendChild(videoSectionAndPanel)
@@ -505,7 +505,7 @@ const createPageStructure = (() => {
 			pageOfMeeting.appendChild(rightSideSectionChatsAndParticipants)
 
 		}
-		APP.append(pageOfMeeting) 
+		APP.append(pageOfMeeting)
 	}
 
 
@@ -519,9 +519,10 @@ const createPageStructure = (() => {
 		_createRoomsPage,
 		_createPageOfMeeting,
 		_createVideoCard,
-		_createAccountImageAndName,
-		_createMessageTemplate,
-		
+		_createSectionOfChat,
+		_createSectionOfParticipants,
+		_createRightSideSectionChatsAndParticipants,
+		_createPageOfMeeting
 	}
 })()
 
@@ -589,24 +590,60 @@ const createPageFunctionality = (() => {
 		})
 	}
 	//--->  add message template to the general chat
-	function _addMessageToTheSectionMessages(messageTemplate){
+	function _addMessageToTheSectionMessages(messageTemplate) {
 		let messageSection = qs('.messageSection')
-		if(messageSection){
+		if (messageSection) {
 
 			messageSection.appendChild(messageTemplate)
 		}
 	}
 	//--->   add participants
-	function _addParticipantToTheSectionParticipants(participant){
+	function _addParticipantToTheSectionParticipants(participant) {
 		let participantSection = qs('.participantSection')
 		participantSection.appendChild(participant)
 	}
 
-	return {
-		_addCardToRoomsPage,
-		_addVideoToVideoGroup,
-		_addMessageToTheSectionMessages
+	//--->  bringRegisterPageForLargeScreen
+	function _bringRegisterPageForLargeScreen() {
+		console.log(`bringRegisterPageForLargeScreen`);
+	}
+	//--->  bringLoginPageForLargeScreen
+	function _bringLoginPageForLargeScreen() {
+		console.log(`bringLoginPageForLargeScreen`);
+	}
+	//---> bringRegisterPageForSmallScreen
+	function _bringRegisterPageForSmallScreen() {
+		console.log(`bringRegisterPageForSmallScreen`);
+	}
+	//---> bringLoginPageForSmallScreen
+	function _bringLoginPageForSmallScreen() {
+		console.log(`bringLoginPageForSmallScreen`);
+	}
+	
 
+	//--->  add AUTH page event listeners
+	function _addAuthenticationEventListeners() {
+		let getRegisterPageButtonLargeScreen = qs('.authPage>.sectionOne>.registerButton')
+		let getLoginPageButtonLargeScreen = qs('.authPage>.sectionOne>.loginButton')
+		let getRegisterPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.registerButton')
+		let getLoginPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.loginButton')
+		if(getRegisterPageButtonLargeScreen){
+			addEventListener(getRegisterPageButtonLargeScreen, 'click', _bringRegisterPageForLargeScreen)
+		}
+		if(getLoginPageButtonLargeScreen){
+			addEventListener(getLoginPageButtonLargeScreen, 'click', _bringLoginPageForLargeScreen)
+		}
+		if(getRegisterPageButtonSmallScreen){
+			addEventListener(getRegisterPageButtonSmallScreen, 'click', _bringRegisterPageForSmallScreen)
+		}
+		if(getLoginPageButtonSmallScreen){
+			addEventListener(getLoginPageButtonSmallScreen, 'click', _bringLoginPageForSmallScreen)
+		}
+
+	}
+
+	return {
+		_addAuthenticationEventListeners
 	}
 })()
 
@@ -615,6 +652,7 @@ const createPageFunctionality = (() => {
 
 
 createPageStructure._authentication()
+createPageFunctionality._addAuthenticationEventListeners()
 // createPageStructure._newOrJoinMeeting()
 // createPageStructure._createRoomsPage();
 
