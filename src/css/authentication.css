@@ -22,6 +22,7 @@
 	& .loginSection,
 	& .registerSection {
 		padding: 10%;
+		/* background-color:green; */
 	}
 	& .groupButton {
 		position: absolute;
@@ -108,28 +109,37 @@
 			margin-left: -3%;
 			margin-bottom: 25%;
 		}
-		& .registerButton {
-			background-color: var(--clr_White);
-			color: var(--clr_Dark);
-			border: none;
-			outline: none;
-			width: 160px;
-			height: 65px;
-			border-radius: 20px;
-			font-size: 30px;
-			font-family: var(--ff_Bebas);
-			letter-spacing: 1.2px;
-			opacity: 0.8;
-			transition: all 0.3s ease-in-out;
+		& .sectionOne {
+			& .registerButton,& .loginButton{
+				background-color: var(--clr_White);
+				color: var(--clr_Dark);
+				border: none;
+				outline: none;
+				width: 160px;
+				height: 65px;
+				border-radius: 20px;
+				font-size: 30px;
+				font-family: var(--ff_Bebas);
+				letter-spacing: 1.2px;
+				opacity: 0.8;
+				transition: all 0.3s ease-in-out;
+			}
+			& .registerButton:hover,
+			& .loginButton:hover,
+			& .registerButton:focus,
+			& .loginButton:focus {
+				opacity: 1;
+				cursor: pointer;
+			}
+			& .registerButton:active,
+			& .loginButton:active {
+				transform: scale(0.9);
+				opacity: 0.9;
+			}
+
+			
 		}
-		& .registerButton:hover,
-		& .registerButton:focus {
-			opacity: 1;
-			cursor: pointer;
-		}
-		& .registerButton:active {
-			transform: scale(0.9);
-			opacity: 0.9;
-		}
+		
+		
 	}
 }

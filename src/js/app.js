@@ -4,7 +4,7 @@ let {
 	createElement,
 	addGlobalEventListener,
 	addEventListener,
-	insertAfter
+	insertAfter,
 } = await import("./utilities.js");
 const APP = qs('#app')
 
@@ -606,10 +606,91 @@ const createPageFunctionality = (() => {
 	//--->  bringRegisterPageForLargeScreen
 	function _bringRegisterPageForLargeScreen() {
 		console.log(`bringRegisterPageForLargeScreen`);
+		let registerSectionPage = createPageStructure._register()
+		//make register section absolute position
+		registerSectionPage.style.position = 'absolute'
+		// registerSectionPage.style.backgroundColor = 'red'
+		registerSectionPage.style.top = '-100%'
+		registerSectionPage.style.right = '0'
+		registerSectionPage.style.height = '100%'
+		registerSectionPage.style.width = '50%'
+		registerSectionPage.style.padding = '10%'
+		// add transition to register section
+		// registerSectionPage.style.borderLeft = '1px solid white'
+		// registerSectionPage.style.borderLeft = '1px solid white'
+		// add it to the dom 
+		APP.appendChild(registerSectionPage)
+		qs('.loginSection').style.transition = 'all 0.5s ease-in-out'
+		qs('.loginSection').style.opacity = '0'
+
+		// create animation
+		qs('.registerSection').animate([
+			// keyframes
+			{
+				top: '-100%',
+				backgroundColor: ''
+			},
+			{
+				top: '0',
+				backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+			}
+		], {
+			duration: 800,
+			fill: 'both',
+			easing: 'ease-in-out'
+			// iterations: Infinity
+
+		});
+
+		//change register button to login button
+		qs('.authPage>.sectionOne>.registerButton').disabled = true
+		// change class name
+		qs('.authPage>.sectionOne>.registerButton').style.opacity = '0'
+		//create button login
+		let loginButton = createElement('button', {
+			class: 'loginButton',
+			text: 'Login'
+		})
+		loginButton.style.position = 'absolute'
+		loginButton.style.height = '60px'
+		loginButton.style.width = '150px'
+		loginButton.style.left = '38%'
+		qs('.authPage>.sectionOne').appendChild(loginButton);
+		_addAuthenticationEventListeners()
 	}
 	//--->  bringLoginPageForLargeScreen
 	function _bringLoginPageForLargeScreen() {
 		console.log(`bringLoginPageForLargeScreen`);
+		qs('.authPage>.sectionOne>.registerButton').disabled = false
+		qs('.authPage>.sectionOne>.registerButton').style.opacity = '1'
+		qs('.authPage>.sectionOne>.loginButton').remove()
+
+		qs('.registerSection').animate([
+			// keyframes
+			{
+				top: '0',
+				backgroundColor: ''
+			},
+			{
+				top: '-100%',
+				backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+			}
+		], {
+			duration: 800,
+			fill: 'both',
+			easing: 'ease-in-out'
+			// iterations: Infinity
+
+		});
+		qs('.loginSection').style.transition = 'all 2s ease-in'
+
+		qs('.loginSection').style.opacity = '1'
+		setTimeout(() => {
+			qs('.registerSection').remove()
+		}, 1000);
+		// _addAuthenticationEventListeners()
+		
+
 	}
 	//---> bringRegisterPageForSmallScreen
 	function _bringRegisterPageForSmallScreen() {
@@ -619,7 +700,7 @@ const createPageFunctionality = (() => {
 	function _bringLoginPageForSmallScreen() {
 		console.log(`bringLoginPageForSmallScreen`);
 	}
-	
+
 
 	//--->  add AUTH page event listeners
 	function _addAuthenticationEventListeners() {
@@ -627,16 +708,16 @@ const createPageFunctionality = (() => {
 		let getLoginPageButtonLargeScreen = qs('.authPage>.sectionOne>.loginButton')
 		let getRegisterPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.registerButton')
 		let getLoginPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.loginButton')
-		if(getRegisterPageButtonLargeScreen){
+		if (getRegisterPageButtonLargeScreen) {
 			addEventListener(getRegisterPageButtonLargeScreen, 'click', _bringRegisterPageForLargeScreen)
 		}
-		if(getLoginPageButtonLargeScreen){
+		if (getLoginPageButtonLargeScreen) {
 			addEventListener(getLoginPageButtonLargeScreen, 'click', _bringLoginPageForLargeScreen)
 		}
-		if(getRegisterPageButtonSmallScreen){
+		if (getRegisterPageButtonSmallScreen) {
 			addEventListener(getRegisterPageButtonSmallScreen, 'click', _bringRegisterPageForSmallScreen)
 		}
-		if(getLoginPageButtonSmallScreen){
+		if (getLoginPageButtonSmallScreen) {
 			addEventListener(getLoginPageButtonSmallScreen, 'click', _bringLoginPageForSmallScreen)
 		}
 
@@ -664,6 +745,6 @@ createPageFunctionality._addAuthenticationEventListeners()
 // let videoCard =createPageStructure._createVideoCard(`marwen`,`true`)
 // createPageFunctionality._addVideoToVideoGroup(videoCard)
 
-// let account=createPageStructure._createAccountImageAndName(`helloMarwen`,`/assets/icons/google.svg`)
+// let account=createPageStructure._createAccountImageAndName(`hello Marwen`,`/assets/icons/google.svg`)
 // let message=createPageStructure._createMessageTemplate(`this is a message from idk how`,account,`2022`)
 // createPageFunctionality._addMessageToTheSectionMessages(message)

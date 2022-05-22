@@ -84,6 +84,9 @@ export const addEventListener = (parent,type, callback,options=false) => {
 };
 
 
+
+
+
 export const insertAfter=(newElement, referenceElement)=> {
 	referenceElement.parentNode.insertBefore(newElement, referenceElement.nextSibling);
 }
