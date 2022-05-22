@@ -695,17 +695,149 @@ const createPageFunctionality = (() => {
 		setTimeout(() => {
 			qs('.registerSection').remove()
 		}, 1000);
-		// _addAuthenticationEventListeners()
+
+
+	}
+	//----> up arrow back to homw from register in small screens
+	function _backToHomePageFromRegisterPageInSmallScreen() {
 		
+		console.log(`backToHomePageFromRegisterPageInSmallScreen`);
+		qs('.registerSection').animate([
+			// keyframes
+			{
+				top: '0',
+			},
+			{
+				top: '-100%',
+			}
+		], {
+			duration: 800,
+			fill: 'both',
+			easing: 'ease-in-out'
+			// iterations: Infinity
+
+		});
+
+		setTimeout(() => {
+			qs('.registerSection').remove()
+		}, 1000);
+	}
+	//--->  left arrow back to home from login in small screens
+	function _backToHomePageFromLoginPageInSmallScreen(){
+		console.log(`_backToHomePageFromLoginPageInSmallScreen`);
+		qs('.loginSection').animate([
+			// keyframes
+			{
+				left: '0',
+			},
+			{
+				left: '100%',
+			}
+		], {
+			duration: 800,
+			fill: 'both',
+			easing: 'ease-in-out'
+			// iterations: Infinity
+
+		});
+
+		setTimeout(() => {
+			qs('.loginSection').remove()
+		}, 1000);
 
 	}
 	//---> bringRegisterPageForSmallScreen
 	function _bringRegisterPageForSmallScreen() {
+		
 		console.log(`bringRegisterPageForSmallScreen`);
+		let registerSectionPage = createPageStructure._register()
+		//make register section absolute position
+		registerSectionPage.style.position = 'absolute'
+		// registerSectionPage.style.backgroundColor = 'red'
+		registerSectionPage.style.top = '-100%'
+		registerSectionPage.style.right = '0'
+		registerSectionPage.style.height = '100%'
+		registerSectionPage.style.width = '100%'
+		registerSectionPage.style.padding = '10%'
+		// add it to the dom 
+		APP.appendChild(registerSectionPage)
+
+		// create animation
+		qs('.registerSection').animate([
+			// keyframes
+			{
+				top: '-100%',
+				backgroundColor: ''
+			},
+			{
+				top: '0',
+				backgroundColor: `hsla(0, 0%, 7%, 1)`,
+			},
+			{
+				top: '-10%',
+				backgroundColor: `hsla(0, 0%, 7%, 1)`,
+
+			},
+			{
+				top: '0',
+				backgroundColor: `hsla(0, 0%, 7%,1)`,
+
+			}
+		], {
+			duration: 900,
+			fill: 'both',
+			easing: 'ease-in-out'
+			// iterations: Infinity
+
+		});
+		_addAuthenticationEventListeners()
 	}
 	//---> bringLoginPageForSmallScreen
 	function _bringLoginPageForSmallScreen() {
+
 		console.log(`bringLoginPageForSmallScreen`);
+		let loginSectionPage = createPageStructure._login()
+		//make register section absolute position
+		loginSectionPage.style.position = 'absolute'
+		// registerSectionPage.style.backgroundColor = 'red'
+		loginSectionPage.style.top = '0%'
+		loginSectionPage.style.left = '100'
+		loginSectionPage.style.height = '100%'
+		loginSectionPage.style.width = '100%'
+		loginSectionPage.style.padding = '10%'
+		// add it to the dom 
+		APP.appendChild(loginSectionPage)
+
+		// create animation
+		qs('.loginSection').animate([
+			// keyframes
+			{
+				left: '100%',
+				backgroundColor: ''
+			},
+			{
+				left: '0',
+				backgroundColor: `hsla(0, 0%, 7%, 1)`,
+			},
+			{
+				left: '10%',
+				backgroundColor: `hsla(0, 0%, 7%, 1)`,
+
+			},
+			{
+				left: '0',
+				backgroundColor: `hsla(0, 0%, 7%,1)`,
+
+			}
+		], {
+			duration: 900,
+			fill: 'both',
+			easing: 'ease-in-out'
+			// iterations: Infinity
+
+		});
+		_addAuthenticationEventListeners()
+
 	}
 
 
@@ -715,17 +847,51 @@ const createPageFunctionality = (() => {
 		let getLoginPageButtonLargeScreen = qs('.authPage>.sectionOne>.loginButton')
 		let getRegisterPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.registerButton')
 		let getLoginPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.loginButton')
+		let upArrow = qs('section.registerSection>img.backArrow')
+		let leftArrow = qs('section.loginSection>img.backArrow')
+                //--> remove all attached event listener in th getlogin and get register button
+		if(getLoginPageButtonSmallScreen){
+
+			let newLogin=getLoginPageButtonSmallScreen.cloneNode(true)
+			getLoginPageButtonSmallScreen.parentNode.replaceChild(newLogin, getLoginPageButtonSmallScreen);
+			if (newLogin) {
+				addEventListener(newLogin, 'click', _bringLoginPageForSmallScreen, {
+					once: true
+				})
+			}
+		}
+		if(getRegisterPageButtonSmallScreen){
+
+			let newRegister=getRegisterPageButtonSmallScreen.cloneNode(true)
+			getRegisterPageButtonSmallScreen.parentNode.replaceChild(newRegister, getRegisterPageButtonSmallScreen);
+			if (newRegister) {
+				addEventListener(newRegister, 'click', _bringRegisterPageForSmallScreen, {
+					once: true
+				})
+			}
+		}
+
 		if (getRegisterPageButtonLargeScreen) {
-			addEventListener(getRegisterPageButtonLargeScreen, 'click', _bringRegisterPageForLargeScreen,{once:true});
+			addEventListener(getRegisterPageButtonLargeScreen, 'click', _bringRegisterPageForLargeScreen, {
+				once: true
+			});
 		}
 		if (getLoginPageButtonLargeScreen) {
-			addEventListener(getLoginPageButtonLargeScreen, 'click', _bringLoginPageForLargeScreen,{once:true})
+			addEventListener(getLoginPageButtonLargeScreen, 'click', _bringLoginPageForLargeScreen, {
+				once: true
+			})
 		}
-		if (getRegisterPageButtonSmallScreen) {
-			addEventListener(getRegisterPageButtonSmallScreen, 'click', _bringRegisterPageForSmallScreen,{once:true})
+		
+		
+		if (upArrow) {
+			addEventListener(upArrow, 'click', _backToHomePageFromRegisterPageInSmallScreen, {
+				once: true
+			})
 		}
-		if (getLoginPageButtonSmallScreen) {
-			addEventListener(getLoginPageButtonSmallScreen, 'click', _bringLoginPageForSmallScreen,{once:true})
+		if (leftArrow) {
+			addEventListener(leftArrow, 'click', _backToHomePageFromLoginPageInSmallScreen, {
+				once: true
+			})
 		}
 
 	}
