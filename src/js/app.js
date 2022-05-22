@@ -615,9 +615,6 @@ const createPageFunctionality = (() => {
 		registerSectionPage.style.height = '100%'
 		registerSectionPage.style.width = '50%'
 		registerSectionPage.style.padding = '10%'
-		// add transition to register section
-		// registerSectionPage.style.borderLeft = '1px solid white'
-		// registerSectionPage.style.borderLeft = '1px solid white'
 		// add it to the dom 
 		APP.appendChild(registerSectionPage)
 		qs('.loginSection').style.transition = 'all 0.5s ease-in-out'
@@ -646,6 +643,7 @@ const createPageFunctionality = (() => {
 		qs('.authPage>.sectionOne>.registerButton').disabled = true
 		// change class name
 		qs('.authPage>.sectionOne>.registerButton').style.opacity = '0'
+		// qs('.authPage>.sectionOne>.registerButton').remove()
 		//create button login
 		let loginButton = createElement('button', {
 			class: 'loginButton',
@@ -709,16 +707,16 @@ const createPageFunctionality = (() => {
 		let getRegisterPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.registerButton')
 		let getLoginPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.loginButton')
 		if (getRegisterPageButtonLargeScreen) {
-			addEventListener(getRegisterPageButtonLargeScreen, 'click', _bringRegisterPageForLargeScreen)
+			addEventListener(getRegisterPageButtonLargeScreen, 'click', _bringRegisterPageForLargeScreen,{once:true});
 		}
 		if (getLoginPageButtonLargeScreen) {
-			addEventListener(getLoginPageButtonLargeScreen, 'click', _bringLoginPageForLargeScreen)
+			addEventListener(getLoginPageButtonLargeScreen, 'click', _bringLoginPageForLargeScreen,{once:true})
 		}
 		if (getRegisterPageButtonSmallScreen) {
-			addEventListener(getRegisterPageButtonSmallScreen, 'click', _bringRegisterPageForSmallScreen)
+			addEventListener(getRegisterPageButtonSmallScreen, 'click', _bringRegisterPageForSmallScreen,{once:true})
 		}
 		if (getLoginPageButtonSmallScreen) {
-			addEventListener(getLoginPageButtonSmallScreen, 'click', _bringLoginPageForSmallScreen)
+			addEventListener(getLoginPageButtonSmallScreen, 'click', _bringLoginPageForSmallScreen,{once:true})
 		}
 
 	}
