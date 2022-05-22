@@ -617,7 +617,7 @@ const createPageFunctionality = (() => {
 		registerSectionPage.style.padding = '10%'
 		// add it to the dom 
 		APP.appendChild(registerSectionPage)
-		qs('.loginSection').style.transition = 'all 0.5s ease-in-out'
+		qs('.loginSection').style.transition = 'all 0.3s linear'
 		qs('.loginSection').style.opacity = '0'
 
 		// create animation
@@ -630,9 +630,19 @@ const createPageFunctionality = (() => {
 			{
 				top: '0',
 				backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+			},
+			{
+				top: '-10%',
+				backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+
+			},
+			{
+				top: '0',
+				backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+
 			}
 		], {
-			duration: 800,
+			duration: 900,
 			fill: 'both',
 			easing: 'ease-in-out'
 			// iterations: Infinity
@@ -662,7 +672,6 @@ const createPageFunctionality = (() => {
 		qs('.authPage>.sectionOne>.registerButton').disabled = false
 		qs('.authPage>.sectionOne>.registerButton').style.opacity = '1'
 		qs('.authPage>.sectionOne>.loginButton').remove()
-
 		qs('.registerSection').animate([
 			// keyframes
 			{
