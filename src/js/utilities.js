@@ -111,6 +111,10 @@ export const slideME=(direction,element)=>{
 						easing: 'ease-in-out',
 						fill: 'both'
 					})
+					setTimeout(() => {
+						
+						element.remove()
+					}, 1000);
 				}
 				
 				break;
@@ -125,6 +129,10 @@ export const slideME=(direction,element)=>{
 						easing: 'ease-in-out',
 						fill: 'both'
 					})
+					setTimeout(() => {
+						
+						element.remove()
+					}, 1000);
 				}
 				break;
 			case 'up':
@@ -138,7 +146,10 @@ export const slideME=(direction,element)=>{
 						easing: 'ease-in-out',
 						fill: 'both'
 					})
-				}
+					setTimeout(() => {
+						
+						element.remove()
+					}, 1000);				}
 				break;
 			case 'down':
 				if(endPositionY-startPositionY>0){
@@ -151,6 +162,10 @@ export const slideME=(direction,element)=>{
 						easing: 'ease-in-out',
 						fill: 'both'
 					})
+					setTimeout(() => {
+						
+						element.remove()
+					}, 1000);
 				}
 				break;
 			default:
