@@ -73,21 +73,15 @@ export const addGlobalEventListener = (type, selector, callback, options, parent
 	);
 };
 
-export const addEventListener = (parent,type, callback,options=false) => {
+export const addEventListener = (parent, type, callback, options = false) => {
 	parent.addEventListener(
 		type,
-		e=> {
-			callback(e);
-		},
+		callback,
 		options
 	);
 };
 
 
-
-
-
-
-export const insertAfter=(newElement, referenceElement)=> {
+export const insertAfter = (newElement, referenceElement) => {
 	referenceElement.parentNode.insertBefore(newElement, referenceElement.nextSibling);
 }

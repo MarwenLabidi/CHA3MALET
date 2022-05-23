@@ -700,7 +700,7 @@ const createPageFunctionality = (() => {
 	}
 	//----> up arrow back to homw from register in small screens
 	function _backToHomePageFromRegisterPageInSmallScreen() {
-		
+
 		console.log(`backToHomePageFromRegisterPageInSmallScreen`);
 		qs('.registerSection').animate([
 			// keyframes
@@ -723,7 +723,7 @@ const createPageFunctionality = (() => {
 		}, 1000);
 	}
 	//--->  left arrow back to home from login in small screens
-	function _backToHomePageFromLoginPageInSmallScreen(){
+	function _backToHomePageFromLoginPageInSmallScreen() {
 		console.log(`_backToHomePageFromLoginPageInSmallScreen`);
 		qs('.loginSection').animate([
 			// keyframes
@@ -748,7 +748,7 @@ const createPageFunctionality = (() => {
 	}
 	//---> bringRegisterPageForSmallScreen
 	function _bringRegisterPageForSmallScreen() {
-		
+
 		console.log(`bringRegisterPageForSmallScreen`);
 		let registerSectionPage = createPageStructure._register()
 		//make register section absolute position
@@ -849,26 +849,17 @@ const createPageFunctionality = (() => {
 		let getLoginPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.loginButton')
 		let upArrow = qs('section.registerSection>img.backArrow')
 		let leftArrow = qs('section.loginSection>img.backArrow')
-                //--> remove all attached event listener in th getlogin and get register button
-		if(getLoginPageButtonSmallScreen){
 
-			let newLogin=getLoginPageButtonSmallScreen.cloneNode(true)
-			getLoginPageButtonSmallScreen.parentNode.replaceChild(newLogin, getLoginPageButtonSmallScreen);
-			if (newLogin) {
-				addEventListener(newLogin, 'click', _bringLoginPageForSmallScreen, {
-					once: true
-				})
-			}
+
+		if (getLoginPageButtonSmallScreen) {
+			addEventListener(getLoginPageButtonSmallScreen, 'click', _bringLoginPageForSmallScreen, {
+				once: true
+			})
 		}
-		if(getRegisterPageButtonSmallScreen){
-
-			let newRegister=getRegisterPageButtonSmallScreen.cloneNode(true)
-			getRegisterPageButtonSmallScreen.parentNode.replaceChild(newRegister, getRegisterPageButtonSmallScreen);
-			if (newRegister) {
-				addEventListener(newRegister, 'click', _bringRegisterPageForSmallScreen, {
-					once: true
-				})
-			}
+		if (getRegisterPageButtonSmallScreen) {
+			addEventListener(getRegisterPageButtonSmallScreen, 'click', _bringRegisterPageForSmallScreen, {
+				once: true
+			})
 		}
 
 		if (getRegisterPageButtonLargeScreen) {
@@ -881,8 +872,8 @@ const createPageFunctionality = (() => {
 				once: true
 			})
 		}
-		
-		
+
+
 		if (upArrow) {
 			addEventListener(upArrow, 'click', _backToHomePageFromRegisterPageInSmallScreen, {
 				once: true
