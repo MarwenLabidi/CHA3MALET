@@ -85,3 +85,76 @@ export const addEventListener = (parent, type, callback, options = false) => {
 export const insertAfter = (newElement, referenceElement) => {
 	referenceElement.parentNode.insertBefore(newElement, referenceElement.nextSibling);
 }
+
+export const slideME=(direction,element)=>{
+	console.log(`slide ${element} to the ${direction}`);
+	let startPositionX=null
+	let startPositionY=null
+	let endPositionX=null
+	let endPositionY=null
+	element.addEventListener('touchstart', (e)=>{
+		startPositionX=e.touches[0].clientX
+		startPositionY=e.touches[0].clientY
+	})
+	element.addEventListener('touchend', (e)=>{
+		endPositionX=e.changedTouches[0].clientX
+		endPositionY=e.changedTouches[0].clientY
+		switch (direction) {
+			case 'left':
+				if(endPositionX-startPositionX<0){
+					console.log(`move ${element} to the ${direction}`);
+					element.animate([
+						{transform: 'translateX(0px)'},
+						{transform: 'translateX(-100%)'}
+					],{
+						duration: 500,
+						easing: 'ease-in-out',
+						fill: 'both'
+					})
+				}
+				
+				break;
+			case 'right':
+				if(endPositionX-startPositionX>0){
+					console.log(`move ${element} to the ${direction}`);
+					element.animate([
+						{transform: 'translateX(0px)'},
+						{transform: 'translateX(100%)'}
+					],{
+						duration: 500,
+						easing: 'ease-in-out',
+						fill: 'both'
+					})
+				}
+				break;
+			case 'up':
+				if(endPositionY-startPositionY<0){
+					console.log(`move ${element} to the ${direction}`);
+					element.animate([
+						{transform: 'translateY(0px)'},
+						{transform: 'translateY(-100%)'}
+					],{
+						duration: 500,
+						easing: 'ease-in-out',
+						fill: 'both'
+					})
+				}
+				break;
+			case 'down':
+				if(endPositionY-startPositionY>0){
+					console.log(`move ${element} to the ${direction}`);
+					element.animate([
+						{transform: 'translateY(0px)'},
+						{transform: 'translateY(100%)'}
+					],{
+						duration: 500,
+						easing: 'ease-in-out',
+						fill: 'both'
+					})
+				}
+				break;
+			default:
+				break;
+		}
+	})
+}

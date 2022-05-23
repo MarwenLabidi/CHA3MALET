@@ -5,6 +5,7 @@ let {
 	addGlobalEventListener,
 	addEventListener,
 	insertAfter,
+	slideME
 } = await import("./utilities.js");
 const APP = qs('#app')
 
@@ -849,6 +850,8 @@ const createPageFunctionality = (() => {
 		let getLoginPageButtonSmallScreen = qs('.authPage>.sectionOne>div.groupButton>.loginButton')
 		let upArrow = qs('section.registerSection>img.backArrow')
 		let leftArrow = qs('section.loginSection>img.backArrow')
+		let registerSection = qs('.registerSection')
+		let loginSection = qs('.loginSection')
 
 
 		if (getLoginPageButtonSmallScreen) {
@@ -884,9 +887,14 @@ const createPageFunctionality = (() => {
 				once: true
 			})
 		}
-
+		if (registerSection) {
+			slideME('up', registerSection)
+		}
+		if (loginSection) {
+			slideME('right', loginSection)
+			
+		}
 	}
-
 	return {
 		_addAuthenticationEventListeners
 	}
