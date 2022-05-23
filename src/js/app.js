@@ -772,7 +772,7 @@ const createPageFunctionality = (() => {
 			},
 			{
 				top: '0',
-				backgroundColor: `hsla(0, 0%, 16%, 1)`,
+				backgroundColor: `hsla(0, 0%, 7%, 1)`,
 			},
 			{
 				top: '-10%',
@@ -818,7 +818,7 @@ const createPageFunctionality = (() => {
 			},
 			{
 				left: '0',
-				backgroundColor: `hsla(0, 0%, 16%, 1)`,
+				backgroundColor: `hsla(0, 0%, 7%, 1)`,
 			},
 			{
 				left: '10%',
