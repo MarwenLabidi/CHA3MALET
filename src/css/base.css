@@ -13,15 +13,16 @@ input{
 	max-height: 80px;
 	background-color: var(--clr_White-opacity-16);
 	color: var(--clr_White);
-	font-size:18px;
+	font-size:15px;
 	margin: 10px;
 	border-radius: 20px;
 	text-align: center;
 	font-family: var(--ff-Raleway);
 	letter-spacing: 2px;
+	padding: 0 60px;
 
 }
-input:focus{
+input:focus,input:hover{
 	border: 2px solid var(--clr_White);
 }
 /* change placeholder color */
@@ -33,7 +34,7 @@ input::placeholder {
 	letter-spacing: 4px; 
 	position:relative;
 	top: -2%;
-	left: 5%;
+	/* left: 5%; */
 	
 }
 
@@ -70,8 +71,9 @@ input[type=password] {
 @media(--desktop) {
 	input{
 		border-radius: 30px;
-		font-size: 30px;
+		font-size: 25px;
 		margin: 20px;
+		/* padding: 0 60px; */
 	}
 	input::placeholder {
 		font-size:25px !important;
@@ -82,3 +84,4 @@ input[type=password] {
 		background-size: 40px 40px !important;
 	}
 }
+

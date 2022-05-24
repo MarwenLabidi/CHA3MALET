@@ -1,0 +1,12 @@
+input[type="email"]:valid,
+input[type="text"]:valid,
+input[type="password"]:valid {
+	border-color: green;
+}
+
+input[type="email"]:invalid:focus,
+input[type="text"]:invalid:focus,
+input[type="password"]:invalid:focus {
+	border-color: red;
+}
+

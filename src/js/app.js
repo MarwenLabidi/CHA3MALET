@@ -119,17 +119,24 @@ const createPageStructure = (() => {
 		let inputUserName = createElement('input', {
 			class: 'inputUserName',
 			placeholder: 'User Name',
-			type:'text'
+			type:'text',
+			required:true,
+			pattern: "^(?=.{3,10}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" //  username is 3-10 characters, long no _ or . at the beginning,no __ or _. or ._ or .. inside, allowed characters,no _ or . at the end
 		})
 		let inputEmail = createElement('input', {
 			class: 'inputEmail',
 			type: 'email',
-			placeholder: 'Email'
+			placeholder: 'Email',
+			required:true,
+			pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" // mail pattern
 		})
 		let inputPassword = createElement('input', {
 			class: 'inputPassword',
 			type: 'password',
-			placeholder: 'Password'
+			placeholder: 'Password',
+			required:true,
+			pattern:".*.{8,}$" //Minimum eight characters
+			
 		})
 		let registerButton = createElement('button', {
 			class: 'registerButton',
@@ -160,12 +167,16 @@ const createPageStructure = (() => {
 		let inputEmail = createElement('input', {
 			class: 'inputEmail',
 			type: 'email',
-			placeholder: 'Email'
+			placeholder: 'Email',
+			required:true,
+			pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" // mail pattern
 		})
 		let inputPassword = createElement('input', {
 			class: 'inputPassword',
 			type: 'password',
-			placeholder: 'Password'
+			placeholder: 'Password',
+			required:true,
+			pattern:".*.{8,}$" //Minimum eight characters
 		})
 		let loginButton = createElement('button', {
 			class: 'loginButton',

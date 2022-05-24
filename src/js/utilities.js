@@ -55,6 +55,14 @@ export const createElement = (type, options = {}) => {
 			element.setAttribute("playsinline", "");
 			return
 		}
+		if (key === "pattern") {
+			element.setAttribute("pattern", value);
+			return
+		}
+		if (key === "required") {
+			element.setAttribute("required", "");
+			return
+		}
 		
 
 		element.setAttribute(key, value)
