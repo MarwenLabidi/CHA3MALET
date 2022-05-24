@@ -51,6 +51,7 @@
 		& .registerButton:active {
 			transform: scale(0.9);
 			opacity: 0.9;
+			box-shadow: 50px 0px transparent;
 		}
 		& .loginButton {
 			background-color: var(--clr_Purple);
