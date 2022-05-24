@@ -9,13 +9,13 @@ input{
 	border: none;
 	width: 80vw;
 	height: 17vw;
-	max-width: 500px;
+	max-width: 450px;
 	max-height: 80px;
 	background-color: var(--clr_White-opacity-16);
 	color: var(--clr_White);
 	font-size:15px;
 	margin: 10px;
-	border-radius: 20px;
+	border-radius: 25px;
 	text-align: center;
 	font-family: var(--ff-Raleway);
 	letter-spacing: 2px;
@@ -67,11 +67,11 @@ input[type=password] {
 @media(--desktop) {
 	input{
 		border-radius: 30px;
-		font-size: 25px;
+		font-size: 20px;
 		margin: 20px;
 	}
 	input::placeholder {
-		font-size:25px !important;
+		font-size:20px !important;
 		letter-spacing: 6px !important;
 		
 	}
