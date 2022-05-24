@@ -55,6 +55,7 @@ export const createElement = (type, options = {}) => {
 			element.setAttribute("playsinline", "");
 			return
 		}
+		
 
 		element.setAttribute(key, value)
 	})

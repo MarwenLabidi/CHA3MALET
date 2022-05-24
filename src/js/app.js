@@ -118,7 +118,8 @@ const createPageStructure = (() => {
 		})
 		let inputUserName = createElement('input', {
 			class: 'inputUserName',
-			placeholder: 'User Name'
+			placeholder: 'User Name',
+			type:'text'
 		})
 		let inputEmail = createElement('input', {
 			class: 'inputEmail',

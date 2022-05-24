@@ -1,4 +1,84 @@
-body{
+body {
 	background-color: var(--clr_Dark-100);
 	color: var(--clr_White);
+}
+
+
+input{
+	outline: none;
+	border: none;
+	width: 80vw;
+	height: 17vw;
+	max-width: 500px;
+	max-height: 80px;
+	background-color: var(--clr_White-opacity-16);
+	color: var(--clr_White);
+	font-size:18px;
+	margin: 10px;
+	border-radius: 20px;
+	text-align: center;
+	font-family: var(--ff-Raleway);
+	letter-spacing: 2px;
+
+}
+input:focus{
+	border: 2px solid var(--clr_White);
+}
+/* change placeholder color */
+input::placeholder {
+	color: var(--clr_White);
+	font-size:17px;
+	opacity: 0.9;
+	font-family: var(--ff-Raleway);
+	letter-spacing: 4px; 
+	position:relative;
+	top: -2%;
+	left: 5%;
+	
+}
+
+
+input[type=email] {
+	/* background-color: red; */
+	background-image: url(/assets/icons/gmail_outlined.svg);
+	background-repeat: no-repeat;
+	background-size: 30px 30px;
+	background-position: 5% center;
+	padding-right: 40px;
+	
+}
+
+input[type=password] {
+	/* background-color: green; */
+	background-image: url(/assets/icons/key.svg);
+	background-repeat: no-repeat;
+	background-size: 30px 30px;
+	background-position: 5% center;
+	padding-right: 40px;
+}
+
+
+.inputUserName {
+	/* background-color:purple; */
+	background-image: url(/assets/icons/account_circle.svg);
+	background-repeat: no-repeat;
+	background-size: 30px 30px;
+	background-position: 5% center;
+	padding-right: 40px;
+}
+
+@media(--desktop) {
+	input{
+		border-radius: 30px;
+		font-size: 30px;
+		margin: 20px;
+	}
+	input::placeholder {
+		font-size:25px !important;
+		letter-spacing: 6px !important;
+		
+	}
+	input[type=email],input[type=password],input[type=text] {
+		background-size: 40px 40px !important;
+	}
 }

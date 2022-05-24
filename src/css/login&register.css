@@ -1,0 +1,36 @@
+.groupFacebookGoogleMetaMask{
+	/* background-color: blue; */
+	& .iconFacebook{
+		
+
+	}
+	& .iconGoogle{
+
+	}
+	& .iconMetaMask{
+
+	}
+
+}
+
+.loginSection>.loginButton,.registerSection>.registerButton{
+	/* background-color: red; */
+}
+
+.brand{
+	& .logo{
+		/* background-color: red; */
+	}
+	& .title{
+		/* color: red; */
+	}
+}
+
+
+
+
+
+
+
+@media(--desktop) {
+}

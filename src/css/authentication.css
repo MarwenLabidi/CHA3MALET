@@ -21,8 +21,10 @@
 	}
 	& .loginSection,
 	& .registerSection {
-		padding: 10%;
+		/* padding: 10%; */
 		/* background-color:green; */
+		width:50%;
+
 	}
 	& .groupButton {
 		position: absolute;
@@ -97,7 +99,7 @@
 	.authPage {
 		/* background-color: red; */
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 		/* gap: 20px; */
 		& img {
 			top: 30% !important;
