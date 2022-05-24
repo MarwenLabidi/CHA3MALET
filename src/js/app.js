@@ -622,12 +622,11 @@ const createPageFunctionality = (() => {
 		let registerSectionPage = createPageStructure._register()
 		//make register section absolute position
 		registerSectionPage.style.position = 'absolute'
-		// registerSectionPage.style.backgroundColor = 'red'
 		registerSectionPage.style.top = '-100%'
 		registerSectionPage.style.right = '0'
 		registerSectionPage.style.height = '100%'
 		registerSectionPage.style.width = '50%'
-		registerSectionPage.style.padding = '10%'
+		
 		// add it to the dom 
 		APP.appendChild(registerSectionPage)
 		qs('.loginSection').style.transition = 'all 0.3s linear'
@@ -663,28 +662,18 @@ const createPageFunctionality = (() => {
 		});
 
 		//change register button to login button
-		qs('.authPage>.sectionOne>.registerButton').disabled = true
-		// change class name
-		qs('.authPage>.sectionOne>.registerButton').style.opacity = '0'
-		// qs('.authPage>.sectionOne>.registerButton').remove()
+		qs('.authPage>.sectionOne>.registerButton').remove()
 		//create button login
 		let loginButton = createElement('button', {
 			class: 'loginButton',
 			text: 'Login'
 		})
-		loginButton.style.position = 'absolute'
-		loginButton.style.height = '60px'
-		loginButton.style.width = '150px'
-		loginButton.style.left = '38%'
 		qs('.authPage>.sectionOne').appendChild(loginButton);
 		_addAuthenticationEventListeners()
 	}
 	//--->  bringLoginPageForLargeScreen
 	function _bringLoginPageForLargeScreen() {
 		console.log(`bringLoginPageForLargeScreen`);
-		qs('.authPage>.sectionOne>.registerButton').disabled = false
-		qs('.authPage>.sectionOne>.registerButton').style.opacity = '1'
-		qs('.authPage>.sectionOne>.loginButton').remove()
 		qs('.registerSection').animate([
 			// keyframes
 			{
@@ -707,7 +696,15 @@ const createPageFunctionality = (() => {
 		qs('.loginSection').style.opacity = '1'
 		setTimeout(() => {
 			qs('.registerSection').remove()
+			
 		}, 1000);
+		let registerButton = createElement('button', {
+			class: 'registerButton',
+			text: 'register'
+		})
+		qs('.authPage>.sectionOne').appendChild(registerButton);
+		qs('.authPage>.sectionOne>.loginButton').remove()
+		_addAuthenticationEventListeners()
 
 
 	}
@@ -766,12 +763,10 @@ const createPageFunctionality = (() => {
 		let registerSectionPage = createPageStructure._register()
 		//make register section absolute position
 		registerSectionPage.style.position = 'absolute'
-		// registerSectionPage.style.backgroundColor = 'red'
 		registerSectionPage.style.top = '-100%'
 		registerSectionPage.style.right = '0'
 		registerSectionPage.style.height = '100%'
 		registerSectionPage.style.width = '100%'
-		registerSectionPage.style.padding = '10%'
 		// add it to the dom 
 		APP.appendChild(registerSectionPage)
 
@@ -812,12 +807,10 @@ const createPageFunctionality = (() => {
 		let loginSectionPage = createPageStructure._login()
 		//make register section absolute position
 		loginSectionPage.style.position = 'absolute'
-		// registerSectionPage.style.backgroundColor = 'red'
 		loginSectionPage.style.top = '0%'
 		loginSectionPage.style.left = '100'
 		loginSectionPage.style.height = '100%'
 		loginSectionPage.style.width = '100%'
-		loginSectionPage.style.padding = '10%'
 		// add it to the dom 
 		APP.appendChild(loginSectionPage)
 

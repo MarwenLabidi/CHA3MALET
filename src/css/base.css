@@ -34,13 +34,11 @@ input::placeholder {
 	letter-spacing: 4px; 
 	position:relative;
 	top: -2%;
-	/* left: 5%; */
 	
 }
 
 
 input[type=email] {
-	/* background-color: red; */
 	background-image: url(/assets/icons/gmail_outlined.svg);
 	background-repeat: no-repeat;
 	background-size: 30px 30px;
@@ -50,7 +48,6 @@ input[type=email] {
 }
 
 input[type=password] {
-	/* background-color: green; */
 	background-image: url(/assets/icons/key.svg);
 	background-repeat: no-repeat;
 	background-size: 30px 30px;
@@ -60,7 +57,6 @@ input[type=password] {
 
 
 .inputUserName {
-	/* background-color:purple; */
 	background-image: url(/assets/icons/account_circle.svg);
 	background-repeat: no-repeat;
 	background-size: 30px 30px;
@@ -73,7 +69,6 @@ input[type=password] {
 		border-radius: 30px;
 		font-size: 25px;
 		margin: 20px;
-		/* padding: 0 60px; */
 	}
 	input::placeholder {
 		font-size:25px !important;

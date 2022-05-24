@@ -1,36 +1,85 @@
 .groupFacebookGoogleMetaMask{
-	/* background-color: blue; */
-	& .iconFacebook{
-		
+	display: flex;
+	justify-content: space-around;
+	& img{
+		border: 3px solid var(--clr_White-opacity-16);
+		border-radius: 15%;
+		padding: 8px 17px;
 
 	}
-	& .iconGoogle{
+	& img:hover,& img:focus{
+		border-color: var(--clr_Purple);
+		cursor: pointer;
 
 	}
-	& .iconMetaMask{
-
+	& img:active{
+		box-shadow: 200px 0px  4px var(--clr_White-opacity-25) inset;
 	}
 
 }
 
 .loginSection>.loginButton,.registerSection>.registerButton{
-	/* background-color: red; */
+	border:none;
+	width: 80vw;
+	height: 17vw;
+	max-width: 500px;
+	max-height: 80px;
+	background-color: var(--clr_Purple);
+	color: var(--clr_White);
+	font-size:15px;
+	margin: 10px;
+	border-radius: 20px;
+	text-align: center;
+	font-family: var(--ff_Bebas);
+	letter-spacing: 2px;
 }
-
+.loginSection>.loginButton:hover,.registerSection>.registerButton:hover{
+	cursor: pointer;
+}
 .brand{
+	display: flex;
+	object-fit: contain;
 	& .logo{
 		/* background-color: red; */
+		width: 100px;
+		height: 60px;
 	}
 	& .title{
-		/* color: red; */
+		align-self: center;
+		font-family: var(--ff_Libre);
+
 	}
 }
 
 
+.loginSection{
+	/* background-color: red; */
+	text-align: center;
+}
 
+.registerSection{
+	/* background-color: blue; */
+	text-align: center;
+}
 
 
 
 
 @media(--desktop) {
+	.groupFacebookGoogleMetaMask{
+		
+		& img{
+			height: 65px;
+			width: 110px;
+			border-radius: 20px;
+		}
+		
+	
+	}
+	.loginSection>.loginButton,.registerSection>.registerButton{
+			border-radius: 30px;
+			font-size: 25px;
+			margin: 20px;
+		}
 }
+
