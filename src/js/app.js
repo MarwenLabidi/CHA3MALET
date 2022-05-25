@@ -890,7 +890,7 @@ const createPageFunctionality = (() => {
 		let loginSection = qs('.loginSection')
 		let registerLinkInLoginSmallScreen=qs('.dontHaveAccount>a')
 		let loginButton=qs('.loginSection>.loginButton')
-		let registerButton=qs('.registerSection>.groupFacebookGoogleMetaMask>.registerButton')
+		let registerButton=qs('.registerSection>.registerButton')
 		let facebookLoginButton=qs('.loginSection>.groupFacebookGoogleMetaMask>.iconFacebook')
 		let googleLoginButton=qs('.loginSection>.groupFacebookGoogleMetaMask>.iconGoogle')
 		let metaMaskLoginButton=qs('.loginSection>.groupFacebookGoogleMetaMask>.iconMetaMask')
