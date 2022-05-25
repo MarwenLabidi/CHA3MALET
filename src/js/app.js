@@ -845,6 +845,13 @@ const createPageFunctionality = (() => {
 
 	}
 
+	function _bringRegisterPageFromLinkInLoginPage() {
+		console.log(`bringRegisterPageFromLinkInLoginPage`);
+		qs('.loginSection').remove();
+		qs('.authPage>.sectionOne>div.groupButton>.registerButton').click()
+		
+	}
+
 
 	//--->  add AUTH page event listeners
 	function _addAuthenticationEventListeners() {
@@ -856,6 +863,7 @@ const createPageFunctionality = (() => {
 		let leftArrow = qs('section.loginSection>img.backArrow')
 		let registerSection = qs('.registerSection')
 		let loginSection = qs('.loginSection')
+		let registerLinkInLoginSmallScreen=qs('.dontHaveAccount>a')
 
 
 		if (getLoginPageButtonSmallScreen) {
@@ -897,6 +905,9 @@ const createPageFunctionality = (() => {
 		if (loginSection) {
 			slideME('right', loginSection)
 			
+		}
+		if(registerLinkInLoginSmallScreen){
+			addEventListener(registerLinkInLoginSmallScreen, 'click',_bringRegisterPageFromLinkInLoginPage)
 		}
 	}
 	return {
