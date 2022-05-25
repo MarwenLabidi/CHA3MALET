@@ -1,25 +1,28 @@
 body {
 	background-color: var(--clr_Dark-100);
 	color: var(--clr_White);
+	height:100%;
+	
 }
 
 
 input{
+	display: block;
 	outline: none;
 	border: none;
 	width: 80vw;
 	height: 17vw;
-	max-width: 450px;
+	max-width: 364px;
 	max-height: 80px;
 	background-color: var(--clr_White-opacity-16);
 	color: var(--clr_White);
 	font-size:15px;
-	margin: 10px;
+	margin: 10px auto;
 	border-radius: 25px;
 	text-align: center;
 	font-family: var(--ff-Raleway);
 	letter-spacing: 2px;
-	padding: 0 60px;
+	padding: 0 50px;
 
 }
 input:focus,input:hover{
@@ -65,10 +68,12 @@ input[type=password] {
 }
 
 @media(--desktop) {
+	body{
+		overflow:hidden;
+	}
 	input{
 		border-radius: 30px;
 		font-size: 20px;
-		margin: 20px;
 	}
 	input::placeholder {
 		font-size:20px !important;

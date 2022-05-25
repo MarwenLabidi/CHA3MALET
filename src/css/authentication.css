@@ -25,6 +25,9 @@
 	}
 	& .groupButton {
 		border-radius: 25px;
+		background-color: var(--clr_Purple);
+		width:max-content;
+		margin: 0 auto;
 
 		& .registerButton {
 			background-color: var(--clr_White);
@@ -38,7 +41,6 @@
 			font-family: var(--ff_Bebas);
 			letter-spacing: 1.2px;
 			transition: all 0.3s ease-in-out;
-			box-shadow: 50px 0px var(--clr_Purple);
 		}
 		&.registerButton:focus {
 			opacity: 1;
@@ -51,7 +53,6 @@
 		& .registerButton:active {
 			transform: scale(0.9);
 			opacity: 0.9;
-			box-shadow: 50px 0px transparent;
 		}
 		& .loginButton {
 			background-color: var(--clr_Purple);
@@ -95,7 +96,7 @@
 	.authPage {
 		display: flex;
 		justify-content: space-between;
-		flex-wrap: wrap;
+		/* flex-wrap: wrap ; */
 		& img {
 			justify-self: center;
 		}

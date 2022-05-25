@@ -114,7 +114,7 @@ const createPageStructure = (() => {
 		let groupFacebookGoogleMetaMask = _socialMediaAuth()
 		let orRegisterWith = createElement('p', {
 			class: 'orRegisterWith',
-			text: 'or Register with'
+			text: 'Or Register With'
 		})
 		let inputUserName = createElement('input', {
 			class: 'inputUserName',
@@ -184,7 +184,7 @@ const createPageStructure = (() => {
 		})
 		let orLoginWith = createElement('p', {
 			class: 'orLoginWith',
-			text: 'or login with'
+			text: 'Or Login With'
 		})
 
 		let groupFacebookGoogleMetaMask = _socialMediaAuth()
@@ -200,7 +200,7 @@ const createPageStructure = (() => {
 		if (window.innerWidth < 900) {
 			let dontHaveAccount = createElement('p', {
 				class: 'dontHaveAccount',
-				innerHTML: 'don\'t have an account? <a href="#">Register</a>'
+				innerHTML: 'Don\'t Have An Account? <a href="#">REGISTER</a>'
 			})
 
 
@@ -764,9 +764,8 @@ const createPageFunctionality = (() => {
 		//make register section absolute position
 		registerSectionPage.style.position = 'absolute'
 		registerSectionPage.style.top = '-100%'
-		registerSectionPage.style.right = '0'
-		registerSectionPage.style.height = '100%'
-		registerSectionPage.style.width = '100%'
+		registerSectionPage.style.height = '100vh'
+		registerSectionPage.style.width = '100vw'
 		// add it to the dom 
 		APP.appendChild(registerSectionPage)
 
@@ -809,8 +808,8 @@ const createPageFunctionality = (() => {
 		loginSectionPage.style.position = 'absolute'
 		loginSectionPage.style.top = '0%'
 		loginSectionPage.style.left = '100'
-		loginSectionPage.style.height = '100%'
-		loginSectionPage.style.width = '100%'
+		loginSectionPage.style.height = '100vh'
+		loginSectionPage.style.width = '100vw'
 		// add it to the dom 
 		APP.appendChild(loginSectionPage)
 
