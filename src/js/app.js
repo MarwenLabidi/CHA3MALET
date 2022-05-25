@@ -851,6 +851,31 @@ const createPageFunctionality = (() => {
 		qs('.authPage>.sectionOne>div.groupButton>.registerButton').click()
 		
 	}
+	function _loginFireBase(){
+		console.log(`-loginFireBase`);
+	}
+	function _registerFireBase(){
+		console.log(`-registerFireBase`);
+	}
+	function _facebookLoginFireBase(){
+		console.log(`__facebookLoginFireBase`);
+	}
+	function _googleLoginFireBase(){
+		console.log(`__googleLoginFireBase`);
+	}
+	function _metaMaskLogin(){
+		console.log(`_metaMaskLogin`);
+	}
+	function _facebookRegisterFireBase(){
+		console.log(`_facebookRegisterFireBase`);
+	}
+	function _googleRegisterFireBase(){
+		console.log(`_googleRegisterFireBase`);
+	}
+	function _metaMaskRegister(){
+		console.log(`_metaMaskRegister`);
+	}
+
 
 
 	//--->  add AUTH page event listeners
@@ -864,6 +889,14 @@ const createPageFunctionality = (() => {
 		let registerSection = qs('.registerSection')
 		let loginSection = qs('.loginSection')
 		let registerLinkInLoginSmallScreen=qs('.dontHaveAccount>a')
+		let loginButton=qs('.loginSection>.loginButton')
+		let registerButton=qs('.registerSection>.groupFacebookGoogleMetaMask>.registerButton')
+		let facebookLoginButton=qs('.loginSection>.groupFacebookGoogleMetaMask>.iconFacebook')
+		let googleLoginButton=qs('.loginSection>.groupFacebookGoogleMetaMask>.iconGoogle')
+		let metaMaskLoginButton=qs('.loginSection>.groupFacebookGoogleMetaMask>.iconMetaMask')
+		let facebookRegisterButton=qs('.registerSection>.groupFacebookGoogleMetaMask>.iconFacebook')
+		let googleRegisterButton=qs('.registerSection>.groupFacebookGoogleMetaMask>.iconGoogle')
+		let metaMaskRegisterButton=qs('.registerSection>.groupFacebookGoogleMetaMask>.iconMetaMask')
 
 
 		if (getLoginPageButtonSmallScreen) {
@@ -909,6 +942,31 @@ const createPageFunctionality = (() => {
 		if(registerLinkInLoginSmallScreen){
 			addEventListener(registerLinkInLoginSmallScreen, 'click',_bringRegisterPageFromLinkInLoginPage)
 		}
+		if(loginButton){
+			addEventListener(loginButton, 'click',_loginFireBase)
+		}
+		if(registerButton){
+			addEventListener(registerButton, 'click',_registerFireBase)
+		}
+		if(facebookLoginButton){
+			addEventListener(facebookLoginButton, 'click',_facebookLoginFireBase)
+		}
+		if(googleLoginButton){
+			addEventListener(googleLoginButton, 'click',_googleLoginFireBase)
+		}
+		if(metaMaskLoginButton){
+			addEventListener(metaMaskLoginButton, 'click',_metaMaskLogin)
+		}
+		if(facebookRegisterButton){
+			addEventListener(facebookRegisterButton, 'click',_facebookRegisterFireBase)
+		}
+		if(googleRegisterButton){
+			addEventListener(googleRegisterButton, 'click',_googleRegisterFireBase)
+		}
+		if(metaMaskRegisterButton){
+			addEventListener(metaMaskRegisterButton, 'click',_metaMaskRegister)
+		}
+
 	}
 	return {
 		_addAuthenticationEventListeners
