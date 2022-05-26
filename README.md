@@ -20,3 +20,4 @@
 
 ## API :
 - WebRTC API	
+- GIPHY API
