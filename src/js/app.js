@@ -10,19 +10,31 @@ let {
 const APP = qs('#app')
 
 // fireBase config
-import { initializeApp } from "firebase/app";
-import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
-import { getFirestore,collection, addDoc,getDocs } from "firebase/firestore";
+import {
+	initializeApp
+} from "firebase/app";
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	onAuthStateChanged
+} from "firebase/auth";
+import {
+	getFirestore,
+	collection,
+	addDoc,
+	getDocs
+} from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBLGVitcjxSggmupKBaxAM9mHD4ygg48Nw",
-  authDomain: "cha3mlet-conference-app.firebaseapp.com",
-  projectId: "cha3mlet-conference-app",
-  storageBucket: "cha3mlet-conference-app.appspot.com",
-  messagingSenderId: "990797560961",
-  appId: "1:990797560961:web:33d0c1a811954866682180",
-  measurementId: "G-4K73E2K1MN"
+	apiKey: "AIzaSyBLGVitcjxSggmupKBaxAM9mHD4ygg48Nw",
+	authDomain: "cha3mlet-conference-app.firebaseapp.com",
+	projectId: "cha3mlet-conference-app",
+	storageBucket: "cha3mlet-conference-app.appspot.com",
+	messagingSenderId: "990797560961",
+	appId: "1:990797560961:web:33d0c1a811954866682180",
+	measurementId: "G-4K73E2K1MN"
 };
 
 // Initialize Firebase
@@ -140,24 +152,24 @@ const createPageStructure = (() => {
 		let inputUserName = createElement('input', {
 			class: 'inputUserName',
 			placeholder: 'User Name',
-			type:'text',
-			required:true,
+			type: 'text',
+			required: true,
 			pattern: "^(?=.{3,10}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" //  username is 3-10 characters, long no _ or . at the beginning,no __ or _. or ._ or .. inside, allowed characters,no _ or . at the end
 		})
 		let inputEmail = createElement('input', {
 			class: 'inputEmail',
 			type: 'email',
 			placeholder: 'Email',
-			required:true,
-			pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" // mail pattern
+			required: true,
+			pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" // mail pattern
 		})
 		let inputPassword = createElement('input', {
 			class: 'inputPassword',
 			type: 'password',
 			placeholder: 'Password',
-			required:true,
-			pattern:".*.{8,}$" //Minimum eight characters
-			
+			required: true,
+			pattern: ".*.{8,}$" //Minimum eight characters
+
 		})
 		let registerButton = createElement('button', {
 			class: 'registerButton',
@@ -189,15 +201,15 @@ const createPageStructure = (() => {
 			class: 'inputEmail',
 			type: 'email',
 			placeholder: 'Email',
-			required:true,
-			pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" // mail pattern
+			required: true,
+			pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" // mail pattern
 		})
 		let inputPassword = createElement('input', {
 			class: 'inputPassword',
 			type: 'password',
 			placeholder: 'Password',
-			required:true,
-			pattern:".*.{8,}$" //Minimum eight characters
+			required: true,
+			pattern: ".*.{8,}$" //Minimum eight characters
 		})
 		let loginButton = createElement('button', {
 			class: 'loginButton',
@@ -647,7 +659,7 @@ const createPageFunctionality = (() => {
 		registerSectionPage.style.right = '0'
 		registerSectionPage.style.height = '100%'
 		registerSectionPage.style.width = '50%'
-		
+
 		// add it to the dom 
 		APP.appendChild(registerSectionPage)
 		qs('.loginSection').style.transition = 'all 0.3s linear'
@@ -717,7 +729,7 @@ const createPageFunctionality = (() => {
 		qs('.loginSection').style.opacity = '1'
 		setTimeout(() => {
 			qs('.registerSection').remove()
-			
+
 		}, 1000);
 		let registerButton = createElement('button', {
 			class: 'registerButton',
@@ -865,36 +877,81 @@ const createPageFunctionality = (() => {
 		_addAuthenticationEventListeners()
 
 	}
+	//---> bringRegisterPageFromLinkInLoginPage
 
 	function _bringRegisterPageFromLinkInLoginPage() {
 		console.log(`bringRegisterPageFromLinkInLoginPage`);
 		qs('.loginSection').remove();
 		qs('.authPage>.sectionOne>div.groupButton>.registerButton').click()
-		
+
 	}
-	function _loginFireBase(){
+	//----> firebase authentication and MetaMask
+	function _loginFireBase() {
 		console.log(`-loginFireBase`);
+		let inputLoginEmail = qs('.loginSection>.inputEmail')
+		let inputLoginPassword = qs('.loginSection>.inputPassword')
+		console.log('inputLoginEmail: ', inputLoginEmail.value);
+		console.log('inputLoginPassword: ', inputLoginPassword.value);
 	}
-	function _registerFireBase(){
+
+	function _registerFireBase() {
 		console.log(`-registerFireBase`);
+		let inputRegisterUserName = qs('.registerSection>.inputUserName')
+		let inputRegisterEmail = qs('.registerSection>.inputEmail')
+		let inputRegisterPassword = qs('.registerSection>.inputPassword')
+
+		//TODO setup email verification first with code
+		//pop up window with verification code
+
+		createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
+			.then((userCredential) => {
+				// Signed in 
+				const user = userCredential.user;
+				console.log('user: ', user);
+				// ...
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				console.log('errorCode: ', errorCode);
+				const errorMessage = error.message;
+				console.log('errorMessage: ', errorMessage);
+				// ..
+			});
+		//empty the inputs field and show pop up of sucess or error
 	}
-	function _facebookLoginFireBase(){
+
+	function _facebookLoginFireBase() {
 		console.log(`__facebookLoginFireBase`);
 	}
-	function _googleLoginFireBase(){
+
+	function _googleLoginFireBase() {
 		console.log(`__googleLoginFireBase`);
 	}
-	function _metaMaskLogin(){
+
+	function _metaMaskLogin() {
 		console.log(`_metaMaskLogin`);
 	}
-	function _facebookRegisterFireBase(){
+
+	function _facebookRegisterFireBase() {
 		console.log(`_facebookRegisterFireBase`);
 	}
-	function _googleRegisterFireBase(){
+
+	function _googleRegisterFireBase() {
 		console.log(`_googleRegisterFireBase`);
 	}
-	function _metaMaskRegister(){
+
+	function _metaMaskRegister() {
 		console.log(`_metaMaskRegister`);
+	}
+	function logOutFromFireBase(){
+		console.log(`logOutFromFireBase`);
+		auth.signOut().then(function() {
+			// Sign-out successful.
+			console.log('signOut successful');
+		}).catch(function(error) {
+			// An error happened.
+			console.log('signOut error: ', error);
+		});
 	}
 
 
@@ -909,15 +966,15 @@ const createPageFunctionality = (() => {
 		let leftArrow = qs('section.loginSection>img.backArrow')
 		let registerSection = qs('.registerSection')
 		let loginSection = qs('.loginSection')
-		let registerLinkInLoginSmallScreen=qs('.dontHaveAccount>a')
-		let loginButton=qs('.loginSection>.loginButton')
-		let registerButton=qs('.registerSection>.registerButton')
-		let facebookLoginButton=qs('.loginSection>.groupFacebookGoogleMetaMask>.iconFacebook')
-		let googleLoginButton=qs('.loginSection>.groupFacebookGoogleMetaMask>.iconGoogle')
-		let metaMaskLoginButton=qs('.loginSection>.groupFacebookGoogleMetaMask>.iconMetaMask')
-		let facebookRegisterButton=qs('.registerSection>.groupFacebookGoogleMetaMask>.iconFacebook')
-		let googleRegisterButton=qs('.registerSection>.groupFacebookGoogleMetaMask>.iconGoogle')
-		let metaMaskRegisterButton=qs('.registerSection>.groupFacebookGoogleMetaMask>.iconMetaMask')
+		let registerLinkInLoginSmallScreen = qs('.dontHaveAccount>a')
+		let loginButton = qs('.loginSection>.loginButton')
+		let registerButton = qs('.registerSection>.registerButton')
+		let facebookLoginButton = qs('.loginSection>.groupFacebookGoogleMetaMask>.iconFacebook')
+		let googleLoginButton = qs('.loginSection>.groupFacebookGoogleMetaMask>.iconGoogle')
+		let metaMaskLoginButton = qs('.loginSection>.groupFacebookGoogleMetaMask>.iconMetaMask')
+		let facebookRegisterButton = qs('.registerSection>.groupFacebookGoogleMetaMask>.iconFacebook')
+		let googleRegisterButton = qs('.registerSection>.groupFacebookGoogleMetaMask>.iconGoogle')
+		let metaMaskRegisterButton = qs('.registerSection>.groupFacebookGoogleMetaMask>.iconMetaMask')
 
 
 		if (getLoginPageButtonSmallScreen) {
@@ -958,34 +1015,34 @@ const createPageFunctionality = (() => {
 		}
 		if (loginSection) {
 			slideME('right', loginSection)
-			
+
 		}
-		if(registerLinkInLoginSmallScreen){
-			addEventListener(registerLinkInLoginSmallScreen, 'click',_bringRegisterPageFromLinkInLoginPage)
+		if (registerLinkInLoginSmallScreen) {
+			addEventListener(registerLinkInLoginSmallScreen, 'click', _bringRegisterPageFromLinkInLoginPage)
 		}
-		if(loginButton){
-			addEventListener(loginButton, 'click',_loginFireBase)
+		if (loginButton) {
+			addEventListener(loginButton, 'click', _loginFireBase)
 		}
-		if(registerButton){
-			addEventListener(registerButton, 'click',_registerFireBase)
+		if (registerButton) {
+			addEventListener(registerButton, 'click', _registerFireBase)
 		}
-		if(facebookLoginButton){
-			addEventListener(facebookLoginButton, 'click',_facebookLoginFireBase)
+		if (facebookLoginButton) {
+			addEventListener(facebookLoginButton, 'click', _facebookLoginFireBase)
 		}
-		if(googleLoginButton){
-			addEventListener(googleLoginButton, 'click',_googleLoginFireBase)
+		if (googleLoginButton) {
+			addEventListener(googleLoginButton, 'click', _googleLoginFireBase)
 		}
-		if(metaMaskLoginButton){
-			addEventListener(metaMaskLoginButton, 'click',_metaMaskLogin)
+		if (metaMaskLoginButton) {
+			addEventListener(metaMaskLoginButton, 'click', _metaMaskLogin)
 		}
-		if(facebookRegisterButton){
-			addEventListener(facebookRegisterButton, 'click',_facebookRegisterFireBase)
+		if (facebookRegisterButton) {
+			addEventListener(facebookRegisterButton, 'click', _facebookRegisterFireBase)
 		}
-		if(googleRegisterButton){
-			addEventListener(googleRegisterButton, 'click',_googleRegisterFireBase)
+		if (googleRegisterButton) {
+			addEventListener(googleRegisterButton, 'click', _googleRegisterFireBase)
 		}
-		if(metaMaskRegisterButton){
-			addEventListener(metaMaskRegisterButton, 'click',_metaMaskRegister)
+		if (metaMaskRegisterButton) {
+			addEventListener(metaMaskRegisterButton, 'click', _metaMaskRegister)
 		}
 
 	}
