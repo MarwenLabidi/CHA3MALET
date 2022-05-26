@@ -5,7 +5,9 @@ let {
 	addGlobalEventListener,
 	addEventListener,
 	insertAfter,
-	slideME
+	slideME,
+	generateVerificationCode,
+	createHTMLTemplateMailTemplate
 } = await import("./utilities.js");
 const APP = qs('#app')
 

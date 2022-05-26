@@ -182,3 +182,22 @@ export const slideME=(direction,element)=>{
 		}
 	})
 }
+
+
+export const createHTMLTemplateMailTemplate = (code) => {
+	const template = `
+	<div style="background-color: hsla(0, 0%, 16%, 1);color: hsla(0, 0%, 100%, 1);text-align:center" class="mail-template">
+		<div  class="mail-template-header"><img style="margin:0 auto;" src="/assets/logo/logo-for-dark.svg" alt="logo" width="250" height="200"></div>
+		<div class="mail-template-body">
+		<h1 >Your Verification Code</h1>
+		<h1 style="font-size: 5em; font-weight:bold;">${code}</h1>
+		</div>
+	</div>
+	`;
+	return template;
+}
+
+
+export const generateVerificationCode=()=>{
+	return Math.floor(Math.random() * (9999 - 1000) + 1000);
+}
