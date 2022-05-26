@@ -9,6 +9,27 @@ let {
 } = await import("./utilities.js");
 const APP = qs('#app')
 
+// fireBase config
+import { initializeApp } from "firebase/app";
+import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
+import { getFirestore,collection, addDoc,getDocs } from "firebase/firestore";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBLGVitcjxSggmupKBaxAM9mHD4ygg48Nw",
+  authDomain: "cha3mlet-conference-app.firebaseapp.com",
+  projectId: "cha3mlet-conference-app",
+  storageBucket: "cha3mlet-conference-app.appspot.com",
+  messagingSenderId: "990797560961",
+  appId: "1:990797560961:web:33d0c1a811954866682180",
+  measurementId: "G-4K73E2K1MN"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
 
 
 
