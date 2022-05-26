@@ -16,6 +16,7 @@
 - Html5 , Css3 , javaScript
 - Git , GitHub
 - Vite,esbuild, PostCss ,workBox,firebase
+- EmailJS ,emoji-picker-element
 
 
 ## API :
