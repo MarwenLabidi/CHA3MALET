@@ -12,5 +12,8 @@
     "postcss": "^8.4.13",
     "postcss-preset-env": "^7.4.4",
     "vite": "^2.9.5"
+  },
+  "dependencies": {
+    "firebase": "^9.8.1"
   }
 }
