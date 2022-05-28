@@ -1249,7 +1249,7 @@ const createPageFunctionality = (() => {
 		const CODE = generateVerificationCode()
 		let userInputCode = null
 
-		//TODO setup email verification first with code
+		// setup email verification first with code
 		function sendVerificationMail(userMail, code) {
 			console.log(`sendVerificationMail`);
 			emailjs.init("nz22SjHkHngIkm7_W");
@@ -1272,10 +1272,14 @@ const createPageFunctionality = (() => {
 			if(!e.target.nextSibling){return}
 			console.log(`listenToKeyPressInInputVerificationCode`);
 			e.target.nextSibling.focus();
+			//TODO create the paste functionality
+			//TODO return the user input code
+
 		}
 
 		function registerButtonFunction() {
 			console.log(`registerButtonFucntion`);
+			//TODO check if the user input lenght is 4 to execute
 			if (userInputCode === CODE) {
 				createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
 					.then((userCredential) => {
@@ -1292,17 +1296,17 @@ const createPageFunctionality = (() => {
 						// ..
 					});
 
-				// delete verifiction dialog and show succe dialog
-				//add event lister to continue button
+				//TODO  delete verifiction dialog and show succe dialog
+				//TODO add event lister to continue button
 			} else {
-				//empty the inputs field and show pop up of success or error
+				//TODO empty the inputs field and show pop up  of error
 			}
 		}
 		//pop up window with verification code
 		// type : accountSetting verificationCode successfullyCreatedAccount createNewRoom joinRoom uploadImg done changeName changePassword
 		let dialog = createPageStructure._createDialogBox('verificationCode')
 		APP.appendChild(dialog)
-		//REVIEW uncomment the send mail function
+		//NOTE uncomment the send mail function
 		// sendVerificationMail(inputRegisterEmail.value, CODE)
 		qs('.dialogBox').showModal();
 		qsa('.verificationInput > input').forEach((input) => {
