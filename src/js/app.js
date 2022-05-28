@@ -1247,11 +1247,24 @@ const createPageFunctionality = (() => {
 		let inputRegisterEmail = qs('.registerSection>.inputEmail')
 		let inputRegisterPassword = qs('.registerSection>.inputPassword')
 		const CODE = generateVerificationCode()
-		let userInputCode=null
+		let userInputCode = null
 
 		//TODO setup email verification first with code
 		function sendVerificationMail(userMail, code) {
 			console.log(`sendVerificationMail`);
+			emailjs.init("nz22SjHkHngIkm7_W");
+			let templateParams = {
+				to_mail: inputRegisterEmail.value,
+				message: createHTMLTemplateMailTemplate(CODE)
+			};
+
+			emailjs.send('default_service', 'template_lurnigu', templateParams)
+				.then(function (response) {
+					console.log('SUCCESS!', response.status, response.text);
+				}, function (error) {
+					console.log('FAILED...', error);
+				});
+
 
 		}
 
@@ -1277,6 +1290,9 @@ const createPageFunctionality = (() => {
 						console.log('errorMessage: ', errorMessage);
 						// ..
 					});
+
+				// delete verifiction dialog and show succe dialog
+				//add event lister to continue button
 			} else {
 				//empty the inputs field and show pop up of success or error
 			}
@@ -1285,7 +1301,8 @@ const createPageFunctionality = (() => {
 		// type : accountSetting verificationCode successfullyCreatedAccount createNewRoom joinRoom uploadImg done changeName changePassword
 		let dialog = createPageStructure._createDialogBox('verificationCode')
 		APP.appendChild(dialog)
-		sendVerificationMail(inputRegisterEmail.value, CODE)
+		//REVIEW uncomment the send mail function
+		// sendVerificationMail(inputRegisterEmail.value, CODE)
 		qs('.dialogBox').showModal();
 		qsa('.verificationInput > input').forEach((input) => {
 			addEventListener(input, 'keyup', listenToKeyPressInInputVerificationCode)
