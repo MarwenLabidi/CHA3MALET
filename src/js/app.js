@@ -1268,9 +1268,10 @@ const createPageFunctionality = (() => {
 
 		}
 
-		function listenToKeyPressInInputVerificationCode() {
+		function listenToKeyPressInInputVerificationCode(e) {
+			if(!e.target.nextSibling){return}
 			console.log(`listenToKeyPressInInputVerificationCode`);
-
+			e.target.nextSibling.focus();
 		}
 
 		function registerButtonFunction() {
