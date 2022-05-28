@@ -557,19 +557,19 @@ const createPageStructure = (() => {
 	}
 
 	//---> create account setting page for small screens
-	function _createAccountSettingPageSmallScreens(){
-		let accountSettingPageSmallScreens = createElement('div',{
+	function _createAccountSettingPageSmallScreens() {
+		let accountSettingPageSmallScreens = createElement('div', {
 			class: 'accountSettingPageSmallScreens'
 		})
 		_addBackArrowToTheTopOfElements(accountSettingPageSmallScreens)
-		let profilePhotoAndChangeImgIcon = createElement('div',{
+		let profilePhotoAndChangeImgIcon = createElement('div', {
 			class: 'profilePhotoAndChangeImgIcon'
 		})
-		let profilePhoto = createElement('img',{
+		let profilePhoto = createElement('img', {
 			class: 'profilePhoto',
 			src: '/assets/icons/user-two.svg'
 		})
-		let changePhotoIcon = createElement('img',{
+		let changePhotoIcon = createElement('img', {
 			class: 'changePhotoIcon',
 			src: '/assets/icons/COCO-Bold-Insta.svg'
 		})
@@ -577,45 +577,45 @@ const createPageStructure = (() => {
 		profilePhotoAndChangeImgIcon.appendChild(changePhotoIcon)
 		accountSettingPageSmallScreens.appendChild(profilePhotoAndChangeImgIcon)
 
-		let profileName = createElement('h1',{
+		let profileName = createElement('h1', {
 			class: 'profileName',
 			text: 'Name'
 		})
 		accountSettingPageSmallScreens.appendChild(profileName)
 
-		let bodyAccountSetting= createElement('div',{
+		let bodyAccountSetting = createElement('div', {
 			class: 'bodyAccountSetting'
 		})
-		let logOutSection = createElement('div',{
+		let logOutSection = createElement('div', {
 			class: 'logOutSection'
 		})
-		let editNameSection = createElement('div',{
+		let editNameSection = createElement('div', {
 			class: 'editNameSection'
 		})
-		let changePasswordSection = createElement('div',{
+		let changePasswordSection = createElement('div', {
 			class: 'changePasswordSection'
 		})
-		let logOutIcon= createElement('img',{
+		let logOutIcon = createElement('img', {
 			class: 'logOutIcon',
 			src: '/assets/icons/logOut.svg'
 		})
-		let editNameIcon= createElement('img',{
+		let editNameIcon = createElement('img', {
 			class: 'editNameIcon',
 			src: '/assets/icons/COCO-Bold-Edit.svg'
 		})
-		let changePasswordIcon= createElement('img',{
+		let changePasswordIcon = createElement('img', {
 			class: 'changePasswordIcon',
 			src: '/assets/icons/COCO-Bold-Unlock.svg'
 		})
-		let logOutText= createElement('p',{
+		let logOutText = createElement('p', {
 			class: 'logOutText',
 			text: 'Log Out'
 		})
-		let editNameText= createElement('p',{
+		let editNameText = createElement('p', {
 			class: 'editNameText',
 			text: 'Edit Name'
 		})
-		let changePasswordText= createElement('p',{
+		let changePasswordText = createElement('p', {
 			class: 'changePasswordText',
 			text: 'Change Password'
 		})
@@ -632,37 +632,35 @@ const createPageStructure = (() => {
 		return accountSettingPageSmallScreens
 	}
 	//---> create not found email or password error and reset your password error and the verification code s incorrect
-	function _createErrorMessage(errType){
-		let errorMessage = createElement('div',{
+	function _createErrorMessage(errType) {
+		let errorMessage = createElement('div', {
 			class: 'errorMessage'
 		})
-		if(errType==="notFoundEmailOrPassword"){
-			let errorMessageText = createElement('p',{
+		if (errType === "notFoundEmailOrPassword") {
+			let errorMessageText = createElement('p', {
 				class: 'errorMessageText',
 				text: 'Ops !!!The Email or Password is incorrect'
 			})
 			errorMessage.appendChild(errorMessageText)
-		}
-		else if(errType==="resetYourPassword"){
-			let errorMessageText = createElement('p',{
+		} else if (errType === "resetYourPassword") {
+			let errorMessageText = createElement('p', {
 				class: 'errorMessageText',
 				text: 'if you forgot your password !!!'
 			})
-			let resetYourPassword = createElement('p',{
+			let resetYourPassword = createElement('p', {
 				class: 'resetYourPassword',
 				text: 'Reset Your Password'
 			})
 
 			errorMessage.appendChild(errorMessageText)
 			errorMessage.appendChild(resetYourPassword)
-		}
-		else if(errType==="verificationCodeIncorrect"){
-			let errorMessageText = createElement('p',{
+		} else if (errType === "verificationCodeIncorrect") {
+			let errorMessageText = createElement('p', {
 				class: 'errorMessageText',
 				text: 'Ops !!!The Verification Code is incorrect'
 			})
 			errorMessage.appendChild(errorMessageText)
-		}else{
+		} else {
 			console.log(`no error message type found`);
 		}
 
@@ -674,24 +672,24 @@ const createPageStructure = (() => {
 	//successfully created account dialog box
 	//create new room dialog box
 	// join room dialog
-	function _verificationCodeInput(){
-		let verificationInput= createElement('div',{
+	function _verificationCodeInput() {
+		let verificationInput = createElement('div', {
 			class: 'verificationInput'
 
 		})
-		let input1 = createElement('input',{
+		let input1 = createElement('input', {
 			class: 'input1',
 			// type: 'number',
 		})
-		let input2 = createElement('input',{
+		let input2 = createElement('input', {
 			class: 'input2',
 			// type: 'number',
 		})
-		let input3 = createElement('input',{
+		let input3 = createElement('input', {
 			class: 'input3',
 			// type: 'number',
 		})
-		let input4 = createElement('input',{
+		let input4 = createElement('input', {
 			class: 'input4',
 			// type: 'number',
 		})
@@ -702,49 +700,50 @@ const createPageStructure = (() => {
 		return verificationInput
 
 	}
-	function _createDialogBox(dialogType){
-		let dialogBox = createElement('dialog',{
+
+	function _createDialogBox(dialogType) {
+		let dialogBox = createElement('dialog', {
 			class: 'dialogBox',
 			// open: true,
 		})
-		if (dialogType==='accountSetting') {
-			let profileName = createElement('h1',{
+		if (dialogType === 'accountSetting') {
+			let profileName = createElement('h1', {
 				class: 'profileName',
 				text: 'Name'
 			})
-			let bodyAccountSetting= createElement('div',{
+			let bodyAccountSetting = createElement('div', {
 				class: 'bodyAccountSetting'
 			})
-			let logOutSection = createElement('div',{
+			let logOutSection = createElement('div', {
 				class: 'logOutSection'
 			})
-			let editNameSection = createElement('div',{
+			let editNameSection = createElement('div', {
 				class: 'editNameSection'
 			})
-			let changePasswordSection = createElement('div',{
+			let changePasswordSection = createElement('div', {
 				class: 'changePasswordSection'
 			})
-			let logOutIcon= createElement('img',{
+			let logOutIcon = createElement('img', {
 				class: 'logOutIcon',
 				src: '/assets/icons/logOut.svg'
 			})
-			let editNameIcon= createElement('img',{
+			let editNameIcon = createElement('img', {
 				class: 'editNameIcon',
 				src: '/assets/icons/COCO-Bold-Edit.svg'
 			})
-			let changePasswordIcon= createElement('img',{
+			let changePasswordIcon = createElement('img', {
 				class: 'changePasswordIcon',
 				src: '/assets/icons/COCO-Bold-Unlock.svg'
 			})
-			let logOutText= createElement('p',{
+			let logOutText = createElement('p', {
 				class: 'logOutText',
 				text: 'Log Out'
 			})
-			let editNameText= createElement('p',{
+			let editNameText = createElement('p', {
 				class: 'editNameText',
 				text: 'Edit Name'
 			})
-			let changePasswordText= createElement('p',{
+			let changePasswordText = createElement('p', {
 				class: 'changePasswordText',
 				text: 'Change Password'
 			})
@@ -760,20 +759,19 @@ const createPageStructure = (() => {
 			dialogBox.appendChild(profileName)
 			dialogBox.appendChild(bodyAccountSetting)
 			dialogBox.classList.add('accountSettingDialogBox')
-		}
-		else if(dialogType==='verificationCode'){
-			let verificationCodeH3 = createElement('h3',{
+		} else if (dialogType === 'verificationCode') {
+			let verificationCodeH3 = createElement('h3', {
 				class: 'verificationCodeH3',
 				text: 'We sent you a verification code to your email address'
 			})
-			let verificationCodeP = createElement('p',{
+			let verificationCodeP = createElement('p', {
 				class: 'verificationCodeP',
 				text: 'Please enter the code below to verify'
 			})
-			
+
 
 			let verificationCodeInput = _verificationCodeInput()
-			let verificationCodeSubmit = createElement('button',{
+			let verificationCodeSubmit = createElement('button', {
 				class: 'verificationCodeSubmit',
 				text: 'Submit'
 			})
@@ -782,42 +780,40 @@ const createPageStructure = (() => {
 			dialogBox.appendChild(verificationCodeInput)
 			dialogBox.appendChild(verificationCodeSubmit)
 
-		}
-		else if(dialogType==='successfullyCreatedAccount'){
-			let successIcon = createElement('img',{
+		} else if (dialogType === 'successfullyCreatedAccount') {
+			let successIcon = createElement('img', {
 				class: 'successIcon',
 				src: '/assets/icons/ico---24---gestures-&-emotions---clap.svg'
 			})
-			let successTitle = createElement('h1',{
+			let successTitle = createElement('h1', {
 				class: 'successTitle',
 				text: 'Successfully Created Account'
 			})
-			let continueButton = createElement('button',{
+			let continueButton = createElement('button', {
 				class: 'continueButton',
 				text: 'Continue'
 			})
 			dialogBox.appendChild(successIcon)
 			dialogBox.appendChild(successTitle)
 			dialogBox.appendChild(continueButton)
-		}
-		else if(dialogType==='createNewRoom'){
-			let checkBox = createElement('input',{
+		} else if (dialogType === 'createNewRoom') {
+			let checkBox = createElement('input', {
 				class: 'checkBox',
 				type: 'checkbox'
 			})
-			let checkBoxBlock = createElement('div',{
+			let checkBoxBlock = createElement('div', {
 				class: 'checkBoxBlock'
 			})
-			let checkBoxLabel = createElement('label',{
+			let checkBoxLabel = createElement('label', {
 				class: 'checkBoxLabel',
 				text: ' Private Room'
 			})
-			let inputNameroom = createElement('input',{
+			let inputNameroom = createElement('input', {
 				class: 'inputNameroom',
 				type: 'text',
-				placeholder: 'Room Name'		
+				placeholder: 'Room Name'
 			})
-			let createRoomButton = createElement('button',{
+			let createRoomButton = createElement('button', {
 				class: 'createRoomButton',
 				text: 'Create'
 			})
@@ -826,79 +822,77 @@ const createPageStructure = (() => {
 			dialogBox.appendChild(checkBoxBlock)
 			dialogBox.appendChild(inputNameroom)
 			dialogBox.appendChild(createRoomButton)
-		}
-		else if(dialogType==='joinRoom'){
-			let joinRoomH3 = createElement('h3',{
+		} else if (dialogType === 'joinRoom') {
+			let joinRoomH3 = createElement('h3', {
 				class: 'joinRoomH3',
 				text: 'Enter the room code below'
 			})
-			let joinRoomInput = createElement('input',{
+			let joinRoomInput = createElement('input', {
 				class: 'joinRoomInput',
 				placeholder: 'Room Code'
 			})
-			let joinRoomButton = createElement('button',{
+			let joinRoomButton = createElement('button', {
 				class: 'joinRoomButton',
 				text: 'Join'
 			})
 			dialogBox.appendChild(joinRoomH3)
 			dialogBox.appendChild(joinRoomInput)
 			dialogBox.appendChild(joinRoomButton)
-		}else if(dialogType==='uploadImg'){
-			let uploadImgButton = createElement('button',{
+		} else if (dialogType === 'uploadImg') {
+			let uploadImgButton = createElement('button', {
 				class: 'uploadImgButton',
 				text: 'Upload'
 			})
 			dialogBox.appendChild(uploadImgButton)
-		}else if(dialogType==='done'){
-			let doneIcon = createElement('img',{
+		} else if (dialogType === 'done') {
+			let doneIcon = createElement('img', {
 				class: 'doneIcon',
 				src: '/assets/icons/ico---24---gestures-&-emotions---clap.svg'
 			})
-			let doneTitle = createElement('h1',{
+			let doneTitle = createElement('h1', {
 				class: 'doneTitle',
 				text: 'Done'
 			})
-			let continueButton = createElement('button',{
+			let continueButton = createElement('button', {
 				class: 'continueButton',
 				text: 'Continue'
 			})
 			dialogBox.appendChild(doneIcon)
 			dialogBox.appendChild(doneTitle)
 			dialogBox.appendChild(continueButton)
-		}else if(dialogType==='changeName'){
-			let changeNameH3 = createElement('h3',{
+		} else if (dialogType === 'changeName') {
+			let changeNameH3 = createElement('h3', {
 				class: 'changeNameH3',
 				text: 'Enter your new name below'
 			})
-			let changeNameInput = createElement('input',{
+			let changeNameInput = createElement('input', {
 				class: 'changeNameInput',
 				placeholder: 'New Name'
 			})
-			let changeNameButton = createElement('button',{
+			let changeNameButton = createElement('button', {
 				class: 'changeNameButton',
 				text: 'Change'
 			})
 			dialogBox.appendChild(changeNameH3)
 			dialogBox.appendChild(changeNameInput)
 			dialogBox.appendChild(changeNameButton)
-		}else if(dialogType==='changePassword'){
-			let changePasswordH3 = createElement('h3',{
+		} else if (dialogType === 'changePassword') {
+			let changePasswordH3 = createElement('h3', {
 				class: 'changePasswordH3',
 				text: 'Enter your new password below'
 			})
-			let changePasswordInput = createElement('input',{
+			let changePasswordInput = createElement('input', {
 				class: 'changePasswordInput',
 				placeholder: 'New Password'
 			})
-			let changePasswordButton = createElement('button',{
+			let changePasswordButton = createElement('button', {
 				class: 'changePasswordButton',
 				text: 'Change '
 			})
 			dialogBox.appendChild(changePasswordH3)
 			dialogBox.appendChild(changePasswordInput)
 			dialogBox.appendChild(changePasswordButton)
-		}
-		else{
+		} else {
 			console.log('no dialog type found')
 		}
 		return dialogBox
@@ -1252,29 +1246,52 @@ const createPageFunctionality = (() => {
 		let inputRegisterUserName = qs('.registerSection>.inputUserName')
 		let inputRegisterEmail = qs('.registerSection>.inputEmail')
 		let inputRegisterPassword = qs('.registerSection>.inputPassword')
+		const CODE = generateVerificationCode()
+		let userInputCode=null
 
 		//TODO setup email verification first with code
+		function sendVerificationMail(userMail, code) {
+			console.log(`sendVerificationMail`);
+
+		}
+
+		function listenToKeyPressInInputVerificationCode() {
+			console.log(`listenToKeyPressInInputVerificationCode`);
+
+		}
+
+		function registerButtonFunction() {
+			console.log(`registerButtonFucntion`);
+			if (userInputCode === CODE) {
+				createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
+					.then((userCredential) => {
+						// Signed in 
+						const user = userCredential.user;
+						console.log('user: ', user);
+						// ...
+					})
+					.catch((error) => {
+						const errorCode = error.code;
+						console.log('errorCode: ', errorCode);
+						const errorMessage = error.message;
+						console.log('errorMessage: ', errorMessage);
+						// ..
+					});
+			} else {
+				//empty the inputs field and show pop up of success or error
+			}
+		}
 		//pop up window with verification code
 		// type : accountSetting verificationCode successfullyCreatedAccount createNewRoom joinRoom uploadImg done changeName changePassword
-		let dialog=createPageStructure._createDialogBox('verificationCode')
+		let dialog = createPageStructure._createDialogBox('verificationCode')
 		APP.appendChild(dialog)
+		sendVerificationMail(inputRegisterEmail.value, CODE)
 		qs('.dialogBox').showModal();
+		qsa('.verificationInput > input').forEach((input) => {
+			addEventListener(input, 'keyup', listenToKeyPressInInputVerificationCode)
+		})
+		addEventListener(qs('.verificationCodeSubmit'), 'click', registerButtonFunction)
 
-		// createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
-		// 	.then((userCredential) => {
-		// 		// Signed in 
-		// 		const user = userCredential.user;
-		// 		console.log('user: ', user);
-		// 		// ...
-		// 	})
-		// 	.catch((error) => {
-		// 		const errorCode = error.code;
-		// 		console.log('errorCode: ', errorCode);
-		// 		const errorMessage = error.message;
-		// 		console.log('errorMessage: ', errorMessage);
-		// 		// ..
-		// 	});
-		//empty the inputs field and show pop up of success or error
 	}
 
 	function _facebookLoginFireBase() {
@@ -1300,12 +1317,13 @@ const createPageFunctionality = (() => {
 	function _metaMaskRegister() {
 		console.log(`_metaMaskRegister`);
 	}
-	function _logOutFromFireBase(){
+
+	function _logOutFromFireBase() {
 		console.log(`logOutFromFireBase`);
-		auth.signOut().then(function() {
+		auth.signOut().then(function () {
 			// Sign-out successful.
 			console.log('signOut successful');
-		}).catch(function(error) {
+		}).catch(function (error) {
 			// An error happened.
 			console.log('signOut error: ', error);
 		});
