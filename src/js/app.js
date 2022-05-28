@@ -761,16 +761,12 @@ const createPageStructure = (() => {
 			dialogBox.appendChild(bodyAccountSetting)
 		}
 		else if(dialogType==='verificationCode'){
-			let verificationCodeTitle = createElement('h1',{
-				class: 'verificationCodeTitle',
-				text: 'Enter Your Verification Code'
-			})
 			let verificationCodeH3 = createElement('h3',{
 				class: 'verificationCodeH3',
 				text: 'We sent you a verification code to your email address'
 			})
 			let verificationCodeP = createElement('p',{
-				class: 'verificationCodeH3',
+				class: 'verificationCodeP',
 				text: 'Please enter the code below to verify'
 			})
 			
@@ -780,7 +776,6 @@ const createPageStructure = (() => {
 				class: 'verificationCodeSubmit',
 				text: 'Submit'
 			})
-			dialogBox.appendChild(verificationCodeTitle)
 			dialogBox.appendChild(verificationCodeH3)
 			dialogBox.appendChild(verificationCodeP)
 			dialogBox.appendChild(verificationCodeInput)
@@ -1255,6 +1250,7 @@ const createPageFunctionality = (() => {
 
 		//TODO setup email verification first with code
 		//pop up window with verification code
+		// type : accountSetting verificationCode successfullyCreatedAccount createNewRoom joinRoom uploadImg done changeName changePassword
 		let dialog=createPageStructure._createDialogBox('verificationCode')
 		APP.appendChild(dialog)
 		qs('.dialogBox').showModal();

@@ -2,6 +2,13 @@
 	background-color: var(--clr_Dark-100);
 	color: var(--clr_White);
 	text-align: center;
+	padding:30px;
+	border-radius: 10px;
+	& .verificationCodeH3{
+		font-family: var(--ff_Bree);
+		color:var(--clr_Blue);	
+		margin-bottom:20px;
+	}
 	& .verificationInput{
 		display:flex;
 		justify-content: center;
@@ -9,13 +16,23 @@
 			border-radius:0;
 			height:40px;
 			width:40px;
-			margin:10px;
+			margin:4%;
 			padding:10px;
 		}
+	}
+	& .verificationCodeSubmit{
+		font-family: var(--ff_Bree);
+		border-radius:10px;
+		background-color: transparent;
+		color: var(--clr_White);
+		border: 5px solid var(--clr_Blue);
+		padding: 2.2%;
+		width: 35%;
+		margin:30px auto;
 	}
 }
 
 .dialogBox::backdrop{
-	background-color: white !important;
-	opacity: 0.4;
+	background-color: blue !important;
+	opacity: 0.3;
 }
