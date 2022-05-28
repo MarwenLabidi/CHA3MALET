@@ -48,7 +48,7 @@ const db = getFirestore(app);
 
 
 const createPageStructure = (() => {
-	//---> add back arrow to the top of elemet selected
+	//---> add back arrow to the top of element selected
 	function _addBackArrowToTheTopOfElements(element) {
 		let backArrow = createElement('img', {
 			class: 'backArrow',
@@ -247,7 +247,7 @@ const createPageStructure = (() => {
 		}
 		return loginSection
 	}
-	//---> authentification page
+	//---> authentication page
 	function _authentication() {
 		let authPage = createElement('div', {
 			class: 'authPage'
@@ -365,7 +365,7 @@ const createPageStructure = (() => {
 	}
 
 
-	//---> create a panel to controll the video callback
+	//---> create a panel to controls the video callback
 	function _createPanel() {
 		let panel = createElement('div', {
 			class: 'panel'
@@ -396,7 +396,7 @@ const createPageStructure = (() => {
 		})
 		return videoPageGroup
 	}
-	//---> CREATE groupButton chat and paticipant
+	//---> CREATE groupButton chat and participant
 	function _createGroupButtonChatAndParticipant() {
 		let groupButtonChatAndParticipant = createElement('div', {
 			class: 'groupButtonChatAndParticipant'
@@ -519,7 +519,7 @@ const createPageStructure = (() => {
 
 
 
-	//---> create right side section and add groupbutton and group message and bar drag to it
+	//---> create right side section and add group button and group message and bar drag to it
 	//---> create a bar to drag it or focus on it or touchmove event on it 
 	function _createRightSideSectionChatsAndParticipants() {
 		let rightSideSectionChatsAndParticipants = createElement('div', {
@@ -556,6 +556,354 @@ const createPageStructure = (() => {
 		APP.append(pageOfMeeting)
 	}
 
+	//---> create account setting page for small screens
+	function _createAccountSettingPageSmallScreens(){
+		let accountSettingPageSmallScreens = createElement('div',{
+			class: 'accountSettingPageSmallScreens'
+		})
+		_addBackArrowToTheTopOfElements(accountSettingPageSmallScreens)
+		let profilePhotoAndChangeImgIcon = createElement('div',{
+			class: 'profilePhotoAndChangeImgIcon'
+		})
+		let profilePhoto = createElement('img',{
+			class: 'profilePhoto',
+			src: '/assets/icons/user-two.svg'
+		})
+		let changePhotoIcon = createElement('img',{
+			class: 'changePhotoIcon',
+			src: '/assets/icons/COCO-Bold-Insta.svg'
+		})
+		profilePhotoAndChangeImgIcon.appendChild(profilePhoto)
+		profilePhotoAndChangeImgIcon.appendChild(changePhotoIcon)
+		accountSettingPageSmallScreens.appendChild(profilePhotoAndChangeImgIcon)
+
+		let profileName = createElement('h1',{
+			class: 'profileName',
+			text: 'Name'
+		})
+		accountSettingPageSmallScreens.appendChild(profileName)
+
+		let bodyAccountSetting= createElement('div',{
+			class: 'bodyAccountSetting'
+		})
+		let logOutSection = createElement('div',{
+			class: 'logOutSection'
+		})
+		let editNameSection = createElement('div',{
+			class: 'editNameSection'
+		})
+		let changePasswordSection = createElement('div',{
+			class: 'changePasswordSection'
+		})
+		let logOutIcon= createElement('img',{
+			class: 'logOutIcon',
+			src: '/assets/icons/logOut.svg'
+		})
+		let editNameIcon= createElement('img',{
+			class: 'editNameIcon',
+			src: '/assets/icons/COCO-Bold-Edit.svg'
+		})
+		let changePasswordIcon= createElement('img',{
+			class: 'changePasswordIcon',
+			src: '/assets/icons/COCO-Bold-Unlock.svg'
+		})
+		let logOutText= createElement('p',{
+			class: 'logOutText',
+			text: 'Log Out'
+		})
+		let editNameText= createElement('p',{
+			class: 'editNameText',
+			text: 'Edit Name'
+		})
+		let changePasswordText= createElement('p',{
+			class: 'changePasswordText',
+			text: 'Change Password'
+		})
+		logOutSection.appendChild(logOutIcon)
+		logOutSection.appendChild(logOutText)
+		editNameSection.appendChild(editNameIcon)
+		editNameSection.appendChild(editNameText)
+		changePasswordSection.appendChild(changePasswordIcon)
+		changePasswordSection.appendChild(changePasswordText)
+		bodyAccountSetting.appendChild(logOutSection)
+		bodyAccountSetting.appendChild(editNameSection)
+		bodyAccountSetting.appendChild(changePasswordSection)
+		accountSettingPageSmallScreens.appendChild(bodyAccountSetting)
+		return accountSettingPageSmallScreens
+	}
+	//---> create not found email or password error and reset your password error and the verification code s incorrect
+	function _createErrorMessage(errType){
+		let errorMessage = createElement('div',{
+			class: 'errorMessage'
+		})
+		if(errType==="notFoundEmailOrPassword"){
+			let errorMessageText = createElement('p',{
+				class: 'errorMessageText',
+				text: 'Ops !!!The Email or Password is incorrect'
+			})
+			errorMessage.appendChild(errorMessageText)
+		}
+		else if(errType==="resetYourPassword"){
+			let errorMessageText = createElement('p',{
+				class: 'errorMessageText',
+				text: 'if you forgot your password !!!'
+			})
+			let resetYourPassword = createElement('p',{
+				class: 'resetYourPassword',
+				text: 'Reset Your Password'
+			})
+
+			errorMessage.appendChild(errorMessageText)
+			errorMessage.appendChild(resetYourPassword)
+		}
+		else if(errType==="verificationCodeIncorrect"){
+			let errorMessageText = createElement('p',{
+				class: 'errorMessageText',
+				text: 'Ops !!!The Verification Code is incorrect'
+			})
+			errorMessage.appendChild(errorMessageText)
+		}else{
+			console.log(`no error message type found`);
+		}
+
+		return errorMessage
+	}
+	//---> create dialog boxes for the app
+	//account setting dialog box for large screens
+	// verification code dialog box 
+	//successfully created account dialog box
+	//create new room dialog box
+	// join room dialog
+	function _verificationCodeInput(){
+		let verificationInput= createElement('div',{
+			class: 'verificationInput'
+
+		})
+		let input1 = createElement('input',{
+			class: 'input1',
+			// type: 'number',
+		})
+		let input2 = createElement('input',{
+			class: 'input2',
+			// type: 'number',
+		})
+		let input3 = createElement('input',{
+			class: 'input3',
+			// type: 'number',
+		})
+		let input4 = createElement('input',{
+			class: 'input4',
+			// type: 'number',
+		})
+		verificationInput.appendChild(input1)
+		verificationInput.appendChild(input2)
+		verificationInput.appendChild(input3)
+		verificationInput.appendChild(input4)
+		return verificationInput
+
+	}
+	function _createDialogBox(dialogType){
+		let dialogBox = createElement('dialog',{
+			class: 'dialogBox',
+			// open: true,
+		})
+		if (dialogType==='accountSetting') {
+			let profileName = createElement('h1',{
+				class: 'profileName',
+				text: 'Name'
+			})
+			let bodyAccountSetting= createElement('div',{
+				class: 'bodyAccountSetting'
+			})
+			let logOutSection = createElement('div',{
+				class: 'logOutSection'
+			})
+			let editNameSection = createElement('div',{
+				class: 'editNameSection'
+			})
+			let changePasswordSection = createElement('div',{
+				class: 'changePasswordSection'
+			})
+			let logOutIcon= createElement('img',{
+				class: 'logOutIcon',
+				src: '/assets/icons/logOut.svg'
+			})
+			let editNameIcon= createElement('img',{
+				class: 'editNameIcon',
+				src: '/assets/icons/COCO-Bold-Edit.svg'
+			})
+			let changePasswordIcon= createElement('img',{
+				class: 'changePasswordIcon',
+				src: '/assets/icons/COCO-Bold-Unlock.svg'
+			})
+			let logOutText= createElement('p',{
+				class: 'logOutText',
+				text: 'Log Out'
+			})
+			let editNameText= createElement('p',{
+				class: 'editNameText',
+				text: 'Edit Name'
+			})
+			let changePasswordText= createElement('p',{
+				class: 'changePasswordText',
+				text: 'Change Password'
+			})
+			logOutSection.appendChild(logOutIcon)
+			logOutSection.appendChild(logOutText)
+			editNameSection.appendChild(editNameIcon)
+			editNameSection.appendChild(editNameText)
+			changePasswordSection.appendChild(changePasswordIcon)
+			changePasswordSection.appendChild(changePasswordText)
+			bodyAccountSetting.appendChild(editNameSection)
+			bodyAccountSetting.appendChild(changePasswordSection)
+			bodyAccountSetting.appendChild(logOutSection)
+			dialogBox.appendChild(profileName)
+			dialogBox.appendChild(bodyAccountSetting)
+		}
+		else if(dialogType==='verificationCode'){
+			let verificationCodeTitle = createElement('h1',{
+				class: 'verificationCodeTitle',
+				text: 'Enter Your Verification Code'
+			})
+			let verificationCodeH3 = createElement('h3',{
+				class: 'verificationCodeH3',
+				text: 'We sent you a verification code to your email address'
+			})
+			let verificationCodeP = createElement('p',{
+				class: 'verificationCodeH3',
+				text: 'Please enter the code below to verify'
+			})
+			
+
+			let verificationCodeInput = _verificationCodeInput()
+			let verificationCodeSubmit = createElement('button',{
+				class: 'verificationCodeSubmit',
+				text: 'Submit'
+			})
+			dialogBox.appendChild(verificationCodeTitle)
+			dialogBox.appendChild(verificationCodeH3)
+			dialogBox.appendChild(verificationCodeP)
+			dialogBox.appendChild(verificationCodeInput)
+			dialogBox.appendChild(verificationCodeSubmit)
+
+		}
+		else if(dialogType==='successfullyCreatedAccount'){
+			let successIcon = createElement('img',{
+				class: 'successIcon',
+				src: '/assets/icons/ico---24---gestures-&-emotions---clap.svg'
+			})
+			let successTitle = createElement('h1',{
+				class: 'successTitle',
+				text: 'Successfully Created Account'
+			})
+			let continueButton = createElement('button',{
+				class: 'continueButton',
+				text: 'Continue'
+			})
+			dialogBox.appendChild(successIcon)
+			dialogBox.appendChild(successTitle)
+			dialogBox.appendChild(continueButton)
+		}
+		else if(dialogType==='createNewRoom'){
+			let checkBox = createElement('input',{
+				class: 'checkBox',
+				type: 'checkbox'
+			})
+			let checkBoxLabel = createElement('label',{
+				class: 'checkBoxLabel',
+				text: 'Private Room'
+			})
+			let inputNameroom = createElement('input',{
+				class: 'inputNameroom',
+				type: 'text',
+				placeholder: 'Room Name'		
+			})
+			let createRoomButton = createElement('button',{
+				class: 'createRoomButton',
+				text: 'Create Room'
+			})
+			dialogBox.appendChild(checkBox)
+			dialogBox.appendChild(checkBoxLabel)
+			dialogBox.appendChild(inputNameroom)
+			dialogBox.appendChild(createRoomButton)
+		}
+		else if(dialogType==='joinRoom'){
+			let joinRoomH3 = createElement('h3',{
+				class: 'joinRoomH3',
+				text: 'Enter the room code below'
+			})
+			let joinRoomInput = createElement('input',{
+				class: 'joinRoomInput',
+				placeholder: 'Room Code'
+			})
+			let joinRoomButton = createElement('button',{
+				class: 'joinRoomButton',
+				text: 'Join Room'
+			})
+			dialogBox.appendChild(joinRoomH3)
+			dialogBox.appendChild(joinRoomInput)
+			dialogBox.appendChild(joinRoomButton)
+		}else if(dialogType==='uploadImg'){
+			let uploadImgButton = createElement('button',{
+				class: 'uploadImgButton',
+				text: 'Upload'
+			})
+			dialogBox.appendChild(uploadImgButton)
+		}else if(dialogType==='done'){
+			let doneIcon = createElement('img',{
+				class: 'doneIcon',
+				src: '/assets/icons/ico---24---gestures-&-emotions---clap.svg'
+			})
+			let doneTitle = createElement('h1',{
+				class: 'doneTitle',
+				text: 'Done'
+			})
+			let continueButton = createElement('button',{
+				class: 'continueButton',
+				text: 'Continue'
+			})
+			dialogBox.appendChild(doneIcon)
+			dialogBox.appendChild(doneTitle)
+			dialogBox.appendChild(continueButton)
+		}else if(dialogType==='changeName'){
+			let changeNameH3 = createElement('h3',{
+				class: 'changeNameH3',
+				text: 'Enter your new name below'
+			})
+			let changeNameInput = createElement('input',{
+				class: 'changeNameInput',
+				placeholder: 'New Name'
+			})
+			let changeNameButton = createElement('button',{
+				class: 'changeNameButton',
+				text: 'Change Name'
+			})
+			dialogBox.appendChild(changeNameH3)
+			dialogBox.appendChild(changeNameInput)
+			dialogBox.appendChild(changeNameButton)
+		}else if(dialogType==='changePassword'){
+			let changePasswordH3 = createElement('h3',{
+				class: 'changePasswordH3',
+				text: 'Enter your new password below'
+			})
+			let changePasswordInput = createElement('input',{
+				class: 'changePasswordInput',
+				placeholder: 'New Password'
+			})
+			let changePasswordButton = createElement('button',{
+				class: 'changePasswordButton',
+				text: 'Change Password'
+			})
+			dialogBox.appendChild(changePasswordH3)
+			dialogBox.appendChild(changePasswordInput)
+			dialogBox.appendChild(changePasswordButton)
+		}
+		else{
+			console.log('no dialog type found')
+		}
+		return dialogBox
+	}
+
 
 
 	return {
@@ -570,7 +918,10 @@ const createPageStructure = (() => {
 		_createSectionOfChat,
 		_createSectionOfParticipants,
 		_createRightSideSectionChatsAndParticipants,
-		_createPageOfMeeting
+		_createPageOfMeeting,
+		_createAccountSettingPageSmallScreens,
+		_createErrorMessage,
+		_createDialogBox
 	}
 })()
 
@@ -743,7 +1094,7 @@ const createPageFunctionality = (() => {
 
 
 	}
-	//----> up arrow back to homw from register in small screens
+	//----> up arrow back to home from register in small screens
 	function _backToHomePageFromRegisterPageInSmallScreen() {
 
 		console.log(`backToHomePageFromRegisterPageInSmallScreen`);
@@ -904,22 +1255,25 @@ const createPageFunctionality = (() => {
 
 		//TODO setup email verification first with code
 		//pop up window with verification code
+		let dialog=createPageStructure._createDialogBox('verificationCode')
+		APP.appendChild(dialog)
+		qs('.dialogBox').showModal();
 
-		createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
-			.then((userCredential) => {
-				// Signed in 
-				const user = userCredential.user;
-				console.log('user: ', user);
-				// ...
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				console.log('errorCode: ', errorCode);
-				const errorMessage = error.message;
-				console.log('errorMessage: ', errorMessage);
-				// ..
-			});
-		//empty the inputs field and show pop up of sucess or error
+		// createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
+		// 	.then((userCredential) => {
+		// 		// Signed in 
+		// 		const user = userCredential.user;
+		// 		console.log('user: ', user);
+		// 		// ...
+		// 	})
+		// 	.catch((error) => {
+		// 		const errorCode = error.code;
+		// 		console.log('errorCode: ', errorCode);
+		// 		const errorMessage = error.message;
+		// 		console.log('errorMessage: ', errorMessage);
+		// 		// ..
+		// 	});
+		//empty the inputs field and show pop up of success or error
 	}
 
 	function _facebookLoginFireBase() {

@@ -1,0 +1,21 @@
+.dialogBox{
+	background-color: var(--clr_Dark-100);
+	color: var(--clr_White);
+	text-align: center;
+	& .verificationInput{
+		display:flex;
+		justify-content: center;
+		& input{
+			border-radius:0;
+			height:40px;
+			width:40px;
+			margin:10px;
+			padding:10px;
+		}
+	}
+}
+
+.dialogBox::backdrop{
+	background-color: white !important;
+	opacity: 0.4;
+}

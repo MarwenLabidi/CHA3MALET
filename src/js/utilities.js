@@ -63,6 +63,10 @@ export const createElement = (type, options = {}) => {
 			element.setAttribute("required", "");
 			return
 		}
+		if (key === "open") {
+			element.setAttribute("open", "");
+			return
+		}
 		
 
 		element.setAttribute(key, value)
