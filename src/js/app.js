@@ -759,6 +759,7 @@ const createPageStructure = (() => {
 			bodyAccountSetting.appendChild(logOutSection)
 			dialogBox.appendChild(profileName)
 			dialogBox.appendChild(bodyAccountSetting)
+			dialogBox.classList.add('accountSettingDialogBox')
 		}
 		else if(dialogType==='verificationCode'){
 			let verificationCodeH3 = createElement('h3',{
@@ -804,9 +805,12 @@ const createPageStructure = (() => {
 				class: 'checkBox',
 				type: 'checkbox'
 			})
+			let checkBoxBlock = createElement('div',{
+				class: 'checkBoxBlock'
+			})
 			let checkBoxLabel = createElement('label',{
 				class: 'checkBoxLabel',
-				text: 'Private Room'
+				text: ' Private Room'
 			})
 			let inputNameroom = createElement('input',{
 				class: 'inputNameroom',
@@ -815,10 +819,11 @@ const createPageStructure = (() => {
 			})
 			let createRoomButton = createElement('button',{
 				class: 'createRoomButton',
-				text: 'Create Room'
+				text: 'Create'
 			})
-			dialogBox.appendChild(checkBox)
-			dialogBox.appendChild(checkBoxLabel)
+			checkBoxBlock.appendChild(checkBox)
+			checkBoxBlock.appendChild(checkBoxLabel)
+			dialogBox.appendChild(checkBoxBlock)
 			dialogBox.appendChild(inputNameroom)
 			dialogBox.appendChild(createRoomButton)
 		}
@@ -833,7 +838,7 @@ const createPageStructure = (() => {
 			})
 			let joinRoomButton = createElement('button',{
 				class: 'joinRoomButton',
-				text: 'Join Room'
+				text: 'Join'
 			})
 			dialogBox.appendChild(joinRoomH3)
 			dialogBox.appendChild(joinRoomInput)
@@ -871,7 +876,7 @@ const createPageStructure = (() => {
 			})
 			let changeNameButton = createElement('button',{
 				class: 'changeNameButton',
-				text: 'Change Name'
+				text: 'Change'
 			})
 			dialogBox.appendChild(changeNameH3)
 			dialogBox.appendChild(changeNameInput)
@@ -887,7 +892,7 @@ const createPageStructure = (() => {
 			})
 			let changePasswordButton = createElement('button',{
 				class: 'changePasswordButton',
-				text: 'Change Password'
+				text: 'Change '
 			})
 			dialogBox.appendChild(changePasswordH3)
 			dialogBox.appendChild(changePasswordInput)
@@ -1295,7 +1300,7 @@ const createPageFunctionality = (() => {
 	function _metaMaskRegister() {
 		console.log(`_metaMaskRegister`);
 	}
-	function logOutFromFireBase(){
+	function _logOutFromFireBase(){
 		console.log(`logOutFromFireBase`);
 		auth.signOut().then(function() {
 			// Sign-out successful.

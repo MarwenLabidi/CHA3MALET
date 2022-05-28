@@ -4,6 +4,7 @@
 	text-align: center;
 	padding:30px;
 	border-radius: 10px;
+	
 	& .verificationCodeH3{
 		font-family: var(--ff_Bree);
 		color:var(--clr_Blue);	
@@ -20,7 +21,7 @@
 			padding:10px;
 		}
 	}
-	& .verificationCodeSubmit{
+	& button{
 		font-family: var(--ff_Bree);
 		border-radius:10px;
 		background-color: transparent;
@@ -30,9 +31,119 @@
 		width: 35%;
 		margin:30px auto;
 	}
+	& button:hover,& button:focus {
+		background-color: var(--clr_Blue);
+		color: var(--clr_Dark);
+		cursor:pointer;
+	}
+	& button:active{
+		transform:scale(0.95);
+	}
+	/* succes section */
+	& .continueButton{
+		border-color: var(--clr_Green);
+	}
+	& .continueButton:hover,& .continueButton:focus {
+		background-color: var(--clr_Green);
+		
+	}
+	& .successIcon{
+		margin:0 auto;
+	}
+	/* new room section */
+	& .checkBoxBlock{
+		display:flex;
+		padding:10px;
+		gap:10px;
+		margin-bottom:20px;
+
+	}
+	& .checkBox{
+		height:30px !important;
+		width:30px !important;
+		margin:0;
+
+		
+	}
+	& .checkBox:hover,& .checkBox:focus{
+		cursor:pointer;
+	}
+	& .checkBoxLabel,& .joinRoomH3,& .changeNameH3,& .changePasswordH3{
+		font-family: var(--ff_Bree);
+		color: var(--clr_Blue);
+		margin-left:10px;
+	}
+	,& .joinRoomH3,& .changeNameH3,& .changePasswordH3{
+		padding:10px
+	}
+	& .inputNameroom,& .joinRoomInput,& .changeNameInput,& .changePasswordInput{
+		width: 70vw !important;
+		height:15vw !important;
+	}
+
+	& .uploadImgButton,& .continueButton{
+		width:30vw;
+		padding:20px;
+		font-width:bold;
+	}
+	& .doneIcon{
+		margin:0 auto;
+		padding:0 30px;
+	}
+
 }
 
 .dialogBox::backdrop{
 	background-color: blue !important;
 	opacity: 0.3;
 }
+
+	.accountSettingDialogBox{
+		top:10%;
+		left:70%;
+		font-family: var(--ff_Bree);
+		& .profileName{
+			color: var(--clr_Blue);
+			padding:10px;
+			margin-bottom:20px;
+
+		}
+		& .editNameSection,& .logOutSection,& .changePasswordSection{
+			padding:10px;
+			width:100%;
+			border-radius:10px;
+			margin-right:20px;
+			margin-bottom:30px;
+			display:flex;
+			gap:20px;
+			align-items:center;
+			transition: all 0.3s ease-out;
+			padding:10px;
+			& img{
+				width:40px;
+				height:40px;
+				border-radius:50%;
+				
+			}
+		}
+		& .editNameSection:hover,& .logOutSection:hover,& .changePasswordSection:hover,
+		& .editNameSection:focus,& .logOutSection:focus,& .changePasswordSection:focus{
+			
+				background-color: var(--clr_Blue);
+				color: var(--clr_Dark);
+				cursor:pointer;
+				
+			}
+			& .editNameSection:active,& .logOutSection:active,& .changePasswordSection:active{
+			transform: scale(0.95);
+
+		}
+		& .logOutIcon{
+			background-color: var(--clr_White) !important;
+			
+		}
+	}
+	
+	.accountSettingDialogBox::backdrop{
+		background-color: transparent !important;
+	}
