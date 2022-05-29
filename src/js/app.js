@@ -1269,12 +1269,28 @@ const createPageFunctionality = (() => {
 		}
 
 		function listenToKeyPressInInputVerificationCode(e) {
-			if(!e.target.nextSibling){return}
 			console.log(`listenToKeyPressInInputVerificationCode`);
+			console.log(e.key);
+			if(e.key==='Backspace'||e.key==='Delete'){return}
+			if(e.target.value.length>1){
+				e.target.value = e.key
+			}
+			if(!e.target.nextSibling){qs('.verificationCodeSubmit').focus(); return;}
 			e.target.nextSibling.focus();
-			//TODO create the paste functionality
-			//TODO return the user input code
-
+			
+		}
+		// create the paste functionality
+		function pasteEventInInput(e){
+			e.preventDefault();
+			console.log(`pasteEventInInput`);
+			let content =e.clipboardData.getData('text').split('')
+			let nextTarget = e.target
+			content.forEach((element,index) => {
+				if(!nextTarget){qs('.verificationCodeSubmit').focus();return;}				
+				nextTarget.value = element
+				nextTarget.focus()
+				nextTarget=nextTarget.nextSibling				
+			})
 		}
 
 		function registerButtonFunction() {
@@ -1311,6 +1327,7 @@ const createPageFunctionality = (() => {
 		qs('.dialogBox').showModal();
 		qsa('.verificationInput > input').forEach((input) => {
 			addEventListener(input, 'keyup', listenToKeyPressInInputVerificationCode)
+			addEventListener(input, 'paste', pasteEventInInput)
 		})
 		addEventListener(qs('.verificationCodeSubmit'), 'click', registerButtonFunction)
 
