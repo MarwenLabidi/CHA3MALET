@@ -1,0 +1,9 @@
+.errorMessageText{
+	background-color:var(--clr_Red-100);
+	font-family:var(--ff_Bree);
+	padding:0.8em;
+	border-radius:30px;
+	border:1px solid var(--clr_Red);
+	width:80%;
+	margin:0 auto;
+}

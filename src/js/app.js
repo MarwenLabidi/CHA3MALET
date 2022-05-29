@@ -264,6 +264,7 @@ const createPageStructure = (() => {
 	}
 
 	//---> new and join meeting 
+
 	function _newOrJoinMeeting() {
 		let newJoinMeetingPage = createElement('div', {
 			class: 'newJoinMeetingPage'
@@ -632,6 +633,7 @@ const createPageStructure = (() => {
 		return accountSettingPageSmallScreens
 	}
 	//---> create not found email or password error and reset your password error and the verification code s incorrect
+	
 	function _createErrorMessage(errType) {
 		let errorMessage = createElement('div', {
 			class: 'errorMessage'
@@ -1246,8 +1248,17 @@ const createPageFunctionality = (() => {
 		let inputRegisterUserName = qs('.registerSection>.inputUserName')
 		let inputRegisterEmail = qs('.registerSection>.inputEmail')
 		let inputRegisterPassword = qs('.registerSection>.inputPassword')
-		const CODE = generateVerificationCode()
-		let userInputCode = null
+		// if one input is empty return
+		if(inputRegisterUserName.value.length<3||inputRegisterEmail.value.length<0||inputRegisterPassword.value.length<8){
+			inputRegisterUserName.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			inputRegisterPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			return
+		}
+		//NOTE UNCOMENT code and dlete the fake one
+		// const CODE = generateVerificationCode()
+		//NOTE  delete this variiable below
+		const CODE = 1234
 
 		// setup email verification first with code
 		function sendVerificationMail(userMail, code) {
@@ -1271,65 +1282,91 @@ const createPageFunctionality = (() => {
 		function listenToKeyPressInInputVerificationCode(e) {
 			console.log(`listenToKeyPressInInputVerificationCode`);
 			console.log(e.key);
-			if(e.key==='Backspace'||e.key==='Delete'){return}
-			if(e.target.value.length>1){
+			if (e.key === 'Backspace' || e.key === 'Delete') {
+				return
+			}
+			if (e.target.value.length > 1) {
 				e.target.value = e.key
 			}
-			if(!e.target.nextSibling){qs('.verificationCodeSubmit').focus(); return;}
+			if (!e.target.nextSibling) {
+				qs('.verificationCodeSubmit').focus();
+				return;
+			}
 			e.target.nextSibling.focus();
-			
+
 		}
 		// create the paste functionality
-		function pasteEventInInput(e){
+		function pasteEventInInput(e) {
 			e.preventDefault();
 			console.log(`pasteEventInInput`);
-			let content =e.clipboardData.getData('text').split('')
+			let content = e.clipboardData.getData('text').split('')
 			let nextTarget = e.target
-			content.forEach((element,index) => {
-				if(!nextTarget){qs('.verificationCodeSubmit').focus();return;}				
+			content.forEach((element, index) => {
+				if (!nextTarget) {
+					qs('.verificationCodeSubmit').focus();
+					return;
+				}
 				nextTarget.value = element
 				nextTarget.focus()
-				nextTarget=nextTarget.nextSibling				
+				nextTarget = nextTarget.nextSibling
 			})
 		}
 
-		function registerButtonFunction() {
-			console.log(`registerButtonFucntion`);
-			//TODO check if the user input lenght is 4 to execute
-			if (userInputCode === CODE) {
-				createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
-					.then((userCredential) => {
-						// Signed in 
-						const user = userCredential.user;
-						console.log('user: ', user);
-						// ...
-					})
-					.catch((error) => {
-						const errorCode = error.code;
-						console.log('errorCode: ', errorCode);
-						const errorMessage = error.message;
-						console.log('errorMessage: ', errorMessage);
-						// ..
-					});
+		function registerButtonFunctionSubmitCode() {
+			
+			console.log(`registerButtonFunction`);
+			// GET THE input values
+			let userInputCode = ''
+			qsa('.verificationInput > input').forEach((input) => {
+				userInputCode += input.value
+			})
+			// check if the user input length is 4 to execute
+			if (userInputCode.length < 4) {
+				return
+			}
+			userInputCode = +userInputCode
 
-				//TODO  delete verifiction dialog and show succe dialog
-				//TODO add event lister to continue button
+			if (userInputCode === CODE) {
+				//NOTE uncomment the code bellow
+				// createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
+				// 	.then((userCredential) => {
+				// 		// Signed in 
+				// 		const user = userCredential.user;
+				// 		console.log('user: ', user);
+				// 		// ...
+				// 	})
+				// 	.catch((error) => {
+				// 		const errorCode = error.code;
+				// 		console.log('errorCode: ', errorCode);
+				// 		const errorMessage = error.message;
+				// 		console.log('errorMessage: ', errorMessage);
+				// 		// ..
+				// 	});
+
+				//  delete verifiction dialog and show success dialog
+				showMeDialogBox('successfullyCreatedAccount')
+				// add event lister to continue button
+				addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
 			} else {
-				//TODO empty the inputs field and show pop up  of error
+				// empty the inputs field and show pop up  of error
+				qsa('.verificationInput > input').forEach((input) => {
+					input.value = ''
+					input.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+				})
+				let errorMessage = createPageStructure._createErrorMessage(`verificationCodeIncorrect`)
+				insertAfter(errorMessage,qs('.verificationInput'))
 			}
 		}
 		//pop up window with verification code
 		// type : accountSetting verificationCode successfullyCreatedAccount createNewRoom joinRoom uploadImg done changeName changePassword
-		let dialog = createPageStructure._createDialogBox('verificationCode')
-		APP.appendChild(dialog)
 		//NOTE uncomment the send mail function
 		// sendVerificationMail(inputRegisterEmail.value, CODE)
-		qs('.dialogBox').showModal();
+		showMeDialogBox('verificationCode')
 		qsa('.verificationInput > input').forEach((input) => {
 			addEventListener(input, 'keyup', listenToKeyPressInInputVerificationCode)
 			addEventListener(input, 'paste', pasteEventInInput)
 		})
-		addEventListener(qs('.verificationCodeSubmit'), 'click', registerButtonFunction)
+		addEventListener(qs('.verificationCodeSubmit'), 'click', registerButtonFunctionSubmitCode)
 
 	}
 
@@ -1366,6 +1403,26 @@ const createPageFunctionality = (() => {
 			// An error happened.
 			console.log('signOut error: ', error);
 		});
+	}
+
+	function showMeDialogBox(type, normal = true) {
+		if (qs('.dialogBox')) {
+			qs('.dialogBox').remove()
+		}
+		let dialog = createPageStructure._createDialogBox(type)
+		APP.appendChild(dialog)
+		if (normal) {
+			qs('.dialogBox').showModal();
+		} else {
+			qs('.dialogBox').show();
+		}
+	}
+
+	function transitionBetweenAuthenAndNewAndjoinMeetingPage() {
+		console.log(`transitionBetweenAuthenAndNewAndjoinMeetingPage`);
+		qs('.dialogBox').remove()
+		createPageStructure._newOrJoinMeeting()
+		//TODO make the animation  and delelte the auth page and change the position from absolute to static
 	}
 
 
