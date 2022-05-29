@@ -94,8 +94,8 @@
 }
 
 .dialogBox::backdrop{
-	background-color: blue !important;
-	opacity: 0.3;
+	animation: show 1s ease-out normal;
+	background-color: rgb(0, 153, 255,0.3) !important;
 }
 
 	.accountSettingDialogBox{
@@ -148,4 +148,16 @@
 		background-color: transparent !important;
 	}
 
-	/* TODO animate the dialog box */
+
+	dialog[open] {
+		animation: show 1s ease-out normal;
+	    }
+	    @keyframes show{
+		from {
+		   opacity: 0;
+		}
+		to {
+			opacity: 1;
+		
+		}
+	    }
