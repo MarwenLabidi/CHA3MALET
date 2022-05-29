@@ -19,7 +19,8 @@ import {
 	getAuth,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
-	onAuthStateChanged
+	onAuthStateChanged,
+	sendPasswordResetEmail
 } from "firebase/auth";
 import {
 	getFirestore,
@@ -43,7 +44,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-let countLoginClick=0
+let countLoginClick = 0
 
 
 
@@ -634,7 +635,7 @@ const createPageStructure = (() => {
 		return accountSettingPageSmallScreens
 	}
 	//---> create not found email or password error and reset your password error and the verification code s incorrect
-	
+
 	function _createErrorMessage(errType) {
 		let errorMessage = createElement('div', {
 			class: 'errorMessage'
@@ -913,7 +914,24 @@ const createPageStructure = (() => {
 			dialogBox.appendChild(changePasswordH3)
 			dialogBox.appendChild(changePasswordInput)
 			dialogBox.appendChild(changePasswordButton)
-		} else {
+		}else if (dialogType === 'resetPassword') {
+			let resetPasswordH3 = createElement('h3', {
+				class: 'resetPasswordH3',
+				text: 'We sent a reset mail to your email address'
+			})
+			let resetPasswordH5 = createElement('h5', {
+				class: 'resetPasswordH5',
+				text: 'Please check you span section if you dont found it'
+			})
+			let closeButton = createElement('button', {
+				class: 'closeButton',
+				text: 'close '
+			})
+			dialogBox.appendChild(resetPasswordH3)
+			dialogBox.appendChild(resetPasswordH5)
+			dialogBox.appendChild(closeButton)
+		}
+		 else {
 			console.log('no dialog type found')
 		}
 		return dialogBox
@@ -1261,13 +1279,16 @@ const createPageFunctionality = (() => {
 		let inputLoginEmail = qs('.loginSection>.inputEmail')
 		let inputLoginPassword = qs('.loginSection>.inputPassword')
 		// match input regex
-		//FIXME add one error message
+		//NOTE uncomment the regex for email
 		// let patternEmail = inputLoginEmail.getAttribute("pattern");
 		// let regexEmail = new RegExp(patternEmail);
 		// if (!regexEmail.test(inputLoginEmail.value)) {
 		// 	// Pattern does not matches!
 		// 	inputLoginEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 		// 	let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
+		// 	if(qs('.errorMessageText')){
+		// 		qs('.errorMessageText').remove()
+		// 	}
 		// 	insertAfter(errorMessage, qs('.inputPassword'))
 		// 	return
 		// } 
@@ -1277,6 +1298,9 @@ const createPageFunctionality = (() => {
 		// 	// Pattern does not matches!
 		// 	inputLoginPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 		// 	let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
+		// 	if(qs('.errorMessageText')){
+		// 		qs('.errorMessageText').remove()
+		// 	}
 		// 	insertAfter(errorMessage, qs('.inputPassword'))
 		// 	return
 		// } 
@@ -1295,29 +1319,27 @@ const createPageFunctionality = (() => {
 				const errorMessage = error.message;
 				console.log('errorMessage: ', errorMessage);
 				let errorMessages
-				if(countLoginClick===1){
-					if(qs('.errorMessageText')){
+				if (countLoginClick < 3) {
+					if (qs('.errorMessageText')) {
 						qs('.errorMessageText').remove()
 					}
-					if(qs('.resetYourPassword')){
+					if (qs('.resetYourPassword')) {
 						qs('.resetYourPassword').remove()
 					}
-					//FIXME ADD one error message
 
 					errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
 					insertAfter(errorMessages, qs('.inputPassword'))
-				}else if(countLoginClick===3){
-					countLoginClick=0
+				} else {
+					countLoginClick = 0
 					qs('.errorMessageText').remove()
 					errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
-					//FIXME ADD one error message
 					insertAfter(errorMessages, qs('.inputPassword'))
+					_addAuthenticationEventListeners()
 
 				}
 			});
-			//TODO create reset password functionality .resetYourPassword
-			// use built in methode and show dialog mail
-			
+
+
 	}
 
 	function _registerFireBase() {
@@ -1328,13 +1350,15 @@ const createPageFunctionality = (() => {
 		// check the pattern
 		//  match the regex in the input
 		//NOTE uncomment this to check the pattern
-		//FIXME add one pattern
 		// let patternUserName = inputRegisterUserName.getAttribute("pattern");
 		// let regexUserName = new RegExp(patternUserName);
 		// if (!regexUserName.test(inputRegisterUserName.value)) {
 		// 	// Pattern does not matches!
 		// 	inputRegisterUserName.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 		// 	let errorMessage = createPageStructure._createErrorMessage(`userNamePattern`)
+		// 	if(qs('.errorMessageText')){
+		// 		qs('.errorMessageText').remove()
+		// 	}
 		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
 		// 	// qs('.registerSection').append(errorMessage)
 		// 	return
@@ -1345,6 +1369,9 @@ const createPageFunctionality = (() => {
 		// 	// Pattern does not matches!
 		// 	inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 		// 	let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
+		// 	if(qs('.errorMessageText')){
+		// 		qs('.errorMessageText').remove()
+		// 	}
 		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
 		// 	return
 		// } 
@@ -1354,6 +1381,9 @@ const createPageFunctionality = (() => {
 		// 	// Pattern does not matches!
 		// 	inputRegisterPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 		// 	let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
+		// 	if(qs('.errorMessageText')){
+		// 		qs('.errorMessageText').remove()
+		// 	}
 		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
 		// 	return
 		// } 
@@ -1457,8 +1487,10 @@ const createPageFunctionality = (() => {
 					input.value = ''
 					input.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 				})
-				//FIXME ADD one error message
 				let errorMessage = createPageStructure._createErrorMessage(`verificationCodeIncorrect`)
+				if (qs('.errorMessageText')) {
+					qs('.errorMessageText').remove()
+				}
 				insertAfter(errorMessage, qs('.verificationInput'))
 			}
 		}
@@ -1525,7 +1557,7 @@ const createPageFunctionality = (() => {
 
 	function transitionBetweenAuthenAndNewAndjoinMeetingPage() {
 		console.log(`transitionBetweenAuthenAndNewAndjoinMeetingPage`);
-		if(qs('.dialogBox')){
+		if (qs('.dialogBox')) {
 
 			qs('.dialogBox').remove()
 		}
@@ -1551,7 +1583,7 @@ const createPageFunctionality = (() => {
 		// 	console.log(`animatin end`);
 		// })	
 		setTimeout(() => {
-			if(qs('.registerSection')){
+			if (qs('.registerSection')) {
 				qs('.registerSection').remove()
 
 			}
@@ -1559,6 +1591,28 @@ const createPageFunctionality = (() => {
 			qs('.newJoinMeetingPage').style.position = 'static'
 
 		}, 1000);
+	}
+	function _resetYourPassword(){
+		console.log(`reset mail`);
+		showMeDialogBox('resetPassword')
+		qs('.closeButton').addEventListener('click', () => {
+			qs('.dialogBox').close();
+		})
+		//NOTE uncomment the code bellow
+		// qs(".resetYourPassword").addEventListener('click', () => {
+		// 	console.log(`reset your password`);
+		// 	let emailAddress = inputEmail.value;
+		// 	sendPasswordResetEmail(auth, emailAddress)
+		// 		.then(function () {
+		// 			// Email sent.
+		// 			console.log(`done`);
+		// 		})
+		// 		.catch(function (error) {
+		// 			console.log(`not sent yet`);
+		// 			console.log('error: ', error);
+		// 			// An error happened.
+		// 		});
+		// })
 	}
 
 
@@ -1651,13 +1705,21 @@ const createPageFunctionality = (() => {
 		if (metaMaskRegisterButton) {
 			addEventListener(metaMaskRegisterButton, 'click', _metaMaskRegister)
 		}
+		//TODO create reset password functionality .resetYourPassword
+		//TODO MAKE IT IN A FUNCTION AND USE addevent listenerfunction
+		// create a dialog for the email
+		// and write a note about the span email sction
+
+		// use built in methode and show dialog mail
+		if (qs(".resetYourPassword")) {
+			addEventListener(qs(".resetYourPassword"), 'click', _resetYourPassword)
+		}
 
 	}
 	return {
 		_addAuthenticationEventListeners
 	}
 })()
-
 
 
 
