@@ -43,6 +43,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+let countLoginClick=0
 
 
 
@@ -633,7 +634,7 @@ const createPageStructure = (() => {
 		return accountSettingPageSmallScreens
 	}
 	//---> create not found email or password error and reset your password error and the verification code s incorrect
-
+	
 	function _createErrorMessage(errType) {
 		let errorMessage = createElement('div', {
 			class: 'errorMessage'
@@ -668,20 +669,19 @@ const createPageStructure = (() => {
 				text: 'User Name must be at least 3 characters long'
 			})
 			errorMessage.appendChild(errorMessageText)
-		}else if (errType === "eMailPattern") {
+		} else if (errType === "eMailPattern") {
 			let errorMessageText = createElement('p', {
 				class: 'errorMessageText',
 				text: 'wrong email format'
 			})
 			errorMessage.appendChild(errorMessageText)
-		}else if (errType === "passwordPattern") {
+		} else if (errType === "passwordPattern") {
 			let errorMessageText = createElement('p', {
 				class: 'errorMessageText',
 				text: 'Password must be at least 8 characters long'
 			})
 			errorMessage.appendChild(errorMessageText)
-		}
-		else {
+		} else {
 			console.log(`no error message type found`);
 		}
 
@@ -1254,12 +1254,70 @@ const createPageFunctionality = (() => {
 
 	}
 	//----> firebase authentication and MetaMask
+	//TODO login
 	function _loginFireBase() {
 		console.log(`-loginFireBase`);
+		countLoginClick++
 		let inputLoginEmail = qs('.loginSection>.inputEmail')
 		let inputLoginPassword = qs('.loginSection>.inputPassword')
-		console.log('inputLoginEmail: ', inputLoginEmail.value);
-		console.log('inputLoginPassword: ', inputLoginPassword.value);
+		// match input regex
+		//FIXME add one error message
+		// let patternEmail = inputLoginEmail.getAttribute("pattern");
+		// let regexEmail = new RegExp(patternEmail);
+		// if (!regexEmail.test(inputLoginEmail.value)) {
+		// 	// Pattern does not matches!
+		// 	inputLoginEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+		// 	let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
+		// 	insertAfter(errorMessage, qs('.inputPassword'))
+		// 	return
+		// } 
+		// let patternPassword = inputLoginPassword.getAttribute("pattern");
+		// let regexPassword = new RegExp(patternPassword);
+		// if (!regexPassword.test(inputLoginPassword.value)) {
+		// 	// Pattern does not matches!
+		// 	inputLoginPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+		// 	let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
+		// 	insertAfter(errorMessage, qs('.inputPassword'))
+		// 	return
+		// } 
+		//firebase login 
+		signInWithEmailAndPassword(auth, inputLoginEmail.value, inputLoginPassword.value)
+			.then((userCredential) => {
+				// Signed in 
+				const user = userCredential.user;
+				console.log('user: ', user);
+				// ...
+				transitionBetweenAuthenAndNewAndjoinMeetingPage()
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				console.log('errorCode: ', errorCode);
+				const errorMessage = error.message;
+				console.log('errorMessage: ', errorMessage);
+				let errorMessages
+				if(countLoginClick===1){
+					if(qs('.errorMessageText')){
+						qs('.errorMessageText').remove()
+					}
+					if(qs('.resetYourPassword')){
+						qs('.resetYourPassword').remove()
+					}
+					//FIXME ADD one error message
+
+					errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
+					insertAfter(errorMessages, qs('.inputPassword'))
+				}else if(countLoginClick===3){
+					countLoginClick=0
+					qs('.errorMessageText').remove()
+					errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
+					//FIXME ADD one error message
+					insertAfter(errorMessages, qs('.inputPassword'))
+
+				}
+			});
+			//TODO create reset password functionality .resetYourPassword
+			// use built in methode and show dialog mail
+			
 	}
 
 	function _registerFireBase() {
@@ -1270,6 +1328,7 @@ const createPageFunctionality = (() => {
 		// check the pattern
 		//  match the regex in the input
 		//NOTE uncomment this to check the pattern
+		//FIXME add one pattern
 		// let patternUserName = inputRegisterUserName.getAttribute("pattern");
 		// let regexUserName = new RegExp(patternUserName);
 		// if (!regexUserName.test(inputRegisterUserName.value)) {
@@ -1298,7 +1357,7 @@ const createPageFunctionality = (() => {
 		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
 		// 	return
 		// } 
-		
+
 		//NOTE UNCOMENT code and dlete the fake one
 		// const CODE = generateVerificationCode()
 		//NOTE  delete this variiable below
@@ -1371,6 +1430,7 @@ const createPageFunctionality = (() => {
 			userInputCode = +userInputCode
 
 			if (userInputCode === CODE) {
+				//TODO add the username to the database
 				//NOTE uncomment the code bellow
 				// createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
 				// 	.then((userCredential) => {
@@ -1397,6 +1457,7 @@ const createPageFunctionality = (() => {
 					input.value = ''
 					input.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 				})
+				//FIXME ADD one error message
 				let errorMessage = createPageStructure._createErrorMessage(`verificationCodeIncorrect`)
 				insertAfter(errorMessage, qs('.verificationInput'))
 			}
@@ -1464,9 +1525,12 @@ const createPageFunctionality = (() => {
 
 	function transitionBetweenAuthenAndNewAndjoinMeetingPage() {
 		console.log(`transitionBetweenAuthenAndNewAndjoinMeetingPage`);
-		qs('.dialogBox').remove()
+		if(qs('.dialogBox')){
+
+			qs('.dialogBox').remove()
+		}
 		createPageStructure._newOrJoinMeeting()
-		let newJoinMeetingPage= qs('.newJoinMeetingPage')
+		let newJoinMeetingPage = qs('.newJoinMeetingPage')
 		// make the animation  and delelte the auth page and change the position from absolute to static
 		newJoinMeetingPage.animate([
 			// keyframes
@@ -1482,16 +1546,19 @@ const createPageFunctionality = (() => {
 			easing: 'ease-in-out'
 			// iterations: Infinity
 
-		});	
+		});
 		// newJoinMeetingPage.addEventListener('animationend', () => {
 		// 	console.log(`animatin end`);
 		// })	
 		setTimeout(() => {
-			qs('.registerSection').remove()
+			if(qs('.registerSection')){
+				qs('.registerSection').remove()
+
+			}
 			qs('.authPage').remove()
 			qs('.newJoinMeetingPage').style.position = 'static'
-			
-		}, 1000);			
+
+		}, 1000);
 	}
 
 
