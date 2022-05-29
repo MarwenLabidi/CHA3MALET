@@ -633,7 +633,7 @@ const createPageStructure = (() => {
 		return accountSettingPageSmallScreens
 	}
 	//---> create not found email or password error and reset your password error and the verification code s incorrect
-	
+
 	function _createErrorMessage(errType) {
 		let errorMessage = createElement('div', {
 			class: 'errorMessage'
@@ -662,7 +662,26 @@ const createPageStructure = (() => {
 				text: 'Ops !!!The Verification Code is incorrect'
 			})
 			errorMessage.appendChild(errorMessageText)
-		} else {
+		} else if (errType === "userNamePattern") {
+			let errorMessageText = createElement('p', {
+				class: 'errorMessageText',
+				text: 'User Name must be at least 3 characters long'
+			})
+			errorMessage.appendChild(errorMessageText)
+		}else if (errType === "eMailPattern") {
+			let errorMessageText = createElement('p', {
+				class: 'errorMessageText',
+				text: 'wrong email format'
+			})
+			errorMessage.appendChild(errorMessageText)
+		}else if (errType === "passwordPattern") {
+			let errorMessageText = createElement('p', {
+				class: 'errorMessageText',
+				text: 'Password must be at least 8 characters long'
+			})
+			errorMessage.appendChild(errorMessageText)
+		}
+		else {
 			console.log(`no error message type found`);
 		}
 
@@ -1248,13 +1267,37 @@ const createPageFunctionality = (() => {
 		let inputRegisterUserName = qs('.registerSection>.inputUserName')
 		let inputRegisterEmail = qs('.registerSection>.inputEmail')
 		let inputRegisterPassword = qs('.registerSection>.inputPassword')
-		// if one input is empty return
-		if(inputRegisterUserName.value.length<3||inputRegisterEmail.value.length<0||inputRegisterPassword.value.length<8){
+		// check the pattern
+		//  match the regex in the input
+		let patternUserName = inputRegisterUserName.getAttribute("pattern");
+		let regexUserName = new RegExp(patternUserName);
+		if (!regexUserName.test(inputRegisterUserName.value)) {
+			// Pattern does not matches!
 			inputRegisterUserName.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-			inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-			inputRegisterPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			let errorMessage = createPageStructure._createErrorMessage(`userNamePattern`)
+			insertAfter(errorMessage, qs('.orRegisterWith'))
+			// qs('.registerSection').append(errorMessage)
 			return
-		}
+		} 
+		let patternEmail = inputRegisterEmail.getAttribute("pattern");
+		let regexEmail = new RegExp(patternEmail);
+		if (!regexEmail.test(inputRegisterEmail.value)) {
+			// Pattern does not matches!
+			inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
+			insertAfter(errorMessage, qs('.orRegisterWith'))
+			return
+		} 
+		let patternPassword = inputRegisterPassword.getAttribute("pattern");
+		let regexPassword = new RegExp(patternPassword);
+		if (!regexPassword.test(inputRegisterPassword.value)) {
+			// Pattern does not matches!
+			inputRegisterPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
+			insertAfter(errorMessage, qs('.orRegisterWith'))
+			return
+		} 
+		
 		//NOTE UNCOMENT code and dlete the fake one
 		// const CODE = generateVerificationCode()
 		//NOTE  delete this variiable below
@@ -1313,7 +1356,7 @@ const createPageFunctionality = (() => {
 		}
 
 		function registerButtonFunctionSubmitCode() {
-			
+
 			console.log(`registerButtonFunction`);
 			// GET THE input values
 			let userInputCode = ''
@@ -1354,7 +1397,7 @@ const createPageFunctionality = (() => {
 					input.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 				})
 				let errorMessage = createPageStructure._createErrorMessage(`verificationCodeIncorrect`)
-				insertAfter(errorMessage,qs('.verificationInput'))
+				insertAfter(errorMessage, qs('.verificationInput'))
 			}
 		}
 		//pop up window with verification code

@@ -1,9 +1,16 @@
 .errorMessageText{
 	background-color:var(--clr_Red-100);
 	font-family:var(--ff_Bree);
-	padding:0.8em;
+	/* padding:0.8em; */
+	padding:1px 2px;
 	border-radius:30px;
 	border:1px solid var(--clr_Red);
-	width:80%;
+	/* width:80%; */
 	margin:0 auto;
+}
+@media(--desktop){
+	.errorMessageText{
+		width:70%;
+		padding:5px;
+	}
 }

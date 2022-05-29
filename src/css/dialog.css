@@ -147,3 +147,5 @@
 	.accountSettingDialogBox::backdrop{
 		background-color: transparent !important;
 	}
+
+	/* TODO animate the dialog box */
