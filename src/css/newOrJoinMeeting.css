@@ -1,8 +1,9 @@
 /* TODO DESIGN the new and join meeting page */
 .newJoinMeetingPage{
+	background-color:red;
 	position:absolute;
 	top:0;
-	left:0;
-	background-color:red;
-	
+	left:100%;
+	height:100vh;
+	width:100%;
 }

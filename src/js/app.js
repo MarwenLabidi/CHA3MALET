@@ -1269,34 +1269,35 @@ const createPageFunctionality = (() => {
 		let inputRegisterPassword = qs('.registerSection>.inputPassword')
 		// check the pattern
 		//  match the regex in the input
-		let patternUserName = inputRegisterUserName.getAttribute("pattern");
-		let regexUserName = new RegExp(patternUserName);
-		if (!regexUserName.test(inputRegisterUserName.value)) {
-			// Pattern does not matches!
-			inputRegisterUserName.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-			let errorMessage = createPageStructure._createErrorMessage(`userNamePattern`)
-			insertAfter(errorMessage, qs('.orRegisterWith'))
-			// qs('.registerSection').append(errorMessage)
-			return
-		} 
-		let patternEmail = inputRegisterEmail.getAttribute("pattern");
-		let regexEmail = new RegExp(patternEmail);
-		if (!regexEmail.test(inputRegisterEmail.value)) {
-			// Pattern does not matches!
-			inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-			let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
-			insertAfter(errorMessage, qs('.orRegisterWith'))
-			return
-		} 
-		let patternPassword = inputRegisterPassword.getAttribute("pattern");
-		let regexPassword = new RegExp(patternPassword);
-		if (!regexPassword.test(inputRegisterPassword.value)) {
-			// Pattern does not matches!
-			inputRegisterPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-			let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
-			insertAfter(errorMessage, qs('.orRegisterWith'))
-			return
-		} 
+		//NOTE uncomment this to check the pattern
+		// let patternUserName = inputRegisterUserName.getAttribute("pattern");
+		// let regexUserName = new RegExp(patternUserName);
+		// if (!regexUserName.test(inputRegisterUserName.value)) {
+		// 	// Pattern does not matches!
+		// 	inputRegisterUserName.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+		// 	let errorMessage = createPageStructure._createErrorMessage(`userNamePattern`)
+		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
+		// 	// qs('.registerSection').append(errorMessage)
+		// 	return
+		// } 
+		// let patternEmail = inputRegisterEmail.getAttribute("pattern");
+		// let regexEmail = new RegExp(patternEmail);
+		// if (!regexEmail.test(inputRegisterEmail.value)) {
+		// 	// Pattern does not matches!
+		// 	inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+		// 	let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
+		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
+		// 	return
+		// } 
+		// let patternPassword = inputRegisterPassword.getAttribute("pattern");
+		// let regexPassword = new RegExp(patternPassword);
+		// if (!regexPassword.test(inputRegisterPassword.value)) {
+		// 	// Pattern does not matches!
+		// 	inputRegisterPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+		// 	let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
+		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
+		// 	return
+		// } 
 		
 		//NOTE UNCOMENT code and dlete the fake one
 		// const CODE = generateVerificationCode()
@@ -1465,7 +1466,32 @@ const createPageFunctionality = (() => {
 		console.log(`transitionBetweenAuthenAndNewAndjoinMeetingPage`);
 		qs('.dialogBox').remove()
 		createPageStructure._newOrJoinMeeting()
-		//TODO make the animation  and delelte the auth page and change the position from absolute to static
+		let newJoinMeetingPage= qs('.newJoinMeetingPage')
+		// make the animation  and delelte the auth page and change the position from absolute to static
+		newJoinMeetingPage.animate([
+			// keyframes
+			{
+				left: '100%',
+			},
+			{
+				left: '0%',
+			}
+		], {
+			duration: 800,
+			fill: 'both',
+			easing: 'ease-in-out'
+			// iterations: Infinity
+
+		});	
+		// newJoinMeetingPage.addEventListener('animationend', () => {
+		// 	console.log(`animatin end`);
+		// })	
+		setTimeout(() => {
+			qs('.registerSection').remove()
+			qs('.authPage').remove()
+			qs('.newJoinMeetingPage').style.position = 'static'
+			
+		}, 1000);			
 	}
 
 
