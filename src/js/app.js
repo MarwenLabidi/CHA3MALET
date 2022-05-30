@@ -1615,6 +1615,11 @@ const createPageFunctionality = (() => {
 				qs('.registerSection').remove()
 
 			}
+			if (qs('.loginSection')) {
+				qs('.loginSection').remove()
+
+			}
+			
 			qs('.authPage').remove()
 			qs('.newJoinMeetingPage').style.position = 'static'
 
