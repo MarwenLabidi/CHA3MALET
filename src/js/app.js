@@ -45,6 +45,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 let countLoginClick = 0
+let USERNAME = `Marwen`
+let EMAIL = null
 
 
 
@@ -914,7 +916,7 @@ const createPageStructure = (() => {
 			dialogBox.appendChild(changePasswordH3)
 			dialogBox.appendChild(changePasswordInput)
 			dialogBox.appendChild(changePasswordButton)
-		}else if (dialogType === 'resetPassword') {
+		} else if (dialogType === 'resetPassword') {
 			let resetPasswordH3 = createElement('h3', {
 				class: 'resetPasswordH3',
 				text: 'We sent a reset mail to your email address'
@@ -930,8 +932,7 @@ const createPageStructure = (() => {
 			dialogBox.appendChild(resetPasswordH3)
 			dialogBox.appendChild(resetPasswordH5)
 			dialogBox.appendChild(closeButton)
-		}
-		 else {
+		} else {
 			console.log('no dialog type found')
 		}
 		return dialogBox
@@ -1272,12 +1273,14 @@ const createPageFunctionality = (() => {
 
 	}
 	//----> firebase authentication and MetaMask
-	//TODO login
+	// login
 	function _loginFireBase() {
 		console.log(`-loginFireBase`);
 		countLoginClick++
 		let inputLoginEmail = qs('.loginSection>.inputEmail')
 		let inputLoginPassword = qs('.loginSection>.inputPassword')
+		EMAIL = inputLoginEmail.value
+		
 		// match input regex
 		//NOTE uncomment the regex for email
 		// let patternEmail = inputLoginEmail.getAttribute("pattern");
@@ -1305,39 +1308,50 @@ const createPageFunctionality = (() => {
 		// 	return
 		// } 
 		//firebase login 
-		signInWithEmailAndPassword(auth, inputLoginEmail.value, inputLoginPassword.value)
-			.then((userCredential) => {
-				// Signed in 
-				const user = userCredential.user;
-				console.log('user: ', user);
-				// ...
+		//NOTE  uncomment sign int
+		// signInWithEmailAndPassword(auth, inputLoginEmail.value, inputLoginPassword.value)
+		// 	.then((userCredential) => {
+		// 		// Signed in 
+		// 		//  get data from firebase
+		// 		getDocs(collection(db, EMAIL)).then(querySnapshot => {
+		// 			querySnapshot.forEach((doc) => {
+		// 				// console.log(`${doc.id} => ${doc.data().USERNAME}`);
+		// 				USERNAME = doc.data().USERNAME
+		// 				console.log('USERNAME: ', USERNAME);
+		// 			});
+		// 		});
+
+
+		// 		const user = userCredential.user;
+		// 		console.log('user: ', user);
+		// 		// ...
 				transitionBetweenAuthenAndNewAndjoinMeetingPage()
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				console.log('errorCode: ', errorCode);
-				const errorMessage = error.message;
-				console.log('errorMessage: ', errorMessage);
-				let errorMessages
-				if (countLoginClick < 3) {
-					if (qs('.errorMessageText')) {
-						qs('.errorMessageText').remove()
-					}
-					if (qs('.resetYourPassword')) {
-						qs('.resetYourPassword').remove()
-					}
+			// })
+			// .catch((error) => {
+			// 	const errorCode = error.code;
+			// 	console.log('errorCode: ', errorCode);
+			// 	const errorMessage = error.message;
+			// 	console.log('errorMessage: ', errorMessage);
+			// 	let errorMessages
+			// 	if (countLoginClick < 3) {
+			// 		if (qs('.errorMessageText')) {
+			// 			qs('.errorMessageText').remove()
+			// 		}
+			// 		if (qs('.resetYourPassword')) {
+			// 			qs('.resetYourPassword').remove()
+			// 		}
 
-					errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
-					insertAfter(errorMessages, qs('.inputPassword'))
-				} else {
-					countLoginClick = 0
-					qs('.errorMessageText').remove()
-					errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
-					insertAfter(errorMessages, qs('.inputPassword'))
-					_addAuthenticationEventListeners()
+			// 		errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
+			// 		insertAfter(errorMessages, qs('.inputPassword'))
+			// 	} else {
+			// 		countLoginClick = 0
+			// 		qs('.errorMessageText').remove()
+			// 		errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
+			// 		insertAfter(errorMessages, qs('.inputPassword'))
+			// 		_addAuthenticationEventListeners()
 
-				}
-			});
+			// 	}
+			// });
 
 
 	}
@@ -1460,27 +1474,40 @@ const createPageFunctionality = (() => {
 			userInputCode = +userInputCode
 
 			if (userInputCode === CODE) {
-				//TODO add the username to the database
 				//NOTE uncomment the code bellow
 				// createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
 				// 	.then((userCredential) => {
 				// 		// Signed in 
 				// 		const user = userCredential.user;
-				// 		console.log('user: ', user);
-				// 		// ...
-				// 	})
-				// 	.catch((error) => {
-				// 		const errorCode = error.code;
-				// 		console.log('errorCode: ', errorCode);
-				// 		const errorMessage = error.message;
-				// 		console.log('errorMessage: ', errorMessage);
-				// 		// ..
-				// 	});
+				// 		// add the username to the database
+				// 		USERNAME = inputRegisterUserName.value
+				// 		EMAIL = inputRegisterEmail.value
+
+				// 		try {
+				// 			addDoc(collection(db, EMAIL), {USERNAME}).then(response => {
+				// 				console.log("Document written with ID: ",response);
+				// 			});
+				// 		} catch (e) {
+				// 			console.error("Error adding document: ", e);
+				// 		}
+
+
+						showMeDialogBox('successfullyCreatedAccount')
+						addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
+						// ...
+					// })
+					// .catch((error) => {
+					// 	const errorCode = error.code;
+					// 	console.log('errorCode: ', errorCode);
+					// 	const errorMessage = error.message;
+					// 	console.log('errorMessage: ', errorMessage);
+					// 	// ..
+					// 	qs('.dialogBox').remove()
+					// 	inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+					// });
 
 				//  delete verifiction dialog and show success dialog
-				showMeDialogBox('successfullyCreatedAccount')
 				// add event lister to continue button
-				addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
 			} else {
 				// empty the inputs field and show pop up  of error
 				qsa('.verificationInput > input').forEach((input) => {
@@ -1556,6 +1583,7 @@ const createPageFunctionality = (() => {
 	}
 
 	function transitionBetweenAuthenAndNewAndjoinMeetingPage() {
+		qs('title').innerHTML = 'CHA3MALET'
 		console.log(`transitionBetweenAuthenAndNewAndjoinMeetingPage`);
 		if (qs('.dialogBox')) {
 
@@ -1592,7 +1620,8 @@ const createPageFunctionality = (() => {
 
 		}, 1000);
 	}
-	function _resetYourPassword(){
+
+	function _resetYourPassword() {
 		console.log(`reset mail`);
 		showMeDialogBox('resetPassword')
 		qs('.closeButton').addEventListener('click', () => {
@@ -1705,11 +1734,6 @@ const createPageFunctionality = (() => {
 		if (metaMaskRegisterButton) {
 			addEventListener(metaMaskRegisterButton, 'click', _metaMaskRegister)
 		}
-		//TODO create reset password functionality .resetYourPassword
-		//TODO MAKE IT IN A FUNCTION AND USE addevent listenerfunction
-		// create a dialog for the email
-		// and write a note about the span email sction
-
 		// use built in methode and show dialog mail
 		if (qs(".resetYourPassword")) {
 			addEventListener(qs(".resetYourPassword"), 'click', _resetYourPassword)
@@ -1740,3 +1764,8 @@ createPageFunctionality._addAuthenticationEventListeners()
 // let account=createPageStructure._createAccountImageAndName(`hello Marwen`,`/assets/icons/google.svg`)
 // let message=createPageStructure._createMessageTemplate(`this is a message from idk how`,account,`2022`)
 // createPageFunctionality._addMessageToTheSectionMessages(message)
+
+
+
+//TODO stay logued in firebse : look list in the googlee chrome
+//TODO change the cloud fire store rules

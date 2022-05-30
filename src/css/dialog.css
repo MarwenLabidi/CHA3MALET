@@ -1,163 +1,230 @@
-.dialogBox{
+.dialogBox {
 	background-color: var(--clr_Dark-100);
 	color: var(--clr_White);
 	text-align: center;
-	padding:30px;
+	padding: 30px;
 	border-radius: 10px;
-	
-	& .verificationCodeH3{
+
+	& .verificationCodeH3 {
 		font-family: var(--ff_Bree);
-		color:var(--clr_Blue);	
-		margin-bottom:20px;
+		color: var(--clr_Blue);
+		margin-bottom: 20px;
 	}
-	& .verificationInput{
-		display:flex;
+
+	& .verificationInput {
+		display: flex;
 		justify-content: center;
-		& input{
-			border-radius:0;
-			height:40px;
-			width:40px;
-			margin:4%;
-			padding:10px;
+
+		& input {
+			border-radius: 0;
+			height: 40px;
+			width: 40px;
+			margin: 4%;
+			padding: 10px;
 		}
 	}
-	& button{
+
+	& button {
 		font-family: var(--ff_Bree);
-		border-radius:10px;
+		border-radius: 10px;
 		background-color: transparent;
 		color: var(--clr_White);
 		border: 5px solid var(--clr_Blue);
 		padding: 2.2%;
 		width: 35%;
-		margin:30px auto;
+		margin: 30px auto;
 	}
-	& button:hover,& button:focus {
+
+	& button:hover,
+	& button:focus {
 		background-color: var(--clr_Blue);
 		color: var(--clr_Dark);
-		cursor:pointer;
+		cursor: pointer;
 	}
-	& button:active{
-		transform:scale(0.95);
+
+	& button:active {
+		transform: scale(0.95);
 	}
+
 	/* succes section */
-	& .continueButton{
+	& .continueButton {
 		border-color: var(--clr_Green);
 	}
-	& .continueButton:hover,& .continueButton:focus {
+
+	& .continueButton:hover,
+	& .continueButton:focus {
 		background-color: var(--clr_Green);
-		
+
 	}
-	& .successIcon{
-		margin:0 auto;
+
+	& .successIcon {
+		margin: 0 auto;
 	}
+
 	/* new room section */
-	& .checkBoxBlock{
-		display:flex;
-		padding:10px;
-		gap:10px;
-		margin-bottom:20px;
+	& .checkBoxBlock {
+		display: flex;
+		padding: 10px;
+		gap: 10px;
+		margin-bottom: 20px;
 
 	}
-	& .checkBox{
-		height:30px !important;
-		width:30px !important;
-		margin:0;
 
-		
+	& .checkBox {
+		height: 30px !important;
+		width: 30px !important;
+		margin: 0;
+
+
 	}
-	& .checkBox:hover,& .checkBox:focus{
-		cursor:pointer;
+
+	& .checkBox:hover,
+	& .checkBox:focus {
+		cursor: pointer;
 	}
-	& .checkBoxLabel,& .joinRoomH3,& .changeNameH3,& .changePasswordH3{
+
+	& .checkBoxLabel,
+	& .joinRoomH3,
+	& .changeNameH3,
+	& .changePasswordH3 {
 		font-family: var(--ff_Bree);
 		color: var(--clr_Blue);
-		margin-left:10px;
+		margin-left: 10px;
 	}
-	,& .joinRoomH3,& .changeNameH3,& .changePasswordH3{
-		padding:10px
+
+	,
+	& .joinRoomH3,
+	& .changeNameH3,
+	& .changePasswordH3 {
+		padding: 10px
 	}
-	& .inputNameroom,& .joinRoomInput,& .changeNameInput,& .changePasswordInput{
+
+	& .inputNameroom,
+	& .joinRoomInput,
+	& .changeNameInput,
+	& .changePasswordInput {
 		width: 70vw !important;
-		height:15vw !important;
+		height: 15vw !important;
 	}
 
-	& .uploadImgButton,& .continueButton{
-		width:30vw;
-		padding:20px;
-		font-width:bold;
+	& .uploadImgButton,
+	& .continueButton {
+		width: 30vw;
+		padding: 20px;
+		font-width: bold;
 	}
-	& .doneIcon{
-		margin:0 auto;
-		padding:0 30px;
+
+	& .doneIcon {
+		margin: 0 auto;
+		padding: 0 30px;
 	}
 
 }
 
-.dialogBox::backdrop{
-	animation: show 1s ease-out normal;
-	background-color: rgb(0, 153, 255,0.3) !important;
+.dialogBox::backdrop {
+	background-color: rgb(0, 153, 255, 0.3) !important;
 }
 
-	.accountSettingDialogBox{
-		top:10%;
-		left:70%;
-		font-family: var(--ff_Bree);
-		& .profileName{
-			color: var(--clr_Blue);
-			padding:10px;
-			margin-bottom:20px;
+.accountSettingDialogBox {
+	top: 10%;
+	left: 70%;
+	font-family: var(--ff_Bree);
 
-		}
-		& .editNameSection,& .logOutSection,& .changePasswordSection{
-			padding:10px;
-			width:100%;
-			border-radius:10px;
-			margin-right:20px;
-			margin-bottom:30px;
-			display:flex;
-			gap:20px;
-			align-items:center;
-			transition: all 0.3s ease-out;
-			padding:10px;
-			& img{
-				width:40px;
-				height:40px;
-				border-radius:50%;
-				
-			}
-		}
-		& .editNameSection:hover,& .logOutSection:hover,& .changePasswordSection:hover,
-		& .editNameSection:focus,& .logOutSection:focus,& .changePasswordSection:focus{
-			
-				background-color: var(--clr_Blue);
-				color: var(--clr_Dark);
-				cursor:pointer;
-				
-			}
-			& .editNameSection:active,& .logOutSection:active,& .changePasswordSection:active{
-			transform: scale(0.95);
+	& .profileName {
+		color: var(--clr_Blue);
+		padding: 10px;
+		margin-bottom: 20px;
 
-		}
-		& .logOutIcon{
-			background-color: var(--clr_White) !important;
-			
+	}
+
+	& .editNameSection,
+	& .logOutSection,
+	& .changePasswordSection {
+		padding: 10px;
+		width: 100%;
+		border-radius: 10px;
+		margin-right: 20px;
+		margin-bottom: 30px;
+		display: flex;
+		gap: 20px;
+		align-items: center;
+		transition: all 0.3s ease-out;
+		padding: 10px;
+
+		& img {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+
 		}
 	}
+
+	& .editNameSection:hover,
+	& .logOutSection:hover,
+	& .changePasswordSection:hover,
+	& .editNameSection:focus,
+	& .logOutSection:focus,
+	& .changePasswordSection:focus {
+
+		background-color: var(--clr_Blue);
+		color: var(--clr_Dark);
+		cursor: pointer;
+
+	}
+
+	& .editNameSection:active,
+	& .logOutSection:active,
+	& .changePasswordSection:active {
+		transform: scale(0.95);
+
+	}
+
+	& .logOutIcon {
+		background-color: var(--clr_White) !important;
+
+	}
+}
+
+.accountSettingDialogBox::backdrop {
+	background-color: transparent !important;
+}
+
+
+
+
+
+@media (--tablets) {
+	dialog[open] {
+		animation: show 0.5s ease-out normal;
+	}
+
+	@keyframes show {
+		from {
+			transform:translateX(100%);
+		}
+
+		to {
+			transform:translateX(0%);
+
+		}
+	}
+}
+
+@media (--desktop) {
 	
-	.accountSettingDialogBox::backdrop{
-		background-color: transparent !important;
-	}
-
-
 	dialog[open] {
 		animation: show 1s ease-out normal;
-	    }
-	    @keyframes show{
+	}
+
+	@keyframes show {
 		from {
-		   opacity: 0;
+			opacity: 0;
 		}
+
 		to {
 			opacity: 1;
-		
+
 		}
-	    }
+	}
+
+}
