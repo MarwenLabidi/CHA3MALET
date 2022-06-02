@@ -229,6 +229,10 @@
 }
 
 @media (--desktop) {
+	.dialogBox::backdrop {
+		animation: show 1s ease-out normal;
+
+	}
 
 	dialog[open] {
 		animation: show 1s ease-out normal;

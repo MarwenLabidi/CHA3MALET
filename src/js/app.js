@@ -20,13 +20,18 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	onAuthStateChanged,
-	sendPasswordResetEmail
+	sendPasswordResetEmail,
+	GoogleAuthProvider,
+	signInWithPopup
 } from "firebase/auth";
 import {
 	getFirestore,
 	collection,
 	addDoc,
-	getDocs
+	getDocs,
+	getDoc,
+	doc,
+	query
 } from "firebase/firestore";
 import {
 	getStorage,
@@ -53,8 +58,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const providerGoogle = new GoogleAuthProvider();
+
 
 let countLoginClick = 0
+//NOTE assign null to username
 let USERNAME = `Marwen`
 let EMAIL = null
 
@@ -1568,6 +1576,37 @@ const createPageFunctionality = (() => {
 
 	function _googleLoginFireBase() {
 		console.log(`__googleLoginFireBase`);
+		signInWithPopup(auth, providerGoogle)
+			.then((result) => {
+				// This gives you a Google Access Token. You can use it to access the Google API.
+				const credential = GoogleAuthProvider.credentialFromResult(result);
+
+				const token = credential.accessToken;
+				// The signed-in user info.
+				const user = result.user;
+				console.log('user: ', user);
+				//TODO displayName  email photoURL
+				USERNAME = user.displayName
+				console.log('USERNAME: ', USERNAME);
+				EMAIL = user.email
+				console.log('user.photoURL: ', user.photoURL);
+				transitionBetweenAuthenAndNewAndjoinMeetingPage()
+				qs('.iconAccount').src = user.photoURL
+				// ...
+			}).catch((error) => {
+				// Handle Errors here.
+				const errorCode = error.code;
+				console.log('errorCode: ', errorCode);
+				const errorMessage = error.message;
+				console.log('errorMessage: ', errorMessage);
+				// The email of the user's account used.
+				// const email = error.customData.email;
+				// console.log('email: ', email);
+				// The AuthCredential type that was used.
+				const credential = GoogleAuthProvider.credentialFromError(error);
+				console.log('credential: ', credential);
+				// ...
+			});
 	}
 
 	function _metaMaskLogin() {
@@ -1654,7 +1693,22 @@ const createPageFunctionality = (() => {
 
 		}, 1000);
 		//NOTE DELETE EMAL ASSIGN
-		EMAIL=`labidimarwen6@gmail.com`
+		EMAIL = `labidimarwen6@gmail.com`
+		// get the username from the database
+		const q = query(collection(db, EMAIL));
+		getDocs(q).then((querySnapshot) => {
+			querySnapshot.forEach((doc) => {
+				// doc.data() is never undefined for query doc snapshots
+				// console.log(doc.id, " => ", doc.data());
+				USERNAME = doc.data().USERNAME
+				console.log('USERNAME: ', USERNAME);
+			})
+		})
+
+
+
+
+
 		const storage = getStorage();
 		const storageRef = ref(storage, `profile-photos/${EMAIL}`);
 		getDownloadURL(storageRef)
@@ -1743,40 +1797,42 @@ const createPageFunctionality = (() => {
 			//NOTE delete the assignemetof mil bellow
 			EMAIL = `labidimarwen6@gmail.com`
 
-			const storage = getStorage();
-			const storageRef = ref(storage, `profile-photos/${EMAIL}`);
-			const uploadTask = uploadBytesResumable(storageRef, file);
-			uploadTask.on('state_changed',
-				(snapshot) => {
-					// Observe state change events such as progress, pause, and resume
-					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-					const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-					console.log('Upload is ' + progress + '% done');
-					switch (snapshot.state) {
-						case 'paused':
-							console.log('Upload is paused');
-							break;
-						case 'running':
-							console.log('Upload is running');
-							break;
-					}
-				},
-				(error) => {
-					console.log('error: ', error);
-					// Handle unsuccessful uploads
-				},
-				() => {
-					console.log(`uploaded succesfuly`);
-					// Handle successful uploads on complete
-					// For instance, get the download URL: https://firebasestorage.googleapis.com/...
-					// getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-					// 	console.log('File available at', downloadURL);
-					// });
-					qs('.dialogBox').remove()
-					showMeDialogBox('successfullyCreatedAccount')
-					addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
+		const storage = getStorage();
+		const storageRef = ref(storage, `profile-photos/${EMAIL}`);
+		const uploadTask = uploadBytesResumable(storageRef, file);
+		uploadTask.on('state_changed',
+			(snapshot) => {
+				// Observe state change events such as progress, pause, and resume
+				// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				console.log('Upload is ' + progress + '% done');
+				switch (snapshot.state) {
+					case 'paused':
+						console.log('Upload is paused');
+						break;
+					case 'running':
+						console.log('Upload is running');
+						break;
 				}
-			);
+			},
+			(error) => {
+				console.log('error: ', error);
+				// Handle unsuccessful uploads
+			},
+			() => {
+				console.log(`uploaded succesfuly`);
+				// Handle successful uploads on complete
+				// For instance, get the download URL: https://firebasestorage.googleapis.com/...
+				// getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+				// 	console.log('File available at', downloadURL);
+				// });
+				qs('.dialogBox').remove()
+				showMeDialogBox('successfullyCreatedAccount')
+				addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
+			}
+		);
+
+
 		})
 	}
 
@@ -1900,10 +1956,7 @@ createPageFunctionality._addAuthenticationEventListeners()
 // let account=createPageStructure._createAccountImageAndName(`hello Marwen`,`/assets/icons/google.svg`)
 // let message=createPageStructure._createMessageTemplate(`this is a message from idk how`,account,`2022`)
 // createPageFunctionality._addMessageToTheSectionMessages(message)
-
-//TODO close animation dialogue
-// TODO make a the backgdrop dialogueo only animate in the large screen
-// TODO close when you click outside the dialogue
+//TODO GET THE USENAME
 //TODO google authentication
 //TODO facebook authentication
 //TODO metamask authentication
