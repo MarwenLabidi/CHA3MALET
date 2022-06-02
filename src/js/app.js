@@ -1569,6 +1569,7 @@ const createPageFunctionality = (() => {
 		addEventListener(qs('.verificationCodeSubmit'), 'click', registerButtonFunctionSubmitCode)
 
 	}
+//TODO facebook authentication
 
 	function _facebookLoginFireBase() {
 		console.log(`__facebookLoginFireBase`);
@@ -1585,7 +1586,6 @@ const createPageFunctionality = (() => {
 				// The signed-in user info.
 				const user = result.user;
 				console.log('user: ', user);
-				//TODO displayName  email photoURL
 				USERNAME = user.displayName
 				console.log('USERNAME: ', USERNAME);
 				EMAIL = user.email
@@ -1608,6 +1608,7 @@ const createPageFunctionality = (() => {
 				// ...
 			});
 	}
+//TODO metamask authentication
 
 	function _metaMaskLogin() {
 		console.log(`_metaMaskLogin`);
@@ -1945,8 +1946,4 @@ createPageFunctionality._addAuthenticationEventListeners()
 // let account=createPageStructure._createAccountImageAndName(`hello Marwen`,`/assets/icons/google.svg`)
 // let message=createPageStructure._createMessageTemplate(`this is a message from idk how`,account,`2022`)
 // createPageFunctionality._addMessageToTheSectionMessages(message)
-//TODO GET THE USENAME
-//TODO google authentication
-//TODO facebook authentication
-//TODO metamask authentication
 //TODO stay logued in firebse : look list in the google chrome
