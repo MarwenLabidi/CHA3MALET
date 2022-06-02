@@ -68,6 +68,7 @@ let countLoginClick = 0
 //NOTE assign null to username
 let USERNAME = `Marwen`
 let EMAIL = null
+// let PHOTO_URL=null
 
 
 
@@ -1716,8 +1717,10 @@ const createPageFunctionality = (() => {
 				qs('.loginSection').remove()
 
 			}
+			if(qs('.authPage')){
 
-			qs('.authPage').remove()
+				qs('.authPage').remove()
+			}
 			qs('.newJoinMeetingPage').style.position = 'static'
 
 		}, 1000);
@@ -1962,27 +1965,29 @@ const createPageFunctionality = (() => {
 
 	}
 	return {
-		_addAuthenticationEventListeners
+		_addAuthenticationEventListeners,
+		transitionBetweenAuthenAndNewAndjoinMeetingPage
 	}
 })()
 
-
-
-
-createPageStructure._authentication()
-createPageFunctionality._addAuthenticationEventListeners()
-// createPageStructure._newOrJoinMeeting()
-// createPageStructure._createRoomsPage();
-
-// let cardOne=createPageStructure._createMeetingCard('Meeting One',false,'/assets/icons/google.svg','/assets/icons/facebook.svg')
-// let cardTwo=createPageStructure._createMeetingCard('Meeting two',false,'/assets/icons/google.svg','/assets/icons/facebook.svg')
-
-// createPageFunctionality._addCardToRoomsPage(cardOne,cardTwo)
-// createPageStructure._createPageOfMeeting()
-// let videoCard =createPageStructure._createVideoCard(`marwen`,`true`)
-// createPageFunctionality._addVideoToVideoGroup(videoCard)
-
-// let account=createPageStructure._createAccountImageAndName(`hello Marwen`,`/assets/icons/google.svg`)
-// let message=createPageStructure._createMessageTemplate(`this is a message from idk how`,account,`2022`)
-// createPageFunctionality._addMessageToTheSectionMessages(message)
-//TODO stay logued in firebse : look list in the google chrome
+onAuthStateChanged(auth, (user) => {
+	if (user) {
+		console.log('user: ', user);
+		console.log('user: ', user);
+		USERNAME = user.displayName
+		console.log('USERNAME: ', USERNAME);
+		EMAIL = user.email
+		console.log('user.photoURL: ', user.photoURL);
+		createPageFunctionality.transitionBetweenAuthenAndNewAndjoinMeetingPage()
+		qs('.iconAccount').src = user.photoURL
+		// User is signed in, see docs for a list of available properties
+		// https://firebase.google.com/docs/reference/js/firebase.User
+		const uid = user.uid;
+		// ...
+	} else {
+		// User is signed out
+		console.log(' user is signed out: ', user);
+		createPageStructure._authentication()
+		createPageFunctionality._addAuthenticationEventListeners()
+	}
+});
