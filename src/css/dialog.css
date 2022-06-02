@@ -118,6 +118,22 @@
 		margin: 0 auto;
 		padding: 0 30px;
 	}
+	& .noButton {
+		margin-right: 20px !important;
+
+		border-color: var(--clr_Red) !important;
+	}
+	& .noButton:hover,& .noButton:focus {
+		background-color: var(--clr_Red) !important;
+	}
+
+	& .yesButton {
+
+		border-color: var(--clr_Green) !important;
+	}
+	& .yesButton:hover,& .yesButton:focus {
+		background-color: var(--clr_Green) !important;
+	}
 
 }
 
@@ -183,6 +199,8 @@
 		background-color: var(--clr_White) !important;
 
 	}
+
+
 }
 
 .accountSettingDialogBox::backdrop {
@@ -200,18 +218,18 @@
 
 	@keyframes show {
 		from {
-			transform:translateX(100%);
+			transform: translateX(100%);
 		}
 
 		to {
-			transform:translateX(0%);
+			transform: translateX(0%);
 
 		}
 	}
 }
 
 @media (--desktop) {
-	
+
 	dialog[open] {
 		animation: show 1s ease-out normal;
 	}

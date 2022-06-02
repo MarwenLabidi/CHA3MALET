@@ -28,6 +28,14 @@ import {
 	addDoc,
 	getDocs
 } from "firebase/firestore";
+import {
+	getStorage,
+	ref,
+	uploadBytes,
+	uploadBytesResumable,
+	getDownloadURL
+} from "firebase/storage";
+
 
 
 const firebaseConfig = {
@@ -44,6 +52,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
+
 let countLoginClick = 0
 let USERNAME = `Marwen`
 let EMAIL = null
@@ -932,6 +942,24 @@ const createPageStructure = (() => {
 			dialogBox.appendChild(resetPasswordH3)
 			dialogBox.appendChild(resetPasswordH5)
 			dialogBox.appendChild(closeButton)
+		} else if (dialogType === 'askAboutProfilePhoto') {
+			let resetPasswordH3 = createElement('h2', {
+				class: 'askAboutProfilePhotoH2',
+				text: 'Do You Want To Upload a Profile Photo ?'
+			})
+
+			let yesButton = createElement('button', {
+				class: 'yesButton',
+				text: 'yes '
+			})
+			let noButton = createElement('button', {
+				class: 'noButton',
+				text: 'no '
+			})
+			dialogBox.appendChild(resetPasswordH3)
+			dialogBox.appendChild(noButton)
+			dialogBox.appendChild(yesButton)
+
 		} else {
 			console.log('no dialog type found')
 		}
@@ -1280,7 +1308,7 @@ const createPageFunctionality = (() => {
 		let inputLoginEmail = qs('.loginSection>.inputEmail')
 		let inputLoginPassword = qs('.loginSection>.inputPassword')
 		EMAIL = inputLoginEmail.value
-		
+
 		// match input regex
 		//NOTE uncomment the regex for email
 		// let patternEmail = inputLoginEmail.getAttribute("pattern");
@@ -1325,33 +1353,33 @@ const createPageFunctionality = (() => {
 		// 		const user = userCredential.user;
 		// 		console.log('user: ', user);
 		// 		// ...
-				transitionBetweenAuthenAndNewAndjoinMeetingPage()
-			// })
-			// .catch((error) => {
-			// 	const errorCode = error.code;
-			// 	console.log('errorCode: ', errorCode);
-			// 	const errorMessage = error.message;
-			// 	console.log('errorMessage: ', errorMessage);
-			// 	let errorMessages
-			// 	if (countLoginClick < 3) {
-			// 		if (qs('.errorMessageText')) {
-			// 			qs('.errorMessageText').remove()
-			// 		}
-			// 		if (qs('.resetYourPassword')) {
-			// 			qs('.resetYourPassword').remove()
-			// 		}
+		transitionBetweenAuthenAndNewAndjoinMeetingPage()
+		// })
+		// .catch((error) => {
+		// 	const errorCode = error.code;
+		// 	console.log('errorCode: ', errorCode);
+		// 	const errorMessage = error.message;
+		// 	console.log('errorMessage: ', errorMessage);
+		// 	let errorMessages
+		// 	if (countLoginClick < 3) {
+		// 		if (qs('.errorMessageText')) {
+		// 			qs('.errorMessageText').remove()
+		// 		}
+		// 		if (qs('.resetYourPassword')) {
+		// 			qs('.resetYourPassword').remove()
+		// 		}
 
-			// 		errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
-			// 		insertAfter(errorMessages, qs('.inputPassword'))
-			// 	} else {
-			// 		countLoginClick = 0
-			// 		qs('.errorMessageText').remove()
-			// 		errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
-			// 		insertAfter(errorMessages, qs('.inputPassword'))
-			// 		_addAuthenticationEventListeners()
+		// 		errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
+		// 		insertAfter(errorMessages, qs('.inputPassword'))
+		// 	} else {
+		// 		countLoginClick = 0
+		// 		qs('.errorMessageText').remove()
+		// 		errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
+		// 		insertAfter(errorMessages, qs('.inputPassword'))
+		// 		_addAuthenticationEventListeners()
 
-			// 	}
-			// });
+		// 	}
+		// });
 
 
 	}
@@ -1474,6 +1502,9 @@ const createPageFunctionality = (() => {
 			userInputCode = +userInputCode
 
 			if (userInputCode === CODE) {
+				showMeDialogBox('askAboutProfilePhoto')
+				addEventListener(qs('.yesButton'), 'click', _yesButtonFct)
+				addEventListener(qs('.noButton'), 'click', _noButtonFct)
 				//NOTE uncomment the code bellow
 				// createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
 				// 	.then((userCredential) => {
@@ -1491,20 +1522,17 @@ const createPageFunctionality = (() => {
 				// 			console.error("Error adding document: ", e);
 				// 		}
 
-
-						showMeDialogBox('successfullyCreatedAccount')
-						addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
-						// ...
-					// })
-					// .catch((error) => {
-					// 	const errorCode = error.code;
-					// 	console.log('errorCode: ', errorCode);
-					// 	const errorMessage = error.message;
-					// 	console.log('errorMessage: ', errorMessage);
-					// 	// ..
-					// 	qs('.dialogBox').remove()
-					// 	inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-					// });
+				// ...
+				// })
+				// .catch((error) => {
+				// 	const errorCode = error.code;
+				// 	console.log('errorCode: ', errorCode);
+				// 	const errorMessage = error.message;
+				// 	console.log('errorMessage: ', errorMessage);
+				// 	// ..
+				// 	qs('.dialogBox').remove()
+				// 	inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+				// });
 
 				//  delete verifiction dialog and show success dialog
 				// add event lister to continue button
@@ -1583,6 +1611,7 @@ const createPageFunctionality = (() => {
 	}
 
 	function transitionBetweenAuthenAndNewAndjoinMeetingPage() {
+
 		qs('title').innerHTML = 'CHA3MALET'
 		console.log(`transitionBetweenAuthenAndNewAndjoinMeetingPage`);
 		if (qs('.dialogBox')) {
@@ -1619,11 +1648,45 @@ const createPageFunctionality = (() => {
 				qs('.loginSection').remove()
 
 			}
-			
+
 			qs('.authPage').remove()
 			qs('.newJoinMeetingPage').style.position = 'static'
 
 		}, 1000);
+		//NOTE DELETE EMAL ASSIGN
+		EMAIL=`labidimarwen6@gmail.com`
+		const storage = getStorage();
+		const storageRef = ref(storage, `profile-photos/${EMAIL}`);
+		getDownloadURL(storageRef)
+			.then((url) => {
+				// Insert url into an <img> tag to "download"
+				qs('.iconAccount').src = url;
+			})
+			.catch((error) => {
+				// A full list of error codes is available at
+				// https://firebase.google.com/docs/storage/web/handle-errors
+				switch (error.code) {
+					case 'storage/object-not-found':
+						// File doesn't exist
+						console.log('File doesn File doesn');
+						break;
+					case 'storage/unauthorized':
+						// User doesn't have permission to access the object
+						console.log(`user dont  have permisiion to access the object`);
+						break;
+					case 'storage/canceled':
+						// User canceled the upload
+						console.log('User canceled the upload: ');
+						break;
+
+						// ...
+
+					case 'storage/unknown':
+						// Unknown error occurred, inspect the server response
+						console.log(' Unknown error occurred: ');
+						break;
+				}
+			});
 	}
 
 	function _resetYourPassword() {
@@ -1647,6 +1710,74 @@ const createPageFunctionality = (() => {
 		// 			// An error happened.
 		// 		});
 		// })
+	}
+
+	function _yesButtonFct() {
+		console.log(`yes button`);
+		qs('.dialogBox').remove()
+		showMeDialogBox('uploadImg')
+		addEventListener(qs('.uploadImgButton'), 'click', uploadProfilePhoto)
+
+	}
+
+	function _noButtonFct() {
+		console.log(`no button`);
+		qs('.dialogBox').remove()
+		showMeDialogBox('successfullyCreatedAccount')
+		addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
+	}
+	// upload profile photo 
+	function uploadProfilePhoto() {
+		console.log(`upload profile photo`);
+		let photoUpload = createElement('input', {
+			type: 'file',
+			className: 'photoUpload'
+		})
+		photoUpload.click()
+		photoUpload.addEventListener('change', () => {
+			console.log(`photo upload`);
+			let file = photoUpload.files[0];
+			console.log('file: ', file);
+			console.log(typeof (file));
+
+			//NOTE delete the assignemetof mil bellow
+			EMAIL = `labidimarwen6@gmail.com`
+
+			const storage = getStorage();
+			const storageRef = ref(storage, `profile-photos/${EMAIL}`);
+			const uploadTask = uploadBytesResumable(storageRef, file);
+			uploadTask.on('state_changed',
+				(snapshot) => {
+					// Observe state change events such as progress, pause, and resume
+					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+					const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					console.log('Upload is ' + progress + '% done');
+					switch (snapshot.state) {
+						case 'paused':
+							console.log('Upload is paused');
+							break;
+						case 'running':
+							console.log('Upload is running');
+							break;
+					}
+				},
+				(error) => {
+					console.log('error: ', error);
+					// Handle unsuccessful uploads
+				},
+				() => {
+					console.log(`uploaded succesfuly`);
+					// Handle successful uploads on complete
+					// For instance, get the download URL: https://firebasestorage.googleapis.com/...
+					// getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+					// 	console.log('File available at', downloadURL);
+					// });
+					qs('.dialogBox').remove()
+					showMeDialogBox('successfullyCreatedAccount')
+					addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
+				}
+			);
+		})
 	}
 
 
@@ -1770,7 +1901,10 @@ createPageFunctionality._addAuthenticationEventListeners()
 // let message=createPageStructure._createMessageTemplate(`this is a message from idk how`,account,`2022`)
 // createPageFunctionality._addMessageToTheSectionMessages(message)
 
-
-
-//TODO stay logued in firebse : look list in the googlee chrome
-//TODO change the cloud fire store rules
+//TODO close animation dialogue
+// TODO make a the backgdrop dialogueo only animate in the large screen
+// TODO close when you click outside the dialogue
+//TODO google authentication
+//TODO facebook authentication
+//TODO metamask authentication
+//TODO stay logued in firebse : look list in the google chrome
