@@ -1648,36 +1648,24 @@ const createPageFunctionality = (() => {
 				// ...
 			});
 	}
-	//TODO metamask authentication
 
 	function _metaMaskLogin() {
 		console.log(`_metaMaskLogin`);
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			console.log(`mobile browser`);
-			//dialogue box u should use metamask browser to enable this feature
-			let userAgent = navigator.userAgent;
-			let browserName;
-
-			if (userAgent.match(/chrome|chromium|crios/i)) {
-				browserName = "chrome";
-			} else if (userAgent.match(/firefox|fxios/i)) {
-				browserName = "firefox";
-			} else if (userAgent.match(/safari/i)) {
-				browserName = "safari";
-			} else if (userAgent.match(/opr\//i)) {
-				browserName = "opera";
-			} else if (userAgent.match(/edg/i)) {
-				browserName = "edge";
-			} else {
-				browserName = "No browser detection";
-			}
-			alert(browserName)
+			alert(` This feature only available in laptop and desktop devices `)
 		} else {
 			console.log(`desktop browser`);
 			if (typeof window.ethereum !== 'undefined') {
 				console.log('MetaMask is installed!');
+				ethereum.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+					USERNAME = accounts[0]
+					console.log('USERNAME: ', USERNAME);
+					transitionBetweenAuthenAndNewAndjoinMeetingPage()
+				})
 			} else {
 				//dialogue box to install meta mask extention and show the link of the extention
+				alert(` MetaMask is not installed! \n Please install MetaMask to use this feature. \n Click on the link below to install MetaMask. \n https://metamask.io/ `)
 			}
 
 		}
