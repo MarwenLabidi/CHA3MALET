@@ -1652,17 +1652,33 @@ const createPageFunctionality = (() => {
 
 	function _metaMaskLogin() {
 		console.log(`_metaMaskLogin`);
-		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 			console.log(`mobile browser`);
 			//dialogue box u should use metamask browser to enable this feature
-			alert(navigator.userAgent)
-		}else{
+			let userAgent = navigator.userAgent;
+			let browserName;
+
+			if (userAgent.match(/chrome|chromium|crios/i)) {
+				browserName = "chrome";
+			} else if (userAgent.match(/firefox|fxios/i)) {
+				browserName = "firefox";
+			} else if (userAgent.match(/safari/i)) {
+				browserName = "safari";
+			} else if (userAgent.match(/opr\//i)) {
+				browserName = "opera";
+			} else if (userAgent.match(/edg/i)) {
+				browserName = "edge";
+			} else {
+				browserName = "No browser detection";
+			}
+			alert(browserName)
+		} else {
 			console.log(`desktop browser`);
 			if (typeof window.ethereum !== 'undefined') {
 				console.log('MetaMask is installed!');
-			      }else{
-				      //dialogue box to install meta mask extention and show the link of the extention
-			      }
+			} else {
+				//dialogue box to install meta mask extention and show the link of the extention
+			}
 
 		}
 	}
@@ -1730,7 +1746,7 @@ const createPageFunctionality = (() => {
 				qs('.loginSection').remove()
 
 			}
-			if(qs('.authPage')){
+			if (qs('.authPage')) {
 
 				qs('.authPage').remove()
 			}
