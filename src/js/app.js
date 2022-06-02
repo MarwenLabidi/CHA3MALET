@@ -1654,9 +1654,15 @@ const createPageFunctionality = (() => {
 		console.log(`_metaMaskLogin`);
 		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 			console.log(`mobile browser`);
-			
+			//dialogue box u should use metamask browser to enable this feature
+			alert(navigator.userAgent)
 		}else{
 			console.log(`desktop browser`);
+			if (typeof window.ethereum !== 'undefined') {
+				console.log('MetaMask is installed!');
+			      }else{
+				      //dialogue box to install meta mask extention and show the link of the extention
+			      }
 
 		}
 	}
