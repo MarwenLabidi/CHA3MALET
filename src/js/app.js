@@ -1612,18 +1612,7 @@ const createPageFunctionality = (() => {
 	function _metaMaskLogin() {
 		console.log(`_metaMaskLogin`);
 	}
-
-	function _facebookRegisterFireBase() {
-		console.log(`_facebookRegisterFireBase`);
-	}
-
-	function _googleRegisterFireBase() {
-		console.log(`_googleRegisterFireBase`);
-	}
-
-	function _metaMaskRegister() {
-		console.log(`_metaMaskRegister`);
-	}
+	
 
 	function _logOutFromFireBase() {
 		console.log(`logOutFromFireBase`);
@@ -1918,13 +1907,13 @@ const createPageFunctionality = (() => {
 			addEventListener(metaMaskLoginButton, 'click', _metaMaskLogin)
 		}
 		if (facebookRegisterButton) {
-			addEventListener(facebookRegisterButton, 'click', _facebookRegisterFireBase)
+			addEventListener(facebookRegisterButton, 'click', _facebookLoginFireBase)
 		}
 		if (googleRegisterButton) {
-			addEventListener(googleRegisterButton, 'click', _googleRegisterFireBase)
+			addEventListener(googleRegisterButton, 'click', _googleLoginFireBase)
 		}
 		if (metaMaskRegisterButton) {
-			addEventListener(metaMaskRegisterButton, 'click', _metaMaskRegister)
+			addEventListener(metaMaskRegisterButton, 'click', _metaMaskLogin)
 		}
 		// use built in methode and show dialog mail
 		if (qs(".resetYourPassword")) {
