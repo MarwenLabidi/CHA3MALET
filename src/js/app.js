@@ -1652,6 +1652,13 @@ const createPageFunctionality = (() => {
 
 	function _metaMaskLogin() {
 		console.log(`_metaMaskLogin`);
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			console.log(`mobile browser`);
+			
+		}else{
+			console.log(`desktop browser`);
+
+		}
 	}
 
 
