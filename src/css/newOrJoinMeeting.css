@@ -1,13 +1,163 @@
-/* TODO DESIGN the new and join meeting page */
-.newJoinMeetingPage{
-	background-color:red;
-	position:absolute;
-	top:0;
-	left:100%;
-	height:100vh;
-	width:100%;
-	& img{
-		width:100px;
-		height:100px;
+.newJoinMeetingPage {
+	position: absolute;
+	top: 0;
+	left: 100%;
+	height: 100vh;
+	width: 100%;
+	text-align: center;
+
+	& img {
+		width: 60px;
+		height: 60px;
+		margin: 20px 75vw;
+		border-radius: 50%;
 	}
+
+	& img:hover {
+		cursor: pointer;
+	}
+
+	& button {
+		display: block;
+		border-radius: 10px;
+		height: 13vh;
+		width: 30vh;
+		margin: 0 auto;
+		/* font-family:var(--ff_Lato) ; */
+		font-family: var(--ff_Lato);
+		font-weight: bold;
+		letter-spacing: 2px;
+		border: none;
+		outline: none;
+		transition: all 0.3s ease-in-out;
+
+	}
+
+
+	& button:hover,
+	& button:focus {
+		cursor: pointer;
+	}
+
+	& button:active {
+		transform: scale(0.9);
+		opacity: 0.9;
+	}
+
+	& .newMeeting {
+
+		margin-top: 50%;
+		margin-bottom: 20px;
+		background-image: url(/assets/icons/COCO-Line-Add.svg);
+		background-repeat: no-repeat;
+		background-size: 30px 30px;
+		background-position: 6% center;
+		padding-left: 40px;
+
+
+	}
+
+
+	& .joinMeeting {
+		background-color: var(--clr_Purple);
+		background-image: url(/assets/icons/COCO-Line-Video.svg);
+		background-repeat: no-repeat;
+		background-size: 30px 30px;
+		background-position: 6% center;
+		padding-left: 40px;
+		color: var(--color_White);
+	}
+
+	& .joinMeeting:hover,
+	& .joinMeeting:focus {
+		background-color: var(--clr_White);
+		color: var(--clr_Dark);
+	}
+
+}
+
+
+@media(--desktop) {
+	.newJoinMeetingPage {
+		& img {
+			margin: 20px 90vw;
+		}
+
+		& button {
+			margin-top: 15%;
+			display: inline-block;
+		}
+
+		& .newMeeting {
+			margin-top: 0;
+			margin-right: 20px;
+			margin-bottom: 0;
+
+
+
+		}
+
+		& .joinMeeting {
+			margin-left: 30px;
+
+		}
+	}
+}
+
+
+
+.newJoinMeetingPage:hover>.newMeeting {
+	background-color: var(--clr_Purple);
+	color: var(--clr_White);
+	background-image: url(/assets/icons/Add.svg) ;
+
+}
+
+.newJoinMeetingPage:hover>.joinMeeting {
+	background-color: var(--clr_White);
+	color: var(--clr_Dark);
+	background-image: url(/assets/icons/Video.svg) ;
+
+}
+
+.newMeeting:hover {
+	background-color: var(--clr_White) !important;
+	color: var(--clr_Dark) !important;
+	background-image: url(/assets/icons/COCO-Line-Add.svg) !important;
+}
+
+.newMeeting:hover~.joinMeeting {
+	background-color: var(--clr_Purple) !important;
+	color: var(--clr_White);
+	background-image: url(/assets/icons/COCO-Line-Video.svg) !important;
+
+}
+
+
+
+.newJoinMeetingPage:focus-within>.newMeeting {
+	background-color: var(--clr_Purple);
+	color: var(--clr_White);
+	background-image: url(/assets/icons/Add.svg) ;
+
+}
+
+.newJoinMeetingPage:focus-within>.joinMeeting {
+	background-color: var(--clr_White);
+	color: var(--clr_Dark);
+	background-image: url(/assets/icons/Video.svg) ;
+
+}
+
+.newMeeting:focus {
+	background-color: var(--clr_White) !important;
+	color: var(--clr_Dark) !important;
+	background-image: url(/assets/icons/COCO-Line-Add.svg) !important;
+}
+
+.newMeeting:focus~.joinMeeting {
+	background-color: var(--clr_Purple) !important;
+	color: var(--clr_White);
+	background-image: url(/assets/icons/COCO-Line-Video.svg) !important;
+
 }

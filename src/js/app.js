@@ -1660,6 +1660,7 @@ const createPageFunctionality = (() => {
 				console.log('MetaMask is installed!');
 				ethereum.request({ method: 'eth_requestAccounts' }).then((accounts) => {
 					USERNAME = accounts[0]
+					EMAIL = accounts[0]
 					console.log('USERNAME: ', USERNAME);
 					transitionBetweenAuthenAndNewAndjoinMeetingPage()
 				})
