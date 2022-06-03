@@ -1791,6 +1791,10 @@ const createPageFunctionality = (() => {
 						break;
 				}
 			});
+
+		addEventListener(qs('.iconAccount'), 'click', showAccountSetting)
+		addEventListener(qs('.newMeeting'), 'click', createNewMeetingRoom)
+		addEventListener(qs('.joinMeeting'), 'click', joinNewMeetingRoom)
 	}
 
 	function _resetYourPassword() {
@@ -1981,6 +1985,19 @@ const createPageFunctionality = (() => {
 			addEventListener(qs(".resetYourPassword"), 'click', _resetYourPassword)
 		}
 
+	}
+	//TODO join and new meeting room functionality
+	//---> account setting
+	function showAccountSetting(){
+		console.log(`showAccountSetting`);
+	}
+	//---> create new room
+	function createNewMeetingRoom(){
+		console.log(`createNewMeetingRoom`);
+	}
+	//---> join room
+	function joinNewMeetingRoom(){
+		console.log(`joinNewMeetingRoom`);
 	}
 	return {
 		_addAuthenticationEventListeners,
