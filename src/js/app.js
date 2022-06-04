@@ -4,6 +4,7 @@ let {
 	createElement,
 	addGlobalEventListener,
 	addEventListener,
+	removeEventListener,
 	insertAfter,
 	slideME,
 	generateVerificationCode,
@@ -769,9 +770,16 @@ const createPageStructure = (() => {
 			let changePasswordSection = createElement('div', {
 				class: 'changePasswordSection'
 			})
+			let changeProfilePhotoSection = createElement('div', {
+				class: 'changeProfilePhotoSection'
+			})
 			let logOutIcon = createElement('img', {
 				class: 'logOutIcon',
 				src: '/assets/icons/logOut.svg'
+			})
+			let changePhotoIcon = createElement('img', {
+				class: 'changePhotoIcon',
+				src: '/assets/icons/COCO-Bold-Insta.svg'
 			})
 			let editNameIcon = createElement('img', {
 				class: 'editNameIcon',
@@ -784,6 +792,10 @@ const createPageStructure = (() => {
 			let logOutText = createElement('p', {
 				class: 'logOutText',
 				text: 'Log Out'
+			})
+			let changeProfilePhotoText = createElement('p', {
+				class: 'changeProfilePhotoText',
+				text: 'Change Profile Photo'
 			})
 			let editNameText = createElement('p', {
 				class: 'editNameText',
@@ -799,6 +811,9 @@ const createPageStructure = (() => {
 			editNameSection.appendChild(editNameText)
 			changePasswordSection.appendChild(changePasswordIcon)
 			changePasswordSection.appendChild(changePasswordText)
+			changeProfilePhotoSection.appendChild(changePhotoIcon)
+			changeProfilePhotoSection.appendChild(changeProfilePhotoText)
+			bodyAccountSetting.appendChild(changeProfilePhotoSection)
 			bodyAccountSetting.appendChild(editNameSection)
 			bodyAccountSetting.appendChild(changePasswordSection)
 			bodyAccountSetting.appendChild(logOutSection)
@@ -1991,19 +2006,45 @@ const createPageFunctionality = (() => {
 	}
 	//TODO join and new meeting room functionality  accountSettingDialogBox
 	//---> account setting
+	function editProfileName(){
+		console.log('edit profile name')
+		//TODO 
+	}
+	function changeProfilePhoto(){
+		console.log('change profile photo')
+		//TODO
+	}
+	function changePassword(){
+		console.log('change password')
+		//TODO 
+	}
+	function logOutProfile(){
+		console.log('log out profile')
+		//TODO 
+		//_logOutFromFireBase()
+		//back to auth page
+	}
 	function closeAccountSettingDialogueBox(e){
-		console.log(`closeAccountSettingDialogueBox`);
+		//add evet listener to the dialogue box button editNameSection changePasswordSection logOutSection changeProfilePhotoSection
+		addEventListener(qs('.editNameSection'), 'click', editProfileName,{once:true})
+		addEventListener(qs('.changePasswordSection'), 'click', changePassword,{once:true})
+		addEventListener(qs('.logOutSection'), 'click', logOutProfile,{once:true})
+		addEventListener(qs('.changeProfilePhotoSection'), 'click', changeProfilePhoto,{once:true})
+
+
 		if(e.target!==qs('.accountSettingDialogBox')&& e.target!==qs('.profileName')&& e.target!==qs('.iconAccount')){
 			console.log(`close account setting dialogue box`);
 			qs('.accountSettingDialogBox').close()
-
+			removeEventListener(qs('body'), 'click', closeAccountSettingDialogueBox)
 		}
 	}
 	function showAccountSetting(){
 		console.log(`showAccountSetting`);
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+			//TODO show mobile page version
 		}else{
 			showMeDialogBox('accountSetting',false)
+			qs('.profileName').innerHTML=USERNAME
 			addEventListener(qs('body'), 'click', closeAccountSettingDialogueBox)
 
 		}

@@ -93,6 +93,12 @@ export const addEventListener = (parent, type, callback, options = false) => {
 		options
 	);
 };
+export const removeEventListener = (parent, type, callback) => {
+	parent.removeEventListener(
+		type,
+		callback,
+	);
+};
 
 
 export const insertAfter = (newElement, referenceElement) => {
