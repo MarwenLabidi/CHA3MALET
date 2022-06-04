@@ -1712,9 +1712,12 @@ const createPageFunctionality = (() => {
 			// keyframes
 			{
 				left: '100%',
+				backgroundColor: `hsla(0, 0%, 0%, 1)`,
+
 			},
 			{
 				left: '0%',
+				backgroundColor: `hsla(0, 0%, 16%, 1)`,
 			}
 		], {
 			duration: 800,
@@ -1741,7 +1744,7 @@ const createPageFunctionality = (() => {
 			}
 			qs('.newJoinMeetingPage').style.position = 'static'
 
-		}, 1000);
+		}, 500);
 		//NOTE DELETE EMAL ASSIGN
 		EMAIL = `labidimarwen6@gmail.com`
 		// get the username from the database
