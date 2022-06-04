@@ -1,0 +1,93 @@
+.accountSettingPageSmallScreens{
+	position: absolute;
+	background-color: black;
+	width: 100%;
+	height: 100%;
+	top: -100%;
+	left: 0;
+	& .backArrow{
+		height: 21vw;
+		width: 21vw;
+		object-fit: cover;
+		margin: 0 auto;
+		transform: translateY(-25%);
+		opacity: 0.7;
+		max-width: 120px;
+		max-height: 120px;
+		
+	}
+	& .profilePhotoAndChangeImgIcon{
+		position:relative;
+		& .profilePhoto{
+			border-radius: 50%;
+			margin: 0 auto;
+			height: 40vw;
+			width: 40vw;
+			/* object-fit: contain; */
+			
+		}
+		& .changePhotoIcon{
+			position: absolute;
+			/* top: 50%; */
+			bottom:0;
+			left: 55%;
+			height: 12vw;
+			width: 12vw;
+			background-color:black;
+			border-radius: 50%;
+		}
+		
+	}
+	& .profileName{
+		text-align: center;
+		padding: 3vw;
+
+	}
+	& .bodyAccountSetting{
+		background-color: var(--clr_Dark-100);
+		height:64%;
+		border-radius: 50% 50% 0 0;
+		display: grid;
+		align-items: center;
+		justify-content:center;
+		& div{
+			/* background-color: red; */
+			justify-items: center;
+			display: grid;
+			justify-content: center;
+			text-align: center;
+			height:100px;
+			width:100px;
+			& img{
+				transition: all 0.3s ease-in-out;
+				/* align-self: center; */
+				background-color: black;
+				border-radius: 50%;
+				height: 75px;
+				width: 75px;
+				
+			}
+			& img:hover,& img:focus{
+				box-shadow: 0px 0px 10px white;
+			}
+			& img:active{
+				box-shadow: 0px 0px 10px black;
+				transform:scale(0.9);
+			}
+			& P{
+				width: 130px;
+				padding-top: 10px;
+
+			}
+			& .logOutIcon{
+				background-color: white;
+				border-radius: 50%;
+			}
+		}
+
+	}
+}
+
+.changePhotoIcon:active{
+	transform: scale(0.9);
+}

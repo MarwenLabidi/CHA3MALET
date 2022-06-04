@@ -69,7 +69,7 @@ let countLoginClick = 0
 //NOTE assign null to username
 let USERNAME = `Marwen`
 let EMAIL = null
-// let PHOTO_URL=null
+let PHOTO_URL = null
 
 
 
@@ -653,9 +653,9 @@ const createPageStructure = (() => {
 		editNameSection.appendChild(editNameText)
 		changePasswordSection.appendChild(changePasswordIcon)
 		changePasswordSection.appendChild(changePasswordText)
-		bodyAccountSetting.appendChild(logOutSection)
 		bodyAccountSetting.appendChild(editNameSection)
 		bodyAccountSetting.appendChild(changePasswordSection)
+		bodyAccountSetting.appendChild(logOutSection)
 		accountSettingPageSmallScreens.appendChild(bodyAccountSetting)
 		return accountSettingPageSmallScreens
 	}
@@ -1609,7 +1609,8 @@ const createPageFunctionality = (() => {
 				EMAIL = user.email
 				console.log('user.photoURL: ', user.photoURL);
 				transitionBetweenAuthenAndNewAndjoinMeetingPage()
-				qs('.iconAccount').src = user.photoURL
+				PHOTO_URL = user.photoURL
+				qs('.iconAccount').src = PHOTO_URL
 				// ...
 			})
 			.catch((error) => {
@@ -1646,7 +1647,8 @@ const createPageFunctionality = (() => {
 				EMAIL = user.email
 				console.log('user.photoURL: ', user.photoURL);
 				transitionBetweenAuthenAndNewAndjoinMeetingPage()
-				qs('.iconAccount').src = user.photoURL
+				PHOTO_URL = user.photoURL
+				qs('.iconAccount').src = PHOTO_URL
 				// ...
 			}).catch((error) => {
 				// Handle Errors here.
@@ -1673,7 +1675,9 @@ const createPageFunctionality = (() => {
 			console.log(`desktop browser`);
 			if (typeof window.ethereum !== 'undefined') {
 				console.log('MetaMask is installed!');
-				ethereum.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+				ethereum.request({
+					method: 'eth_requestAccounts'
+				}).then((accounts) => {
 					USERNAME = accounts[0]
 					EMAIL = accounts[0]
 					console.log('USERNAME: ', USERNAME);
@@ -2006,56 +2010,133 @@ const createPageFunctionality = (() => {
 	}
 	//TODO join and new meeting room functionality  accountSettingDialogBox
 	//---> account setting
-	function editProfileName(){
+	function _backToRoomPageFromAccountSetting() {
+
+		// console.log(`backToHomePageFromRegisterPageInSmallScreen`);
+		qs('.accountSettingPageSmallScreens').animate([
+			// keyframes
+			{
+				top: '0',
+			},
+			{
+				top: '-100%',
+			}
+		], {
+			duration: 800,
+			fill: 'both',
+			easing: 'ease-in-out'
+			// iterations: Infinity
+
+		});
+
+		setTimeout(() => {
+			qs('.accountSettingPageSmallScreens').remove()
+		}, 1000);
+	}
+	function editProfileName() {
 		console.log('edit profile name')
 		//TODO 
 	}
-	function changeProfilePhoto(){
+
+	function changeProfilePhoto() {
 		console.log('change profile photo')
 		//TODO
 	}
-	function changePassword(){
+
+	function changePassword() {
 		console.log('change password')
 		//TODO 
 	}
-	function logOutProfile(){
+
+	function logOutProfile() {
 		console.log('log out profile')
 		//TODO 
 		//_logOutFromFireBase()
 		//back to auth page
 	}
-	function closeAccountSettingDialogueBox(e){
+
+	function closeAccountSettingDialogueBox(e) {
 		//add evet listener to the dialogue box button editNameSection changePasswordSection logOutSection changeProfilePhotoSection
-		addEventListener(qs('.editNameSection'), 'click', editProfileName,{once:true})
-		addEventListener(qs('.changePasswordSection'), 'click', changePassword,{once:true})
-		addEventListener(qs('.logOutSection'), 'click', logOutProfile,{once:true})
-		addEventListener(qs('.changeProfilePhotoSection'), 'click', changeProfilePhoto,{once:true})
+		addEventListener(qs('.editNameSection'), 'click', editProfileName, {
+			once: true
+		})
+		addEventListener(qs('.changePasswordSection'), 'click', changePassword, {
+			once: true
+		})
+		addEventListener(qs('.logOutSection'), 'click', logOutProfile, {
+			once: true
+		})
+		addEventListener(qs('.changeProfilePhotoSection'), 'click', changeProfilePhoto, {
+			once: true
+		})
 
 
-		if(e.target!==qs('.accountSettingDialogBox')&& e.target!==qs('.profileName')&& e.target!==qs('.iconAccount')){
+		if (e.target !== qs('.accountSettingDialogBox') && e.target !== qs('.profileName') && e.target !== qs('.iconAccount')) {
 			console.log(`close account setting dialogue box`);
 			qs('.accountSettingDialogBox').close()
 			removeEventListener(qs('body'), 'click', closeAccountSettingDialogueBox)
 		}
 	}
-	function showAccountSetting(){
+
+	function showAccountSetting() {
 		console.log(`showAccountSetting`);
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-			//TODO show mobile page version
-		}else{
-			showMeDialogBox('accountSetting',false)
-			qs('.profileName').innerHTML=USERNAME
+			//TODO show mobile page version  _createAccountSettingPageSmallScreens()
+			let AccountSettingPageSmallScreens = createPageStructure._createAccountSettingPageSmallScreens()
+			APP.appendChild(AccountSettingPageSmallScreens)
+			qs('.profileName').innerHTML = USERNAME
+			if (PHOTO_URL) {
+				qs('.profilePhoto').src = PHOTO_URL
+			}
+			qs('.accountSettingPageSmallScreens').animate([
+					// keyframes
+					{
+						top: '-100%',
+						// backgroundColor: ''
+					},
+					{
+						top: '0',
+						// backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+					},
+					{
+						top: '-10%',
+						// backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+		
+					},
+					{
+						top: '0',
+						// backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+		
+					}
+				], {
+					duration: 900,
+					fill: 'both',
+					easing: 'ease-in-out'
+					// iterations: Infinity
+		
+				});
+				addEventListener(qs('.accountSettingPageSmallScreens>img.backArrow'), 'click', _backToRoomPageFromAccountSetting, {
+				once: true
+			})
+			slideME('up', qs('.accountSettingPageSmallScreens'))
+			addEventListener(qs('.editNameSection'), 'click', editProfileName)
+			addEventListener(qs('.changePasswordSection'), 'click', changePassword)
+			addEventListener(qs('.logOutSection'), 'click', logOutProfile)
+			addEventListener(qs('.changePhotoIcon'), 'click', changeProfilePhoto)
+		} else {
+			showMeDialogBox('accountSetting', false)
+			qs('.profileName').innerHTML = USERNAME
 			addEventListener(qs('body'), 'click', closeAccountSettingDialogueBox)
 
 		}
 
 	}
 	//---> create new room
-	function createNewMeetingRoom(){
+	function createNewMeetingRoom() {
 		console.log(`createNewMeetingRoom`);
 	}
 	//---> join room
-	function joinNewMeetingRoom(){
+	function joinNewMeetingRoom() {
 		console.log(`joinNewMeetingRoom`);
 	}
 	return {
