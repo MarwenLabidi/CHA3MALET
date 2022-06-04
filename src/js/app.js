@@ -67,9 +67,9 @@ const providerFacebook = new FacebookAuthProvider();
 
 let countLoginClick = 0
 //NOTE assign null to username
-let USERNAME = `Marwen`
-let EMAIL = null
-let PHOTO_URL = null
+let USERNAME = ``
+let EMAIL = ``
+let PHOTO_URL = ``
 
 
 
@@ -2019,7 +2019,7 @@ const createPageFunctionality = (() => {
 				top: '0',
 			},
 			{
-				top: '-100%',
+				top: '-120%',
 			}
 		], {
 			duration: 800,
@@ -2081,7 +2081,7 @@ const createPageFunctionality = (() => {
 	function showAccountSetting() {
 		console.log(`showAccountSetting`);
 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-			//TODO show mobile page version  _createAccountSettingPageSmallScreens()
+			// show mobile page version  _createAccountSettingPageSmallScreens()
 			let AccountSettingPageSmallScreens = createPageStructure._createAccountSettingPageSmallScreens()
 			APP.appendChild(AccountSettingPageSmallScreens)
 			qs('.profileName').innerHTML = USERNAME
@@ -2153,6 +2153,7 @@ onAuthStateChanged(auth, (user) => {
 		console.log('USERNAME: ', USERNAME);
 		EMAIL = user.email
 		console.log('user.photoURL: ', user.photoURL);
+		PHOTO_URL = user.photoURL
 		createPageFunctionality.transitionBetweenAuthenAndNewAndjoinMeetingPage()
 		qs('.iconAccount').src = user.photoURL
 		// User is signed in, see docs for a list of available properties
