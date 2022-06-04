@@ -1989,10 +1989,25 @@ const createPageFunctionality = (() => {
 		}
 
 	}
-	//TODO join and new meeting room functionality
+	//TODO join and new meeting room functionality  accountSettingDialogBox
 	//---> account setting
+	function closeAccountSettingDialogueBox(e){
+		console.log(`closeAccountSettingDialogueBox`);
+		if(e.target!==qs('.accountSettingDialogBox')&& e.target!==qs('.profileName')&& e.target!==qs('.iconAccount')){
+			console.log(`close account setting dialogue box`);
+			qs('.accountSettingDialogBox').close()
+
+		}
+	}
 	function showAccountSetting(){
 		console.log(`showAccountSetting`);
+		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		}else{
+			showMeDialogBox('accountSetting',false)
+			addEventListener(qs('body'), 'click', closeAccountSettingDialogueBox)
+
+		}
+
 	}
 	//---> create new room
 	function createNewMeetingRoom(){
