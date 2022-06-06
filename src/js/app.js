@@ -1528,9 +1528,10 @@ const createPageFunctionality = (() => {
 			userInputCode = +userInputCode
 
 			if (userInputCode === CODE) {
-				showMeDialogBox('askAboutProfilePhoto')
-				addEventListener(qs('.yesButton'), 'click', _yesButtonFct)
-				addEventListener(qs('.noButton'), 'click', _noButtonFct)
+				//FIXME delete this
+				// showMeDialogBox('askAboutProfilePhoto')
+				// addEventListener(qs('.yesButton'), 'click', _yesButtonFct)
+				// addEventListener(qs('.noButton'), 'click', _noButtonFct)
 				// uncomment the code bellow
 				createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
 					.then((userCredential) => {
@@ -1539,10 +1540,13 @@ const createPageFunctionality = (() => {
 						// add the username to the database
 						USERNAME = inputRegisterUserName.value
 						EMAIL = inputRegisterEmail.value
+						
 
 						try {
 							addDoc(collection(db, EMAIL), {USERNAME}).then(response => {
 								console.log("Document written with ID: ",response);
+								// showMeDialogBox('successfullyCreatedAccount')
+
 							});
 						} catch (e) {
 							console.error("Error adding document: ", e);
@@ -1764,6 +1768,7 @@ const createPageFunctionality = (() => {
 
 		}, 500);
 		//NOTE DELETE EMAL ASSIGN
+		//FIXME HGET IMAGE PHOTO FROMDATA BASE
 		// EMAIL = `labidimarwen6@gmail.com`
 		// get the username from the database
 		const q = query(collection(db, EMAIL));
@@ -1842,6 +1847,7 @@ const createPageFunctionality = (() => {
 	}
 
 	function _yesButtonFct() {
+		//FIXME
 		console.log(`yes button`);
 		qs('.dialogBox').remove()
 		showMeDialogBox('uploadImg')
@@ -1850,10 +1856,11 @@ const createPageFunctionality = (() => {
 	}
 
 	function _noButtonFct() {
+		//FIXME
 		console.log(`no button`);
 		qs('.dialogBox').remove()
-		showMeDialogBox('successfullyCreatedAccount')
-		addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
+		// showMeDialogBox('successfullyCreatedAccount')
+		// addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
 	}
 	// upload profile photo 
 	function uploadProfilePhoto() {
@@ -2156,7 +2163,11 @@ onAuthStateChanged(auth, (user) => {
 		console.log('user.photoURL: ', user.photoURL);
 		PHOTO_URL = user.photoURL
 		createPageFunctionality.transitionBetweenAuthenAndNewAndjoinMeetingPage()
-		qs('.iconAccount').src = user.photoURL
+		if( user.photoURL){
+
+			qs('.iconAccount').src = user.photoURL
+		}
+		//FIXME get the image from storage if there is image
 		// User is signed in, see docs for a list of available properties
 		// https://firebase.google.com/docs/reference/js/firebase.User
 		const uid = user.uid;
