@@ -66,7 +66,6 @@ const providerFacebook = new FacebookAuthProvider();
 
 
 let countLoginClick = 0
-//NOTE assign null to username
 let USERNAME = ``
 let EMAIL = ``
 let PHOTO_URL = ``
@@ -183,7 +182,7 @@ const createPageStructure = (() => {
 			placeholder: 'User Name',
 			type: 'text',
 			required: true,
-			pattern: "^(?=.{3,10}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" //  username is 3-10 characters, long no _ or . at the beginning,no __ or _. or ._ or .. inside, allowed characters,no _ or . at the end
+			pattern: "^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" //  username is 3-20 characters, long no _ or . at the beginning,no __ or _. or ._ or .. inside, allowed characters,no _ or . at the end
 		})
 		let inputEmail = createElement('input', {
 			class: 'inputEmail',
@@ -692,7 +691,7 @@ const createPageStructure = (() => {
 		} else if (errType === "userNamePattern") {
 			let errorMessageText = createElement('p', {
 				class: 'errorMessageText',
-				text: 'User Name must be at least 3 characters long'
+				text: 'User Name must be more than 3 and less than characters and no spaces and charachters'
 			})
 			errorMessage.appendChild(errorMessageText)
 		} else if (errType === "eMailPattern") {
@@ -1337,76 +1336,76 @@ const createPageFunctionality = (() => {
 		EMAIL = inputLoginEmail.value
 
 		// match input regex
-		//NOTE uncomment the regex for email
-		// let patternEmail = inputLoginEmail.getAttribute("pattern");
-		// let regexEmail = new RegExp(patternEmail);
-		// if (!regexEmail.test(inputLoginEmail.value)) {
-		// 	// Pattern does not matches!
-		// 	inputLoginEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-		// 	let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
-		// 	if(qs('.errorMessageText')){
-		// 		qs('.errorMessageText').remove()
-		// 	}
-		// 	insertAfter(errorMessage, qs('.inputPassword'))
-		// 	return
-		// } 
-		// let patternPassword = inputLoginPassword.getAttribute("pattern");
-		// let regexPassword = new RegExp(patternPassword);
-		// if (!regexPassword.test(inputLoginPassword.value)) {
-		// 	// Pattern does not matches!
-		// 	inputLoginPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-		// 	let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
-		// 	if(qs('.errorMessageText')){
-		// 		qs('.errorMessageText').remove()
-		// 	}
-		// 	insertAfter(errorMessage, qs('.inputPassword'))
-		// 	return
-		// } 
+		// uncomment the regex for email
+		let patternEmail = inputLoginEmail.getAttribute("pattern");
+		let regexEmail = new RegExp(patternEmail);
+		if (!regexEmail.test(inputLoginEmail.value)) {
+			// Pattern does not matches!
+			inputLoginEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
+			if(qs('.errorMessageText')){
+				qs('.errorMessageText').remove()
+			}
+			insertAfter(errorMessage, qs('.inputPassword'))
+			return
+		} 
+		let patternPassword = inputLoginPassword.getAttribute("pattern");
+		let regexPassword = new RegExp(patternPassword);
+		if (!regexPassword.test(inputLoginPassword.value)) {
+			// Pattern does not matches!
+			inputLoginPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
+			if(qs('.errorMessageText')){
+				qs('.errorMessageText').remove()
+			}
+			insertAfter(errorMessage, qs('.inputPassword'))
+			return
+		} 
 		//firebase login 
-		//NOTE  uncomment sign int
-		// signInWithEmailAndPassword(auth, inputLoginEmail.value, inputLoginPassword.value)
-		// 	.then((userCredential) => {
-		// 		// Signed in 
-		// 		//  get data from firebase
-		// 		getDocs(collection(db, EMAIL)).then(querySnapshot => {
-		// 			querySnapshot.forEach((doc) => {
-		// 				// console.log(`${doc.id} => ${doc.data().USERNAME}`);
-		// 				USERNAME = doc.data().USERNAME
-		// 				console.log('USERNAME: ', USERNAME);
-		// 			});
-		// 		});
+		//  uncomment sign int
+		signInWithEmailAndPassword(auth, inputLoginEmail.value, inputLoginPassword.value)
+			.then((userCredential) => {
+				// Signed in 
+				//  get data from firebase
+				getDocs(collection(db, EMAIL)).then(querySnapshot => {
+					querySnapshot.forEach((doc) => {
+						// console.log(`${doc.id} => ${doc.data().USERNAME}`);
+						USERNAME = doc.data().USERNAME
+						console.log('USERNAME: ', USERNAME);
+					});
+				});
 
 
-		// 		const user = userCredential.user;
-		// 		console.log('user: ', user);
-		// 		// ...
+				const user = userCredential.user;
+				console.log('user: ', user);
+				// ...
 		transitionBetweenAuthenAndNewAndjoinMeetingPage()
-		// })
-		// .catch((error) => {
-		// 	const errorCode = error.code;
-		// 	console.log('errorCode: ', errorCode);
-		// 	const errorMessage = error.message;
-		// 	console.log('errorMessage: ', errorMessage);
-		// 	let errorMessages
-		// 	if (countLoginClick < 3) {
-		// 		if (qs('.errorMessageText')) {
-		// 			qs('.errorMessageText').remove()
-		// 		}
-		// 		if (qs('.resetYourPassword')) {
-		// 			qs('.resetYourPassword').remove()
-		// 		}
+		})
+		.catch((error) => {
+			const errorCode = error.code;
+			console.log('errorCode: ', errorCode);
+			const errorMessage = error.message;
+			console.log('errorMessage: ', errorMessage);
+			let errorMessages
+			if (countLoginClick < 3) {
+				if (qs('.errorMessageText')) {
+					qs('.errorMessageText').remove()
+				}
+				if (qs('.resetYourPassword')) {
+					qs('.resetYourPassword').remove()
+				}
 
-		// 		errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
-		// 		insertAfter(errorMessages, qs('.inputPassword'))
-		// 	} else {
-		// 		countLoginClick = 0
-		// 		qs('.errorMessageText').remove()
-		// 		errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
-		// 		insertAfter(errorMessages, qs('.inputPassword'))
-		// 		_addAuthenticationEventListeners()
+				errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
+				insertAfter(errorMessages, qs('.inputPassword'))
+			} else {
+				countLoginClick = 0
+				qs('.errorMessageText').remove()
+				errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
+				insertAfter(errorMessages, qs('.inputPassword'))
+				_addAuthenticationEventListeners()
 
-		// 	}
-		// });
+			}
+		});
 
 
 	}
@@ -1418,44 +1417,44 @@ const createPageFunctionality = (() => {
 		let inputRegisterPassword = qs('.registerSection>.inputPassword')
 		// check the pattern
 		//  match the regex in the input
-		//NOTE uncomment this to check the pattern
-		// let patternUserName = inputRegisterUserName.getAttribute("pattern");
-		// let regexUserName = new RegExp(patternUserName);
-		// if (!regexUserName.test(inputRegisterUserName.value)) {
-		// 	// Pattern does not matches!
-		// 	inputRegisterUserName.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-		// 	let errorMessage = createPageStructure._createErrorMessage(`userNamePattern`)
-		// 	if(qs('.errorMessageText')){
-		// 		qs('.errorMessageText').remove()
-		// 	}
-		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
-		// 	// qs('.registerSection').append(errorMessage)
-		// 	return
-		// } 
-		// let patternEmail = inputRegisterEmail.getAttribute("pattern");
-		// let regexEmail = new RegExp(patternEmail);
-		// if (!regexEmail.test(inputRegisterEmail.value)) {
-		// 	// Pattern does not matches!
-		// 	inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-		// 	let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
-		// 	if(qs('.errorMessageText')){
-		// 		qs('.errorMessageText').remove()
-		// 	}
-		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
-		// 	return
-		// } 
-		// let patternPassword = inputRegisterPassword.getAttribute("pattern");
-		// let regexPassword = new RegExp(patternPassword);
-		// if (!regexPassword.test(inputRegisterPassword.value)) {
-		// 	// Pattern does not matches!
-		// 	inputRegisterPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-		// 	let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
-		// 	if(qs('.errorMessageText')){
-		// 		qs('.errorMessageText').remove()
-		// 	}
-		// 	insertAfter(errorMessage, qs('.orRegisterWith'))
-		// 	return
-		// } 
+		// uncomment this to check the pattern
+		let patternUserName = inputRegisterUserName.getAttribute("pattern");
+		let regexUserName = new RegExp(patternUserName);
+		if (!regexUserName.test(inputRegisterUserName.value)) {
+			// Pattern does not matches!
+			inputRegisterUserName.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			let errorMessage = createPageStructure._createErrorMessage(`userNamePattern`)
+			if(qs('.errorMessageText')){
+				qs('.errorMessageText').remove()
+			}
+			insertAfter(errorMessage, qs('.orRegisterWith'))
+			// qs('.registerSection').append(errorMessage)
+			return
+		} 
+		let patternEmail = inputRegisterEmail.getAttribute("pattern");
+		let regexEmail = new RegExp(patternEmail);
+		if (!regexEmail.test(inputRegisterEmail.value)) {
+			// Pattern does not matches!
+			inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
+			if(qs('.errorMessageText')){
+				qs('.errorMessageText').remove()
+			}
+			insertAfter(errorMessage, qs('.orRegisterWith'))
+			return
+		} 
+		let patternPassword = inputRegisterPassword.getAttribute("pattern");
+		let regexPassword = new RegExp(patternPassword);
+		if (!regexPassword.test(inputRegisterPassword.value)) {
+			// Pattern does not matches!
+			inputRegisterPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+			let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
+			if(qs('.errorMessageText')){
+				qs('.errorMessageText').remove()
+			}
+			insertAfter(errorMessage, qs('.orRegisterWith'))
+			return
+		} 
 
 		//NOTE UNCOMENT code and dlete the fake one
 		// const CODE = generateVerificationCode()
@@ -1532,34 +1531,34 @@ const createPageFunctionality = (() => {
 				showMeDialogBox('askAboutProfilePhoto')
 				addEventListener(qs('.yesButton'), 'click', _yesButtonFct)
 				addEventListener(qs('.noButton'), 'click', _noButtonFct)
-				//NOTE uncomment the code bellow
-				// createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
-				// 	.then((userCredential) => {
-				// 		// Signed in 
-				// 		const user = userCredential.user;
-				// 		// add the username to the database
-				// 		USERNAME = inputRegisterUserName.value
-				// 		EMAIL = inputRegisterEmail.value
+				// uncomment the code bellow
+				createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
+					.then((userCredential) => {
+						// Signed in 
+						const user = userCredential.user;
+						// add the username to the database
+						USERNAME = inputRegisterUserName.value
+						EMAIL = inputRegisterEmail.value
 
-				// 		try {
-				// 			addDoc(collection(db, EMAIL), {USERNAME}).then(response => {
-				// 				console.log("Document written with ID: ",response);
-				// 			});
-				// 		} catch (e) {
-				// 			console.error("Error adding document: ", e);
-				// 		}
+						try {
+							addDoc(collection(db, EMAIL), {USERNAME}).then(response => {
+								console.log("Document written with ID: ",response);
+							});
+						} catch (e) {
+							console.error("Error adding document: ", e);
+						}
 
 				// ...
-				// })
-				// .catch((error) => {
-				// 	const errorCode = error.code;
-				// 	console.log('errorCode: ', errorCode);
-				// 	const errorMessage = error.message;
-				// 	console.log('errorMessage: ', errorMessage);
-				// 	// ..
-				// 	qs('.dialogBox').remove()
-				// 	inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-				// });
+				})
+				.catch((error) => {
+					const errorCode = error.code;
+					console.log('errorCode: ', errorCode);
+					const errorMessage = error.message;
+					console.log('errorMessage: ', errorMessage);
+					// ..
+					qs('.dialogBox').remove()
+					inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+				});
 
 				//  delete verifiction dialog and show success dialog
 				// add event lister to continue button
@@ -1765,7 +1764,7 @@ const createPageFunctionality = (() => {
 
 		}, 500);
 		//NOTE DELETE EMAL ASSIGN
-		EMAIL = `labidimarwen6@gmail.com`
+		// EMAIL = `labidimarwen6@gmail.com`
 		// get the username from the database
 		const q = query(collection(db, EMAIL));
 		getDocs(q).then((querySnapshot) => {
@@ -1825,21 +1824,21 @@ const createPageFunctionality = (() => {
 		qs('.closeButton').addEventListener('click', () => {
 			qs('.dialogBox').close();
 		})
-		//NOTE uncomment the code bellow
-		// qs(".resetYourPassword").addEventListener('click', () => {
-		// 	console.log(`reset your password`);
-		// 	let emailAddress = inputEmail.value;
-		// 	sendPasswordResetEmail(auth, emailAddress)
-		// 		.then(function () {
-		// 			// Email sent.
-		// 			console.log(`done`);
-		// 		})
-		// 		.catch(function (error) {
-		// 			console.log(`not sent yet`);
-		// 			console.log('error: ', error);
-		// 			// An error happened.
-		// 		});
-		// })
+		// uncomment the code bellow
+		qs(".resetYourPassword").addEventListener('click', () => {
+			console.log(`reset your password`);
+			let emailAddress = inputEmail.value;
+			sendPasswordResetEmail(auth, emailAddress)
+				.then(function () {
+					// Email sent.
+					console.log(`done`);
+				})
+				.catch(function (error) {
+					console.log(`not sent yet`);
+					console.log('error: ', error);
+					// An error happened.
+				});
+		})
 	}
 
 	function _yesButtonFct() {
@@ -1870,7 +1869,7 @@ const createPageFunctionality = (() => {
 			console.log('file: ', file);
 			console.log(typeof (file));
 
-			//NOTE delete the assignemetof mil bellow
+			// delete the assignemetof mil bellow
 			EMAIL = `labidimarwen6@gmail.com`
 
 			const storage = getStorage();
@@ -2051,8 +2050,10 @@ const createPageFunctionality = (() => {
 	function logOutProfile() {
 		console.log('log out profile')
 		//TODO 
-		//_logOutFromFireBase()
-		//back to auth page
+		_logOutFromFireBase()
+		//refrech page javascript
+		location.reload()
+		
 	}
 
 	function closeAccountSettingDialogueBox(e) {
