@@ -2156,10 +2156,11 @@ const createPageFunctionality = (() => {
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 		console.log('user: ', user);
-		console.log('user: ', user);
 		USERNAME = user.displayName
 		console.log('USERNAME: ', USERNAME);
+		//TODO email is here always
 		EMAIL = user.email
+		console.log('EMAIL: ', EMAIL);
 		console.log('user.photoURL: ', user.photoURL);
 		PHOTO_URL = user.photoURL
 		createPageFunctionality.transitionBetweenAuthenAndNewAndjoinMeetingPage()
