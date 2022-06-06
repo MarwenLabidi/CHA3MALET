@@ -915,7 +915,7 @@ const createPageStructure = (() => {
 			})
 			let continueButton = createElement('button', {
 				class: 'continueButton',
-				text: 'Continue'
+				text: 'ok'
 			})
 			dialogBox.appendChild(doneIcon)
 			dialogBox.appendChild(doneTitle)
@@ -1343,24 +1343,24 @@ const createPageFunctionality = (() => {
 			// Pattern does not matches!
 			inputLoginEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 			let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
-			if(qs('.errorMessageText')){
+			if (qs('.errorMessageText')) {
 				qs('.errorMessageText').remove()
 			}
 			insertAfter(errorMessage, qs('.inputPassword'))
 			return
-		} 
+		}
 		let patternPassword = inputLoginPassword.getAttribute("pattern");
 		let regexPassword = new RegExp(patternPassword);
 		if (!regexPassword.test(inputLoginPassword.value)) {
 			// Pattern does not matches!
 			inputLoginPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 			let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
-			if(qs('.errorMessageText')){
+			if (qs('.errorMessageText')) {
 				qs('.errorMessageText').remove()
 			}
 			insertAfter(errorMessage, qs('.inputPassword'))
 			return
-		} 
+		}
 		//firebase login 
 		//  uncomment sign int
 		signInWithEmailAndPassword(auth, inputLoginEmail.value, inputLoginPassword.value)
@@ -1379,33 +1379,33 @@ const createPageFunctionality = (() => {
 				const user = userCredential.user;
 				console.log('user: ', user);
 				// ...
-		transitionBetweenAuthenAndNewAndjoinMeetingPage()
-		})
-		.catch((error) => {
-			const errorCode = error.code;
-			console.log('errorCode: ', errorCode);
-			const errorMessage = error.message;
-			console.log('errorMessage: ', errorMessage);
-			let errorMessages
-			if (countLoginClick < 3) {
-				if (qs('.errorMessageText')) {
+				transitionBetweenAuthenAndNewAndjoinMeetingPage()
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				console.log('errorCode: ', errorCode);
+				const errorMessage = error.message;
+				console.log('errorMessage: ', errorMessage);
+				let errorMessages
+				if (countLoginClick < 3) {
+					if (qs('.errorMessageText')) {
+						qs('.errorMessageText').remove()
+					}
+					if (qs('.resetYourPassword')) {
+						qs('.resetYourPassword').remove()
+					}
+
+					errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
+					insertAfter(errorMessages, qs('.inputPassword'))
+				} else {
+					countLoginClick = 0
 					qs('.errorMessageText').remove()
-				}
-				if (qs('.resetYourPassword')) {
-					qs('.resetYourPassword').remove()
-				}
+					errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
+					insertAfter(errorMessages, qs('.inputPassword'))
+					_addAuthenticationEventListeners()
 
-				errorMessages = createPageStructure._createErrorMessage(`notFoundEmailOrPassword`)
-				insertAfter(errorMessages, qs('.inputPassword'))
-			} else {
-				countLoginClick = 0
-				qs('.errorMessageText').remove()
-				errorMessages = createPageStructure._createErrorMessage(`resetYourPassword`)
-				insertAfter(errorMessages, qs('.inputPassword'))
-				_addAuthenticationEventListeners()
-
-			}
-		});
+				}
+			});
 
 
 	}
@@ -1424,42 +1424,40 @@ const createPageFunctionality = (() => {
 			// Pattern does not matches!
 			inputRegisterUserName.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 			let errorMessage = createPageStructure._createErrorMessage(`userNamePattern`)
-			if(qs('.errorMessageText')){
+			if (qs('.errorMessageText')) {
 				qs('.errorMessageText').remove()
 			}
 			insertAfter(errorMessage, qs('.orRegisterWith'))
 			// qs('.registerSection').append(errorMessage)
 			return
-		} 
+		}
 		let patternEmail = inputRegisterEmail.getAttribute("pattern");
 		let regexEmail = new RegExp(patternEmail);
 		if (!regexEmail.test(inputRegisterEmail.value)) {
 			// Pattern does not matches!
 			inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 			let errorMessage = createPageStructure._createErrorMessage(`eMailPattern`)
-			if(qs('.errorMessageText')){
+			if (qs('.errorMessageText')) {
 				qs('.errorMessageText').remove()
 			}
 			insertAfter(errorMessage, qs('.orRegisterWith'))
 			return
-		} 
+		}
 		let patternPassword = inputRegisterPassword.getAttribute("pattern");
 		let regexPassword = new RegExp(patternPassword);
 		if (!regexPassword.test(inputRegisterPassword.value)) {
 			// Pattern does not matches!
 			inputRegisterPassword.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
 			let errorMessage = createPageStructure._createErrorMessage(`passwordPattern`)
-			if(qs('.errorMessageText')){
+			if (qs('.errorMessageText')) {
 				qs('.errorMessageText').remove()
 			}
 			insertAfter(errorMessage, qs('.orRegisterWith'))
 			return
-		} 
+		}
 
-		//NOTE UNCOMENT code and dlete the fake one
-		// const CODE = generateVerificationCode()
-		//NOTE  delete this variiable below
-		const CODE = 1234
+		const CODE = generateVerificationCode()
+		
 
 		// setup email verification first with code
 		function sendVerificationMail(userMail, code) {
@@ -1528,11 +1526,7 @@ const createPageFunctionality = (() => {
 			userInputCode = +userInputCode
 
 			if (userInputCode === CODE) {
-				//FIXME delete this
-				// showMeDialogBox('askAboutProfilePhoto')
-				// addEventListener(qs('.yesButton'), 'click', _yesButtonFct)
-				// addEventListener(qs('.noButton'), 'click', _noButtonFct)
-				// uncomment the code bellow
+
 				createUserWithEmailAndPassword(auth, inputRegisterEmail.value, inputRegisterPassword.value)
 					.then((userCredential) => {
 						// Signed in 
@@ -1540,11 +1534,13 @@ const createPageFunctionality = (() => {
 						// add the username to the database
 						USERNAME = inputRegisterUserName.value
 						EMAIL = inputRegisterEmail.value
-						
+
 
 						try {
-							addDoc(collection(db, EMAIL), {USERNAME}).then(response => {
-								console.log("Document written with ID: ",response);
+							addDoc(collection(db, EMAIL), {
+								USERNAME
+							}).then(response => {
+								console.log("Document written with ID: ", response);
 								// showMeDialogBox('successfullyCreatedAccount')
 
 							});
@@ -1552,17 +1548,17 @@ const createPageFunctionality = (() => {
 							console.error("Error adding document: ", e);
 						}
 
-				// ...
-				})
-				.catch((error) => {
-					const errorCode = error.code;
-					console.log('errorCode: ', errorCode);
-					const errorMessage = error.message;
-					console.log('errorMessage: ', errorMessage);
-					// ..
-					qs('.dialogBox').remove()
-					inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
-				});
+						// ...
+					})
+					.catch((error) => {
+						const errorCode = error.code;
+						console.log('errorCode: ', errorCode);
+						const errorMessage = error.message;
+						console.log('errorMessage: ', errorMessage);
+						// ..
+						qs('.dialogBox').remove()
+						inputRegisterEmail.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--clr_Red-100');
+					});
 
 				//  delete verifiction dialog and show success dialog
 				// add event lister to continue button
@@ -1581,8 +1577,8 @@ const createPageFunctionality = (() => {
 		}
 		//pop up window with verification code
 		// type : accountSetting verificationCode successfullyCreatedAccount createNewRoom joinRoom uploadImg done changeName changePassword
-		//NOTE uncomment the send mail function
-		// sendVerificationMail(inputRegisterEmail.value, CODE)
+		// uncomment the send mail function
+		sendVerificationMail(inputRegisterEmail.value, CODE)
 		showMeDialogBox('verificationCode')
 		qsa('.verificationInput > input').forEach((input) => {
 			addEventListener(input, 'keyup', listenToKeyPressInInputVerificationCode)
@@ -1767,56 +1763,6 @@ const createPageFunctionality = (() => {
 			qs('.newJoinMeetingPage').style.position = 'static'
 
 		}, 500);
-		//NOTE DELETE EMAL ASSIGN
-		//FIXME HGET IMAGE PHOTO FROMDATA BASE
-		// EMAIL = `labidimarwen6@gmail.com`
-		// get the username from the database
-		const q = query(collection(db, EMAIL));
-		getDocs(q).then((querySnapshot) => {
-			querySnapshot.forEach((doc) => {
-				// doc.data() is never undefined for query doc snapshots
-				// console.log(doc.id, " => ", doc.data());
-				USERNAME = doc.data().USERNAME
-				console.log('USERNAME: ', USERNAME);
-			})
-		})
-
-
-
-
-
-		const storage = getStorage();
-		const storageRef = ref(storage, `profile-photos/${EMAIL}`);
-		getDownloadURL(storageRef)
-			.then((url) => {
-				// Insert url into an <img> tag to "download"
-				qs('.iconAccount').src = url;
-			})
-			.catch((error) => {
-				// A full list of error codes is available at
-				// https://firebase.google.com/docs/storage/web/handle-errors
-				switch (error.code) {
-					case 'storage/object-not-found':
-						// File doesn't exist
-						console.log('File doesn File doesn');
-						break;
-					case 'storage/unauthorized':
-						// User doesn't have permission to access the object
-						console.log(`user dont  have permisiion to access the object`);
-						break;
-					case 'storage/canceled':
-						// User canceled the upload
-						console.log('User canceled the upload: ');
-						break;
-
-						// ...
-
-					case 'storage/unknown':
-						// Unknown error occurred, inspect the server response
-						console.log(' Unknown error occurred: ');
-						break;
-				}
-			});
 
 		addEventListener(qs('.iconAccount'), 'click', showAccountSetting)
 		addEventListener(qs('.newMeeting'), 'click', createNewMeetingRoom)
@@ -1846,21 +1792,15 @@ const createPageFunctionality = (() => {
 		})
 	}
 
-	function _yesButtonFct() {
-		//FIXME
-		console.log(`yes button`);
-		qs('.dialogBox').remove()
+	function uploadImageToDB() {
+		console.log(`uploadImageToDB`);
 		showMeDialogBox('uploadImg')
 		addEventListener(qs('.uploadImgButton'), 'click', uploadProfilePhoto)
 
 	}
 
-	function _noButtonFct() {
-		//FIXME
-		console.log(`no button`);
+	function continueButton() {
 		qs('.dialogBox').remove()
-		// showMeDialogBox('successfullyCreatedAccount')
-		// addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
 	}
 	// upload profile photo 
 	function uploadProfilePhoto() {
@@ -1875,12 +1815,8 @@ const createPageFunctionality = (() => {
 			let file = photoUpload.files[0];
 			console.log('file: ', file);
 			console.log(typeof (file));
-
-			// delete the assignemetof mil bellow
-			EMAIL = `labidimarwen6@gmail.com`
-
 			const storage = getStorage();
-			const storageRef = ref(storage, `profile-photos/${EMAIL}`);
+			const storageRef = ref(storage, EMAIL);
 			const uploadTask = uploadBytesResumable(storageRef, file);
 			uploadTask.on('state_changed',
 				(snapshot) => {
@@ -1903,14 +1839,9 @@ const createPageFunctionality = (() => {
 				},
 				() => {
 					console.log(`uploaded succesfuly`);
-					// Handle successful uploads on complete
-					// For instance, get the download URL: https://firebasestorage.googleapis.com/...
-					// getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-					// 	console.log('File available at', downloadURL);
-					// });
 					qs('.dialogBox').remove()
-					showMeDialogBox('successfullyCreatedAccount')
-					addEventListener(qs('.continueButton'), 'click', transitionBetweenAuthenAndNewAndjoinMeetingPage)
+					showMeDialogBox('done')
+					addEventListener(qs('.continueButton'), 'click', continueButton)
 				}
 			);
 
@@ -2014,7 +1945,7 @@ const createPageFunctionality = (() => {
 		}
 
 	}
-	//TODO join and new meeting room functionality  accountSettingDialogBox
+	// join and new meeting room functionality  accountSettingDialogBox
 	//---> account setting
 	function _backToRoomPageFromAccountSetting() {
 
@@ -2039,6 +1970,7 @@ const createPageFunctionality = (() => {
 			qs('.accountSettingPageSmallScreens').remove()
 		}, 1000);
 	}
+
 	function editProfileName() {
 		console.log('edit profile name')
 		//TODO 
@@ -2046,7 +1978,7 @@ const createPageFunctionality = (() => {
 
 	function changeProfilePhoto() {
 		console.log('change profile photo')
-		//TODO
+		uploadImageToDB()
 	}
 
 	function changePassword() {
@@ -2056,32 +1988,47 @@ const createPageFunctionality = (() => {
 
 	function logOutProfile() {
 		console.log('log out profile')
-		//TODO 
 		_logOutFromFireBase()
 		//refrech page javascript
 		location.reload()
-		
+
 	}
 
 	function closeAccountSettingDialogueBox(e) {
 		//add evet listener to the dialogue box button editNameSection changePasswordSection logOutSection changeProfilePhotoSection
-		addEventListener(qs('.editNameSection'), 'click', editProfileName, {
-			once: true
-		})
-		addEventListener(qs('.changePasswordSection'), 'click', changePassword, {
-			once: true
-		})
-		addEventListener(qs('.logOutSection'), 'click', logOutProfile, {
-			once: true
-		})
-		addEventListener(qs('.changeProfilePhotoSection'), 'click', changeProfilePhoto, {
-			once: true
-		})
+		if (qs('.editNameSection')) {
+
+			addEventListener(qs('.editNameSection'), 'click', editProfileName, {
+				once: true
+			})
+		}
+		if (qs('.changePasswordSection')) {
+			addEventListener(qs('.changePasswordSection'), 'click', changePassword, {
+				once: true
+			})
+
+		}
+
+		if (qs('.logOutSection')) {
+			addEventListener(qs('.logOutSection'), 'click', logOutProfile, {
+				once: true
+			})
+		}
+
+		if (qs('.changeProfilePhotoSection')) {
+			addEventListener(qs('.changeProfilePhotoSection'), 'click', changeProfilePhoto, {
+				once: true
+			})
+		}
+
 
 
 		if (e.target !== qs('.accountSettingDialogBox') && e.target !== qs('.profileName') && e.target !== qs('.iconAccount')) {
 			console.log(`close account setting dialogue box`);
-			qs('.accountSettingDialogBox').close()
+			if (qs('.accountSettingDialogBox')) {
+
+				qs('.accountSettingDialogBox').close()
+			}
 			removeEventListener(qs('body'), 'click', closeAccountSettingDialogueBox)
 		}
 	}
@@ -2092,38 +2039,39 @@ const createPageFunctionality = (() => {
 			// show mobile page version  _createAccountSettingPageSmallScreens()
 			let AccountSettingPageSmallScreens = createPageStructure._createAccountSettingPageSmallScreens()
 			APP.appendChild(AccountSettingPageSmallScreens)
+			qs('.profilePhoto').src=qs('.iconAccount').src
 			qs('.profileName').innerHTML = USERNAME
 			if (PHOTO_URL) {
 				qs('.profilePhoto').src = PHOTO_URL
 			}
 			qs('.accountSettingPageSmallScreens').animate([
-					// keyframes
-					{
-						top: '-100%',
-						// backgroundColor: ''
-					},
-					{
-						top: '0',
-						// backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
-					},
-					{
-						top: '-10%',
-						// backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
-		
-					},
-					{
-						top: '0',
-						// backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
-		
-					}
-				], {
-					duration: 900,
-					fill: 'both',
-					easing: 'ease-in-out'
-					// iterations: Infinity
-		
-				});
-				addEventListener(qs('.accountSettingPageSmallScreens>img.backArrow'), 'click', _backToRoomPageFromAccountSetting, {
+				// keyframes
+				{
+					top: '-100%',
+					// backgroundColor: ''
+				},
+				{
+					top: '0',
+					// backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+				},
+				{
+					top: '-10%',
+					// backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+
+				},
+				{
+					top: '0',
+					// backgroundColor: `hsla(0, 0%, 7%, 0.5)`,
+
+				}
+			], {
+				duration: 900,
+				fill: 'both',
+				easing: 'ease-in-out'
+				// iterations: Infinity
+
+			});
+			addEventListener(qs('.accountSettingPageSmallScreens>img.backArrow'), 'click', _backToRoomPageFromAccountSetting, {
 				once: true
 			})
 			slideME('up', qs('.accountSettingPageSmallScreens'))
@@ -2157,22 +2105,46 @@ onAuthStateChanged(auth, (user) => {
 	if (user) {
 		console.log('user: ', user);
 		USERNAME = user.displayName
-		console.log('USERNAME: ', USERNAME);
-		//TODO email is here always
 		EMAIL = user.email
 		console.log('EMAIL: ', EMAIL);
-		console.log('user.photoURL: ', user.photoURL);
+		//
+		// get the username from the database
+		const q = query(collection(db, EMAIL));
+		getDocs(q).then((querySnapshot) => {
+			querySnapshot.forEach((doc) => {
+				// doc.data() is never undefined for query doc snapshots
+				// console.log(doc.id, " => ", doc.data());
+				USERNAME = doc.data().USERNAME
+				console.log('USERNAME: ', USERNAME);
+			})
+		})
 		PHOTO_URL = user.photoURL
+		console.log('PHOTO_URL: ', PHOTO_URL);
 		createPageFunctionality.transitionBetweenAuthenAndNewAndjoinMeetingPage()
-		if( user.photoURL){
+		//get profile photo
+		const storage = getStorage();
+		const storageRef = ref(storage, EMAIL);
+		getDownloadURL(storageRef)
+			.then((url) => {
+				// Insert url into an <img> tag to "download" profilePhoto
+				if(qs('.iconAccount')){
 
-			qs('.iconAccount').src = user.photoURL
-		}
-		//FIXME get the image from storage if there is image
-		// User is signed in, see docs for a list of available properties
-		// https://firebase.google.com/docs/reference/js/firebase.User
-		const uid = user.uid;
-		// ...
+					qs('.iconAccount').src = url;
+				}else{
+
+					qs('.profilePhoto').src = url;
+				}
+			})
+			.catch((error) => {
+				if(qs('.iconAccount')){
+
+					qs('.iconAccount').src = user.photoURL
+				}else{
+					
+					qs('.profilePhoto').src = user.photoURL
+				}
+
+			});
 	} else {
 		// User is signed out
 		console.log(' user is signed out: ', user);
