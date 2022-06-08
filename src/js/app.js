@@ -25,6 +25,9 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 	FacebookAuthProvider,
+	updatePassword,
+	reauthenticateWithCredential,
+	EmailAuthProvider
 } from "firebase/auth";
 import {
 	getFirestore,
@@ -1370,7 +1373,7 @@ const createPageFunctionality = (() => {
 				//  get data from firebase
 				getDocs(collection(db, 'USERS')).then(querySnapshot => {
 					querySnapshot.forEach((doc) => {
-						if(doc.id==EMAIL){
+						if (doc.id == EMAIL) {
 
 							USERNAME = doc.data().USERNAME
 							console.log('USERNAME: ', USERNAME);
@@ -1544,8 +1547,8 @@ const createPageFunctionality = (() => {
 							setDoc(doc(db, "USERS", EMAIL), {
 								USERNAME
 							}).then(response => {
-								console.log("Document written with ID: ", response);	
-								});
+								console.log("Document written with ID: ", response);
+							});
 						} catch (e) {
 							console.error("Error adding document: ", e);
 						}
@@ -1973,7 +1976,31 @@ const createPageFunctionality = (() => {
 
 	function editProfileName() {
 		console.log('edit profile name')
-		//TODO 
+		showMeDialogBox('changeName')
+		//changeNameButton changePasswordButton changeNameInput changePasswordInput
+		addEventListener(qs('.changeNameButton'), 'click', changeNameButton)
+
+		function changeNameButton() {
+			console.log(`changeNameButton`);
+			if (!qs('.changeNameInput').value) {
+				return
+			}
+
+			try {
+				// Add a new document in collection "cities"
+				setDoc(doc(db, "USERS", EMAIL), {
+					USERNAME: qs('.changeNameInput').value
+				}).then(response => {
+					console.log("Document written with ID: ", response);
+					//TODO show done pop up
+				});
+			} catch (e) {
+				console.error("Error adding document: ", e);
+				//TODO show error pop up
+			}
+		}
+
+
 		//chekck if the mail in the firestore first
 		// console.log(db);
 		// console.log('usersCollectionRef: ', usersCollectionRef);
@@ -1988,7 +2015,42 @@ const createPageFunctionality = (() => {
 
 	function changePassword() {
 		console.log('change password')
-		//TODO 
+		showMeDialogBox('changePassword')
+		addEventListener(qs('.changePasswordButton'), 'click', changePasswordButton)
+
+		function changePasswordButton() {
+			console.log(`change password`);
+			if (!qs('.changePasswordInput').value) {
+				return
+			}
+			const user = auth.currentUser;
+			//TODO get the real password fro input
+			const credential = EmailAuthProvider.credential(
+				auth.currentUser.email,
+				`12345678`
+			)
+			reauthenticateWithCredential(auth.currentUser, credential).then(() => {
+				// User re-authenticated.
+				console.log('User re-authenticated: ');
+				//TODO get the real password fro input
+				const newPassword =987654321
+				updatePassword(user, newPassword).then(() => {
+					// Update successful.
+					console.log(' Update successful: ');
+					//TODO show pop up sussucssful
+				}).catch((error) => {
+					console.log('error: ', error);
+					// An error ocurred
+					// TODO show pop up error
+				});
+			}).catch((error) => {
+				console.log('error: ', error);
+				// An error ocurred
+				// ...
+			});
+
+
+		}
 	}
 
 	function logOutProfile() {
@@ -2120,7 +2182,7 @@ onAuthStateChanged(auth, (user) => {
 			.then(querySnapshot => {
 				querySnapshot.forEach((doc) => {
 					// console.log(`${doc.id} => ${doc.data().USERNAME}`);
-					if(doc.id == EMAIL){
+					if (doc.id == EMAIL) {
 						USERNAME = doc.data().USERNAME
 						console.log('USERNAME: ', USERNAME);
 					}
