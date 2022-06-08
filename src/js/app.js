@@ -2000,7 +2000,7 @@ const createPageFunctionality = (() => {
 					console.log("Document written with ID: ", response);
 					qs('.dialogBox').remove()
 					showMeDialogBox('done')
-					qs('.continueButton').addEventListener('click', ()=>qs('.dialogBox').remove())
+					qs('.continueButton').addEventListener('click', () => qs('.dialogBox').remove())
 				});
 			} catch (e) {
 				console.error("Error adding document: ", e);
@@ -2045,7 +2045,7 @@ const createPageFunctionality = (() => {
 					console.log(' Update successful: ');
 					qs('.dialogBox').remove()
 					showMeDialogBox('done')
-					qs('.continueButton').addEventListener('click', ()=>qs('.dialogBox').remove())
+					qs('.continueButton').addEventListener('click', () => qs('.dialogBox').remove())
 				}).catch((error) => {
 					console.log('error: ', error);
 					// An error ocurred
@@ -2169,10 +2169,39 @@ const createPageFunctionality = (() => {
 	//TODO create new room
 	function createNewMeetingRoom() {
 		console.log(`createNewMeetingRoom`);
+		// let data = {
+		// 	name: 'Los Angeles',
+		// 	state: 'CA',
+		// 	country: 'USA'
+		// };
+		// try {
+		// 	// Add a new document in collection "cities"
+		// 	setDoc(doc(db, "ROOMS", `roomName2`), {
+		// 		data,
+		// 		name:`shiiit`
+		// 	}).then(response => {
+		// 		console.log("Document written with ID: ", response);
+		// 	});
+		// } catch (e) {
+		// 	console.error("Error adding document: ", e);
+		// }
 	}
 	//TODO join room
 	function joinNewMeetingRoom() {
 		console.log(`joinNewMeetingRoom`);
+
+		// getDocs(collection(db, `ROOMS`))
+		// 	.then(querySnapshot => {
+		// 		querySnapshot.forEach((doc) => {
+		// 			console.log(`${doc.id} => ${doc.data().name}`);
+		// 			console.log(`${doc.id} => ${doc.data().data.state}`);
+
+					
+		// 		});
+		// 	})
+		// 	.catch(error => {
+		// 		console.log('error: ', error);
+		// 	});
 	}
 	return {
 		_addAuthenticationEventListeners,
