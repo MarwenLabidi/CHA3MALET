@@ -949,12 +949,18 @@ const createPageStructure = (() => {
 				class: 'changePasswordInput',
 				placeholder: 'New Password'
 			})
+			let changePasswordInput2 = createElement('input', {
+				class: 'changePasswordInput2',
+				placeholder: 'Old Password'
+			})
 			let changePasswordButton = createElement('button', {
 				class: 'changePasswordButton',
 				text: 'Change '
 			})
 			dialogBox.appendChild(changePasswordH3)
+			dialogBox.appendChild(changePasswordInput2)
 			dialogBox.appendChild(changePasswordInput)
+
 			dialogBox.appendChild(changePasswordButton)
 		} else if (dialogType === 'resetPassword') {
 			let resetPasswordH3 = createElement('h3', {
@@ -1977,7 +1983,7 @@ const createPageFunctionality = (() => {
 	function editProfileName() {
 		console.log('edit profile name')
 		showMeDialogBox('changeName')
-		//changeNameButton changePasswordButton changeNameInput changePasswordInput
+		//changeNameButton changePasswordButton changeNameInput changePasswordInput changePasswordInput2
 		addEventListener(qs('.changeNameButton'), 'click', changeNameButton)
 
 		function changeNameButton() {
@@ -1992,11 +1998,12 @@ const createPageFunctionality = (() => {
 					USERNAME: qs('.changeNameInput').value
 				}).then(response => {
 					console.log("Document written with ID: ", response);
-					//TODO show done pop up
+					qs('.dialogBox').remove()
+					showMeDialogBox('done')
+					qs('.continueButton').addEventListener('click', ()=>qs('.dialogBox').remove())
 				});
 			} catch (e) {
 				console.error("Error adding document: ", e);
-				//TODO show error pop up
 			}
 		}
 
@@ -2020,28 +2027,28 @@ const createPageFunctionality = (() => {
 
 		function changePasswordButton() {
 			console.log(`change password`);
+			let oldPassword = qs('.changePasswordInput2').value
+			let newPassword = qs('.changePasswordInput').value
 			if (!qs('.changePasswordInput').value) {
 				return
 			}
 			const user = auth.currentUser;
-			//TODO get the real password fro input
 			const credential = EmailAuthProvider.credential(
 				auth.currentUser.email,
-				`12345678`
+				oldPassword
 			)
 			reauthenticateWithCredential(auth.currentUser, credential).then(() => {
 				// User re-authenticated.
 				console.log('User re-authenticated: ');
-				//TODO get the real password fro input
-				const newPassword =987654321
 				updatePassword(user, newPassword).then(() => {
 					// Update successful.
 					console.log(' Update successful: ');
-					//TODO show pop up sussucssful
+					qs('.dialogBox').remove()
+					showMeDialogBox('done')
+					qs('.continueButton').addEventListener('click', ()=>qs('.dialogBox').remove())
 				}).catch((error) => {
 					console.log('error: ', error);
 					// An error ocurred
-					// TODO show pop up error
 				});
 			}).catch((error) => {
 				console.log('error: ', error);
@@ -2159,11 +2166,11 @@ const createPageFunctionality = (() => {
 		}
 
 	}
-	//---> create new room
+	//TODO create new room
 	function createNewMeetingRoom() {
 		console.log(`createNewMeetingRoom`);
 	}
-	//---> join room
+	//TODO join room
 	function joinNewMeetingRoom() {
 		console.log(`joinNewMeetingRoom`);
 	}
