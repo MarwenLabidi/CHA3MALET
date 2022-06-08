@@ -33,7 +33,8 @@ import {
 	getDocs,
 	getDoc,
 	doc,
-	query
+	query,
+	setDoc
 } from "firebase/firestore";
 import {
 	getStorage,
@@ -66,9 +67,9 @@ const providerFacebook = new FacebookAuthProvider();
 
 
 let countLoginClick = 0
-let USERNAME = ``
-let EMAIL = ``
-let PHOTO_URL = ``
+let USERNAME = null
+let EMAIL = null
+let PHOTO_URL = null
 
 
 
@@ -1367,11 +1368,13 @@ const createPageFunctionality = (() => {
 			.then((userCredential) => {
 				// Signed in 
 				//  get data from firebase
-				getDocs(collection(db, EMAIL)).then(querySnapshot => {
+				getDocs(collection(db, 'USERS')).then(querySnapshot => {
 					querySnapshot.forEach((doc) => {
-						// console.log(`${doc.id} => ${doc.data().USERNAME}`);
-						USERNAME = doc.data().USERNAME
-						console.log('USERNAME: ', USERNAME);
+						if(doc.id==EMAIL){
+
+							USERNAME = doc.data().USERNAME
+							console.log('USERNAME: ', USERNAME);
+						}
 					});
 				});
 
@@ -1457,7 +1460,7 @@ const createPageFunctionality = (() => {
 		}
 
 		const CODE = generateVerificationCode()
-		
+
 
 		// setup email verification first with code
 		function sendVerificationMail(userMail, code) {
@@ -1537,13 +1540,12 @@ const createPageFunctionality = (() => {
 
 
 						try {
-							addDoc(collection(db, EMAIL), {
+							// Add a new document in collection "cities"
+							setDoc(doc(db, "USERS", EMAIL), {
 								USERNAME
 							}).then(response => {
-								console.log("Document written with ID: ", response);
-								// showMeDialogBox('successfullyCreatedAccount')
-
-							});
+								console.log("Document written with ID: ", response);	
+								});
 						} catch (e) {
 							console.error("Error adding document: ", e);
 						}
@@ -1678,7 +1680,7 @@ const createPageFunctionality = (() => {
 					method: 'eth_requestAccounts'
 				}).then((accounts) => {
 					USERNAME = accounts[0]
-					EMAIL = accounts[0]
+					EMAIL = `METAMASK`
 					console.log('USERNAME: ', USERNAME);
 					transitionBetweenAuthenAndNewAndjoinMeetingPage()
 				})
@@ -1744,9 +1746,7 @@ const createPageFunctionality = (() => {
 			// iterations: Infinity
 
 		});
-		// newJoinMeetingPage.addEventListener('animationend', () => {
-		// 	console.log(`animatin end`);
-		// })	
+
 		setTimeout(() => {
 			if (qs('.registerSection')) {
 				qs('.registerSection').remove()
@@ -1974,6 +1974,11 @@ const createPageFunctionality = (() => {
 	function editProfileName() {
 		console.log('edit profile name')
 		//TODO 
+		//chekck if the mail in the firestore first
+		// console.log(db);
+		// console.log('usersCollectionRef: ', usersCollectionRef);
+		// if yes, then update the name
+		// if no, then create a the mail to fireStore and create username
 	}
 
 	function changeProfilePhoto() {
@@ -2039,7 +2044,7 @@ const createPageFunctionality = (() => {
 			// show mobile page version  _createAccountSettingPageSmallScreens()
 			let AccountSettingPageSmallScreens = createPageStructure._createAccountSettingPageSmallScreens()
 			APP.appendChild(AccountSettingPageSmallScreens)
-			qs('.profilePhoto').src=qs('.iconAccount').src
+			qs('.profilePhoto').src = qs('.iconAccount').src
 			qs('.profileName').innerHTML = USERNAME
 			if (PHOTO_URL) {
 				qs('.profilePhoto').src = PHOTO_URL
@@ -2085,6 +2090,11 @@ const createPageFunctionality = (() => {
 			addEventListener(qs('body'), 'click', closeAccountSettingDialogueBox)
 
 		}
+		if (EMAIL == `METAMASK`) {
+			qs('.editNameSection').remove()
+			qs('.changePasswordSection').remove()
+			qs('.changeProfilePhotoSection').remove()
+		}
 
 	}
 	//---> create new room
@@ -2104,10 +2114,23 @@ const createPageFunctionality = (() => {
 onAuthStateChanged(auth, (user) => {
 	if (user) {
 		console.log('user: ', user);
-		USERNAME = user.displayName
 		EMAIL = user.email
 		console.log('EMAIL: ', EMAIL);
-		//
+		getDocs(collection(db, `USERS`))
+			.then(querySnapshot => {
+				querySnapshot.forEach((doc) => {
+					// console.log(`${doc.id} => ${doc.data().USERNAME}`);
+					if(doc.id == EMAIL){
+						USERNAME = doc.data().USERNAME
+						console.log('USERNAME: ', USERNAME);
+					}
+				});
+			})
+			.catch(error => {
+
+				USERNAME = user.displayName
+			});
+
 		// get the username from the database
 		const q = query(collection(db, EMAIL));
 		getDocs(q).then((querySnapshot) => {
@@ -2127,20 +2150,20 @@ onAuthStateChanged(auth, (user) => {
 		getDownloadURL(storageRef)
 			.then((url) => {
 				// Insert url into an <img> tag to "download" profilePhoto
-				if(qs('.iconAccount')){
+				if (qs('.iconAccount')) {
 
 					qs('.iconAccount').src = url;
-				}else{
+				} else {
 
 					qs('.profilePhoto').src = url;
 				}
 			})
 			.catch((error) => {
-				if(qs('.iconAccount')){
+				if (qs('.iconAccount')) {
 
 					qs('.iconAccount').src = user.photoURL
-				}else{
-					
+				} else {
+
 					qs('.profilePhoto').src = user.photoURL
 				}
 
