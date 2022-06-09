@@ -2228,7 +2228,6 @@ const createPageFunctionality = (() => {
 					roomInfo
 				}).then(response => {
 					console.log("Document written with ID: ", response);
-					qs('.dialogBox').remove()
 					getVideoAndTextChatRoomPage()
 				});
 			} catch (e) {
@@ -2239,6 +2238,8 @@ const createPageFunctionality = (() => {
 		function getVideoAndTextChatRoomPage() {
 			//TODO bring the video and text page
 			console.log(`getVideoAndTextChatRoomPage`);
+			qs('.dialogBox').remove()
+
 			createPageStructure._createPageOfMeeting()
 			var pageOfMeeting = document.querySelector('.pageOfMeeting');
 			pageOfMeeting.animate([
@@ -2256,6 +2257,10 @@ const createPageFunctionality = (() => {
 				// iterations: Infinity
 				
 			});
+			setTimeout(() => {
+				qs('.newJoinMeetingPage').remove()
+			pageOfMeeting.style.position = 'static'
+			}, 700)
 		}
 
 		// //create two subCollection
