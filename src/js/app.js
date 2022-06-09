@@ -2001,14 +2001,13 @@ const createPageFunctionality = (() => {
 					qs('.dialogBox').remove()
 					console.log("Document written with ID: ", response);
 					showMeDialogBox('done')
-					qs('.continueButton').addEventListener('click', () =>{
+					qs('.continueButton').addEventListener('click', () => {
 
 						qs('.dialogBox').remove()
 						window.location.reload();
 
-					}
-					)
-						
+					})
+
 				});
 			} catch (e) {
 				console.error("Error adding document: ", e);
@@ -2177,39 +2176,114 @@ const createPageFunctionality = (() => {
 	//TODO create new room
 	function createNewMeetingRoom() {
 		console.log(`createNewMeetingRoom`);
-		// let data = {
-		// 	name: 'Los Angeles',
-		// 	state: 'CA',
-		// 	country: 'USA'
-		// };
-		// try {
-		// 	// Add a new document in collection "cities"
-		// 	setDoc(doc(db, "ROOMS", `roomName2`), {
-		// 		data,
-		// 		name:`shiiit`
-		// 	}).then(response => {
-		// 		console.log("Document written with ID: ", response);
-		// 	});
-		// } catch (e) {
-		// 	console.error("Error adding document: ", e);
-		// }
+		showMeDialogBox('createNewRoom')
+		addEventListener(qs('.checkBox'), 'click', checkBoxF)
+		addEventListener(qs('.createRoomButton'), 'click', createRoom)
+
+
+		function checkBoxF() {
+			if (qs('.checkBox').checked == true) {
+				console.log(`checked`);
+				let inputPasswordroom = createElement('input', {
+					class: 'inputPasswordroom',
+					type: 'text',
+					placeholder: 'Room Password'
+				})
+				insertAfter(inputPasswordroom, qs('.inputNameroom'))
+			} else {
+				console.log(`unchecked`);
+				qs('.inputPasswordroom').remove()
+			}
+		}
+
+		function createRoom() {
+			let roomName = qs('.inputNameroom').value
+			let roomInfo =null
+			if (!qs('.inputNameroom').value) {
+				return
+			}
+			console.log(`create room`);
+			if (qs('.checkBox').checked == true) {
+				roomInfo = {
+					privateRoom: true,
+					password: qs('.inputPasswordroom').value
+				}
+
+			} else {
+				roomInfo = {
+					privateRoom: false,
+					password: ``
+				}
+			}
+				//create a collection
+				try {
+					// Add a new document in collection "cities"
+					setDoc(doc(db, "ROOMS", roomName), {
+						roomInfo
+					}).then(response => {
+						console.log("Document written with ID: ", response);
+						qs('.dialogBox').remove()
+						//TODO get the new page of chat room
+						getVideoAndTextChatRoomPage()
+					});
+				} catch (e) {
+					console.error("Error adding document: ", e);
+				}
+		}
+		function getVideoAndTextChatRoomPage(){
+			console.log(`getVideoAndTextChatRoomPage`);
+		}
+
+		// //create two subCollection
+		// const docRef = doc(db, `ROOMS`, roomName);
+		// const docSubcollectionRef = collection(docRef, 'ICE_CANDIDATES');
+		// const docSubcollectionRef2 = collection(docRef, 'ICE_CANDIDATES-responce');
+
+		//TODO Add a new document in subcollection "ICE_CANDIDATES"
+		//NOTE use set if you want specigy the document name
+		// addDoc(docSubcollectionRef, {}).then(response => {
+		// 	console.log("Document written with ID: ", response);
+		// }	
+		// ).catch(error => {
+		// 	console.error("Error adding document: ", error);
+		// }	)
+
+		// addDoc(docSubcollectionRef2, {})
+		// .then(response => {
+		// 	console.log("Document written with ID: ", response);
+		// }	
+		// ).catch(error => {
+		// 	console.error("Error adding document: ", error);
+		// }	)
 	}
 	//TODO join room
 	function joinNewMeetingRoom() {
 		console.log(`joinNewMeetingRoom`);
+		//get collection data
 
 		// getDocs(collection(db, `ROOMS`))
 		// 	.then(querySnapshot => {
 		// 		querySnapshot.forEach((doc) => {
-		// 			console.log(`${doc.id} => ${doc.data().name}`);
-		// 			console.log(`${doc.id} => ${doc.data().data.state}`);
-
-					
+		// 			// console.log(`${doc.id} => ${doc.data().name}`);
+		// 			console.log(`${doc.id} => ${doc.data().roomInfo.privateRoom}`);
 		// 		});
 		// 	})
 		// 	.catch(error => {
 		// 		console.log('error: ', error);
 		// 	});
+
+		//get subCollection data
+		// const subColRef = collection(db, "ROOMS", "rooomo namou", "ICE_CANDIDATES");
+		// getDocs(subColRef)
+		// 	.then(querySnapshot => {
+		// 		querySnapshot.forEach((doc) => {
+		// 			console.log(`${doc.id} => ${doc.data()}`);
+		// 		});
+		// 	})
+		// 	.catch(error => {
+		// 		console.log('error: ', error);
+		// 	});
+
 	}
 	return {
 		_addAuthenticationEventListeners,
