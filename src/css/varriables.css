@@ -30,3 +30,4 @@
 @custom-media --small (width <=400px);
 @custom-media --tablets (width <=860px);
 @custom-media --desktop (width >=900px);
+@custom-media --nodesktop (width <=900px);

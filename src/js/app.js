@@ -566,7 +566,7 @@ const createPageStructure = (() => {
 		rightSideSectionChatsAndParticipants.appendChild(bar)
 		return rightSideSectionChatsAndParticipants
 	}
-	//---> final function to create meeting app
+	//TODO final function to create meeting app
 	function _createPageOfMeeting() {
 		let pageOfMeeting = createElement('div', {
 			class: 'pageOfMeeting'
@@ -579,11 +579,11 @@ const createPageStructure = (() => {
 		videoSectionAndPanel.appendChild(createVideoPageGroup)
 		videoSectionAndPanel.appendChild(panel)
 		pageOfMeeting.appendChild(videoSectionAndPanel)
-		if (window.innerWidth > 900) {
+		// if (window.innerWidth > 900) {
 			let rightSideSectionChatsAndParticipants = _createRightSideSectionChatsAndParticipants()
 			pageOfMeeting.appendChild(rightSideSectionChatsAndParticipants)
 
-		}
+		// }
 		APP.append(pageOfMeeting)
 	}
 
@@ -2178,7 +2178,12 @@ const createPageFunctionality = (() => {
 		console.log(`createNewMeetingRoom`);
 		showMeDialogBox('createNewRoom')
 		addEventListener(qs('.checkBox'), 'click', checkBoxF)
-		addEventListener(qs('.createRoomButton'), 'click', createRoom)
+
+		//NOTE uncommen the first and delete the seconde
+
+		// addEventListener(qs('.createRoomButton'), 'click', createRoom)
+		addEventListener(qs('.createRoomButton'), 'click', getVideoAndTextChatRoomPage)
+
 
 
 		function checkBoxF() {
@@ -2223,7 +2228,6 @@ const createPageFunctionality = (() => {
 					}).then(response => {
 						console.log("Document written with ID: ", response);
 						qs('.dialogBox').remove()
-						//TODO get the new page of chat room
 						getVideoAndTextChatRoomPage()
 					});
 				} catch (e) {
@@ -2232,6 +2236,8 @@ const createPageFunctionality = (() => {
 		}
 		function getVideoAndTextChatRoomPage(){
 			console.log(`getVideoAndTextChatRoomPage`);
+			//TODO bring the video and text page
+			createPageStructure._createPageOfMeeting()
 		}
 
 		// //create two subCollection
