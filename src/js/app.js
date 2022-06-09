@@ -566,7 +566,8 @@ const createPageStructure = (() => {
 		rightSideSectionChatsAndParticipants.appendChild(bar)
 		return rightSideSectionChatsAndParticipants
 	}
-	//TODO final function to create meeting app
+	//-[]
+	//----> final function to create meeting app
 	function _createPageOfMeeting() {
 		let pageOfMeeting = createElement('div', {
 			class: 'pageOfMeeting'
@@ -580,8 +581,8 @@ const createPageStructure = (() => {
 		videoSectionAndPanel.appendChild(panel)
 		pageOfMeeting.appendChild(videoSectionAndPanel)
 		// if (window.innerWidth > 900) {
-			let rightSideSectionChatsAndParticipants = _createRightSideSectionChatsAndParticipants()
-			pageOfMeeting.appendChild(rightSideSectionChatsAndParticipants)
+		let rightSideSectionChatsAndParticipants = _createRightSideSectionChatsAndParticipants()
+		pageOfMeeting.appendChild(rightSideSectionChatsAndParticipants)
 
 		// }
 		APP.append(pageOfMeeting)
@@ -2203,7 +2204,7 @@ const createPageFunctionality = (() => {
 
 		function createRoom() {
 			let roomName = qs('.inputNameroom').value
-			let roomInfo =null
+			let roomInfo = null
 			if (!qs('.inputNameroom').value) {
 				return
 			}
@@ -2220,24 +2221,41 @@ const createPageFunctionality = (() => {
 					password: ``
 				}
 			}
-				//create a collection
-				try {
-					// Add a new document in collection "cities"
-					setDoc(doc(db, "ROOMS", roomName), {
-						roomInfo
-					}).then(response => {
-						console.log("Document written with ID: ", response);
-						qs('.dialogBox').remove()
-						getVideoAndTextChatRoomPage()
-					});
-				} catch (e) {
-					console.error("Error adding document: ", e);
-				}
+			//create a collection
+			try {
+				// Add a new document in collection "cities"
+				setDoc(doc(db, "ROOMS", roomName), {
+					roomInfo
+				}).then(response => {
+					console.log("Document written with ID: ", response);
+					qs('.dialogBox').remove()
+					getVideoAndTextChatRoomPage()
+				});
+			} catch (e) {
+				console.error("Error adding document: ", e);
+			}
 		}
-		function getVideoAndTextChatRoomPage(){
-			console.log(`getVideoAndTextChatRoomPage`);
+
+		function getVideoAndTextChatRoomPage() {
 			//TODO bring the video and text page
+			console.log(`getVideoAndTextChatRoomPage`);
 			createPageStructure._createPageOfMeeting()
+			var pageOfMeeting = document.querySelector('.pageOfMeeting');
+			pageOfMeeting.animate([
+				// keyframes
+				{
+					opacity: '0'
+				},
+				{
+					opacity: '1'
+				}
+			], {
+				duration: 700,
+				fill: 'both',
+				easing: 'ease-in-out'
+				// iterations: Infinity
+				
+			});
 		}
 
 		// //create two subCollection

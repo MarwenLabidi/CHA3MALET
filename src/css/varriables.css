@@ -24,7 +24,7 @@
 	--clr_Green :hsla(126, 100%, 79%, 1);
 	--clr_Red : hsla(349, 91%, 54%, 0.93);
 	--clr_Red-100 : hsla(0, 84%, 56%, 0.41);
-	--clr_Gradiant_blue_gray:linear-gradient(rgba(66, 70, 163, 1) , hsla(0, 0%, 41%, 0.68));
+	--clr_Gradiant_blue_gray:linear-gradient(rgba(66, 70, 163, 1) , hsla(0, 0%, 41%, 1));
 }
 
 @custom-media --small (width <=400px);
