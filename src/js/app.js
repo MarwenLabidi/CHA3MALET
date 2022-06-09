@@ -1822,6 +1822,7 @@ const createPageFunctionality = (() => {
 		photoUpload.addEventListener('change', () => {
 			console.log(`photo upload`);
 			let file = photoUpload.files[0];
+			qs('.iconAccount').src = URL.createObjectURL(file)
 			console.log('file: ', file);
 			console.log(typeof (file));
 			const storage = getStorage();
@@ -1997,10 +1998,17 @@ const createPageFunctionality = (() => {
 				setDoc(doc(db, "USERS", EMAIL), {
 					USERNAME: qs('.changeNameInput').value
 				}).then(response => {
-					console.log("Document written with ID: ", response);
 					qs('.dialogBox').remove()
+					console.log("Document written with ID: ", response);
 					showMeDialogBox('done')
-					qs('.continueButton').addEventListener('click', () => qs('.dialogBox').remove())
+					qs('.continueButton').addEventListener('click', () =>{
+
+						qs('.dialogBox').remove()
+						window.location.reload();
+
+					}
+					)
+						
 				});
 			} catch (e) {
 				console.error("Error adding document: ", e);
