@@ -2260,7 +2260,7 @@ const createPageFunctionality = (() => {
 			setTimeout(() => {
 				qs('.newJoinMeetingPage').remove()
 			pageOfMeeting.style.position = 'static'
-			}, 700)
+			}, 1000)
 		}
 
 		// //create two subCollection
