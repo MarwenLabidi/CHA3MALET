@@ -50,8 +50,10 @@
 			background-color: var(--clr_Dark);
 			display: flex;
 			justify-content: center;
+			
 
 			& button {
+				
 				background-color: var(--clr_Dark);
 				color: var(--clr_White);
 				border: none;
@@ -105,7 +107,6 @@
 		& .chatSection {
 			& .messageSection {
 				background-color: var(--clr_Dark-100);
-				/* NOTE back to this message templat */
 				height: 100vh;
 				width: 100%;
 				scroll-behavior: smooth;
@@ -114,6 +115,7 @@
 			}
 
 			& .typeAGeneralChatTemplate {
+				
 				position: fixed;
 				bottom: 0;
 				right: 0;
@@ -198,12 +200,11 @@
 	.pageOfMeeting {
 		& .videoSectionAndPanel {
 			/* NOTE CHNAGE widht to change page in small screen */
-			/* width: 100%; */
-
+			/* width: 95%; */
 			width: 0%;
 
 			& .panel {
-				/* NOTE WHEN change widht chang display */
+				/* NOTE  display one */
 				display: none;
 				width: 99%;
 				Bottom: 0;
@@ -215,12 +216,14 @@
 
 		& .rightSideSectionChatsAndParticipants {
 			/* NOTE CHNAGE widht to change page in small screen */
-			/* width: 0%; */
+			/* width: 5%; */
 			width: 100%;
 			background: var(--clr_Gradiant_blue_gray);
 			padding-left: 3%;
 			& .typeAGeneralChatTemplate{
 				width: 97% !important;
+				/* NOTE display none */
+				/* display:none; */
 			}
 			& .typeAGeneralChatTemplateInput {
 				display:inline-block;
@@ -228,6 +231,10 @@
 				padding:20px;
 				margin-left: 3%;
 				max-width: 100%;
+			}
+			& .groupButtonChatAndParticipant {
+				/* NOTE display none */
+				/* display: none; */
 			}
 
 		}
