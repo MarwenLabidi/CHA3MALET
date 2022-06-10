@@ -2242,6 +2242,7 @@ const createPageFunctionality = (() => {
 
 			createPageStructure._createPageOfMeeting()
 			var pageOfMeeting = document.querySelector('.pageOfMeeting');
+			qs('.newJoinMeetingPage').style.opacity = '0'
 			pageOfMeeting.animate([
 				// keyframes
 				{
