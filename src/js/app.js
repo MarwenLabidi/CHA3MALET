@@ -316,6 +316,7 @@ const createPageStructure = (() => {
 		newJoinMeetingPage.append(joinMeeting)
 		APP.append(newJoinMeetingPage)
 	}
+	//-[]                                             
 	//---> create a meeting card
 	function _createMeetingCard(name, locked, ...profilePhotos) {
 		let card = createElement('div', {
@@ -368,6 +369,7 @@ const createPageStructure = (() => {
 		_addBackArrowToTheTopOfElements(inputSearcher)
 		APP.appendChild(roomPage)
 	}
+	//-[]                                                                   
 	//---> create a video card : should have a seconde div to close it or stop it and show the icon
 	function _createVideoCard(idName, mediaStream) {
 		let videoCard = createElement('div', {
@@ -461,8 +463,9 @@ const createPageStructure = (() => {
 		accountImageAndName.appendChild(accountName)
 		return accountImageAndName
 	}
+	//-[]                                                                       
 	//---> create a message template for the user
-	function _createMessageTemplate(messageContent, userAccountImageAndName, dateOfMessages) {
+	function _createMessageTemplate(messageContent, userAccountImage,userAccountName, dateOfMessages) {
 		let messageTemplate = createElement('div', {
 			class: 'messageTemplate'
 		})
@@ -477,6 +480,11 @@ const createPageStructure = (() => {
 			class: 'dateOfMessage',
 			text: dateOfMessages
 		})
+		let userAccountImageAndName= createElement('div', {
+			class: 'userAccountImageAndName',
+		})
+		userAccountImageAndName.appendChild(userAccountImage)
+		userAccountImageAndName.appendChild(userAccountName)
 		messageTemplateHeader.appendChild(userAccountImageAndName)
 		messageTemplateHeader.appendChild(dateOfMessage)
 		messageTemplate.appendChild(messageTemplateHeader)
@@ -1025,6 +1033,7 @@ const createPageStructure = (() => {
 })()
 
 const createPageFunctionality = (() => {
+	//-[]                                                             
 	//---> add meeting card to the room page
 	function _addCardToRoomsPage(...rooms) {
 		let roomGroup = qs('.roomGroup')
@@ -1078,7 +1087,7 @@ const createPageFunctionality = (() => {
 			}
 		}
 	}
-
+//-[]                                                                                                   
 	//---> create a function to add a video to the video group
 	function _addVideoToVideoGroup(...videos) {
 		let videoGroup = qs('.videoPageGroup')
