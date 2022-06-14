@@ -2369,16 +2369,17 @@ const createPageFunctionality = (() => {
 			qs('.newJoinMeetingPage').remove()
 		roomPage.style.position = 'static'
 		}, 1000)
-		let meetingCard1=createPageStructure._createMeetingCard(`Marwen Labidi`,false,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		let meetingCard2=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		let meetingCard3=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		let meetingCard4=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		let meetingCard5=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		let meetingCard6=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		let meetingCard7=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		let meetingCard8=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		//-[] add meeting cards
+		// let meetingCard1=createPageStructure._createMeetingCard(`Marwen Labidi`,false,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		// let meetingCard2=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		// let meetingCard3=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		// let meetingCard4=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		// let meetingCard5=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		// let meetingCard6=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		// let meetingCard7=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		// let meetingCard8=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
 
-		_addCardToRoomsPage(meetingCard1,meetingCard2,meetingCard3,meetingCard4,meetingCard5,meetingCard6,meetingCard7,meetingCard8)
+		// _addCardToRoomsPage(meetingCard1,meetingCard2,meetingCard3,meetingCard4,meetingCard5,meetingCard6,meetingCard7,meetingCard8)
 
 
 		//get collection data
