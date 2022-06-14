@@ -2319,6 +2319,18 @@ const createPageFunctionality = (() => {
 			.then(stream => {
 				let videoCard= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
 				_addVideoToVideoGroup(videoCard)
+				let videoCard2= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+				_addVideoToVideoGroup(videoCard2)
+				let videoCard3= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+				_addVideoToVideoGroup(videoCard3)
+				let videoCard4= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+				_addVideoToVideoGroup(videoCard4)
+				let videoCard5= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+				_addVideoToVideoGroup(videoCard5)
+				let videoCard6= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+				_addVideoToVideoGroup(videoCard6)
+				let videoCard7= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+				_addVideoToVideoGroup(videoCard7)
 			})
 
 		}
