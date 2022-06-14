@@ -317,9 +317,8 @@ const createPageStructure = (() => {
 		newJoinMeetingPage.append(joinMeeting)
 		APP.append(newJoinMeetingPage)
 	}
-	//-[]                                             
 	//---> create a meeting card
-	function _createMeetingCard(name, locked, ...profilePhotos) {
+	function _createMeetingCard(name, locked=false, ...profilePhotos) {
 		let card = createElement('div', {
 			class: 'card'
 		})
@@ -370,7 +369,6 @@ const createPageStructure = (() => {
 		_addBackArrowToTheTopOfElements(inputSearcher)
 		APP.appendChild(roomPage)
 	}
-	//-[]                                                                   
 	//---> create a video card : should have a seconde div to close it or stop it and show the icon
 	function _createVideoCard(idName, mediaStream) {
 		//delete space
@@ -1056,7 +1054,6 @@ const createPageStructure = (() => {
 })()
 
 const createPageFunctionality = (() => {
-	//-[]                                                             
 	//---> add meeting card to the room page
 	function _addCardToRoomsPage(...rooms) {
 		let roomGroup = qs('.roomGroup')
@@ -1120,7 +1117,6 @@ const createPageFunctionality = (() => {
 			}
 		}
 	}
-//-[]                                                                                                   
 	//---> create a function to add a video to the video group
 	function _addVideoToVideoGroup(...videos) {
 		let videoGroup = qs('.videoPageGroup')
@@ -2315,23 +2311,13 @@ const createPageFunctionality = (() => {
 			// let participants=createPageStructure._createAccountImageAndName(`Marwen Labidi`,`/assets/icons/user-two.svg`)
 			// _addParticipantToTheSectionParticipants(participants)
 			//-[] add video card	
-			navigator.mediaDevices.getUserMedia({video: true, audio: true})
-			.then(stream => {
-				let videoCard= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-				_addVideoToVideoGroup(videoCard)
-				let videoCard2= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-				_addVideoToVideoGroup(videoCard2)
-				let videoCard3= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-				_addVideoToVideoGroup(videoCard3)
-				let videoCard4= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-				_addVideoToVideoGroup(videoCard4)
-				let videoCard5= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-				_addVideoToVideoGroup(videoCard5)
-				let videoCard6= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-				_addVideoToVideoGroup(videoCard6)
-				let videoCard7= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-				_addVideoToVideoGroup(videoCard7)
-			})
+			// navigator.mediaDevices.getUserMedia({video: true, audio: true})
+			// .then(stream => {
+			// 	let videoCard= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+			// 	_addVideoToVideoGroup(videoCard)
+			// 	let videoCard2= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+			// 	_addVideoToVideoGroup(videoCard2)
+			// })
 
 		}
 
@@ -2383,6 +2369,17 @@ const createPageFunctionality = (() => {
 			qs('.newJoinMeetingPage').remove()
 		roomPage.style.position = 'static'
 		}, 1000)
+		let meetingCard1=createPageStructure._createMeetingCard(`Marwen Labidi`,false,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		let meetingCard2=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		let meetingCard3=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		let meetingCard4=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		let meetingCard5=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		let meetingCard6=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		let meetingCard7=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		let meetingCard8=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+
+		_addCardToRoomsPage(meetingCard1,meetingCard2,meetingCard3,meetingCard4,meetingCard5,meetingCard6,meetingCard7,meetingCard8)
+
 
 		//get collection data
 
