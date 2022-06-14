@@ -1,0 +1,50 @@
+.messageTemplate {
+	padding: 10px;
+	
+	
+	& .messageTemplateHeader {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		& .userAccountImageAndName {
+			display: flex;
+			gap: 15px;
+			& .userAccountImage {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+			}
+
+			& .userAccountName {
+				align-self: center;
+			}
+		}
+
+		& .dateOfMessage {
+			
+		}
+	}
+	
+	& .messageTemplateMessageContent {
+		background-color: gray;
+		color: black;
+		padding: 15px;
+		display: flex;
+		justify-content: center;
+		border-radius: 10px;
+		margin-top: 10px;
+		margin-right: 50px;
+		font-weight: bold;
+	}
+}
+
+.messageTemplateMessageContentForMe{
+	background: var(--clr_Purple);
+	display: flex;
+	justify-content: flex-end;
+	padding: 15px;
+	border-radius: 10px;
+	margin-top: 10px;
+	margin-left: 50px;
+	font-weight: bold;
+}

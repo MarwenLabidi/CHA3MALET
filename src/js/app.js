@@ -46,6 +46,7 @@ import {
 	uploadBytesResumable,
 	getDownloadURL
 } from "firebase/storage";
+// import { create } from "tar";
 
 
 
@@ -449,7 +450,7 @@ const createPageStructure = (() => {
 	//---> create account image and name for the user
 	function _createAccountImageAndName(name, image) {
 		let accountImageAndName = createElement('div', {
-			class: 'accountImageAndName'
+			class: 'participant'
 		})
 		let accountImage = createElement('img', {
 			class: 'accountImage',
@@ -463,9 +464,8 @@ const createPageStructure = (() => {
 		accountImageAndName.appendChild(accountName)
 		return accountImageAndName
 	}
-	//-[]                                                                       
 	//---> create a message template for the user
-	function _createMessageTemplate(messageContent, userAccountImage,userAccountName, dateOfMessages) {
+	function _createMessageTemplate(messageContent, userAccountImagePath,userAccountNameTxt, dateOfMessagesO) {
 		let messageTemplate = createElement('div', {
 			class: 'messageTemplate'
 		})
@@ -476,23 +476,40 @@ const createPageStructure = (() => {
 			class: 'messageTemplateMessageContent',
 			text: messageContent
 		})
-		let dateOfMessage = createElement('p', {
-			class: 'dateOfMessage',
-			text: dateOfMessages
-		})
+	
 		let userAccountImageAndName= createElement('div', {
 			class: 'userAccountImageAndName',
 		})
+		let userAccountImage = createElement('img', {
+			class: 'userAccountImage',
+			src: userAccountImagePath
+		})
+		let userAccountName = createElement('p', {
+			class: 'userAccountName',
+			text: userAccountNameTxt
+		})
+		let dateOfMessages = createElement('p', {
+			class: 'userAccountDate',
+			text: dateOfMessagesO
+		})
+
 		userAccountImageAndName.appendChild(userAccountImage)
 		userAccountImageAndName.appendChild(userAccountName)
 		messageTemplateHeader.appendChild(userAccountImageAndName)
-		messageTemplateHeader.appendChild(dateOfMessage)
+		messageTemplateHeader.appendChild(dateOfMessages)
 		messageTemplate.appendChild(messageTemplateHeader)
 		messageTemplate.appendChild(messageTemplateMessageContent)
 
 
 
 		return messageTemplate
+	}
+	function _createMessageTemplateForMe(messageContent){
+		let messageTemplateMessageContentForMe = createElement('p', {
+			class: 'messageTemplateMessageContentForMe',
+			text: messageContent
+		})
+		return messageTemplateMessageContentForMe
 	}
 	//---> create type a general chat template and check if its mobile than  add send icon
 	function _createInputAGeneralChatTemplate() {
@@ -574,7 +591,6 @@ const createPageStructure = (() => {
 		rightSideSectionChatsAndParticipants.appendChild(bar)
 		return rightSideSectionChatsAndParticipants
 	}
-	//-[]
 	//----> final function to create meeting app
 	function _createPageOfMeeting() {
 		let pageOfMeeting = createElement('div', {
@@ -1028,7 +1044,10 @@ const createPageStructure = (() => {
 		_createPageOfMeeting,
 		_createAccountSettingPageSmallScreens,
 		_createErrorMessage,
-		_createDialogBox
+		_createDialogBox,
+		_createMessageTemplate,
+		_createMessageTemplateForMe,
+		_createAccountImageAndName
 	}
 })()
 
@@ -1040,6 +1059,16 @@ const createPageFunctionality = (() => {
 		rooms.forEach((roomCard) => {
 			roomGroup.appendChild(roomCard)
 		})
+	}
+	//---> add messages t chat 
+	function _addMessageToChatSection(chat) {
+		let chatSection = qs('.messageSection')
+		chatSection.appendChild(chat)
+	}
+	//---> add participant to participantsction 
+	function _addParticipatToParticipantSection(participant) {
+		let participantSection = qs('.bar')
+		participantSection.appendChild(participant)
 	}
 	//---> delete video card
 	function _deleteVideoCard(videoCardId) {
@@ -1106,7 +1135,8 @@ const createPageFunctionality = (() => {
 	}
 	//--->   add participants
 	function _addParticipantToTheSectionParticipants(participant) {
-		let participantSection = qs('.participantSection')
+		let participantSection = qs('.bar')
+		console.log('participantSection: ', participantSection);
 		participantSection.appendChild(participant)
 	}
 
@@ -2271,6 +2301,15 @@ const createPageFunctionality = (() => {
 				qs('.newJoinMeetingPage').remove()
 			pageOfMeeting.style.position = 'static'
 			}, 1000)
+			//FIXME delete that after messages are implemented
+			//  -[] add message to the section
+			// let messageTemplate = createPageStructure._createMessageTemplate(`Welcome to the room this is my first message`, `/assets/icons/user-two.svg`, `Marwen Labidi`, `${new Date().toLocaleString()}`)
+			// let messageTemplateForMe=createPageStructure._createMessageTemplateForMe(`i sent this messg knowwh `)
+			// _addMessageToChatSection(messageTemplate)
+			// _addMessageToChatSection(messageTemplateForMe)
+			//-[] add participants to the section
+			// let participants=createPageStructure._createAccountImageAndName(`Marwen Labidi`,`/assets/icons/user-two.svg`)
+			// _addParticipantToTheSectionParticipants(participants)
 		}
 
 		// //create two subCollection
@@ -2294,10 +2333,34 @@ const createPageFunctionality = (() => {
 		// ).catch(error => {
 		// 	console.error("Error adding document: ", error);
 		// }	)
-	}
+	}				
 	//TODO join room
 	function joinNewMeetingRoom() {
 		console.log(`joinNewMeetingRoom`);
+		//_createRoomsPage()
+		createPageStructure._createRoomsPage()
+		var roomPage = document.querySelector('.roomPage');
+		qs('.newJoinMeetingPage').style.opacity = '0'
+		roomPage.animate([
+			// keyframes
+			{
+				opacity: '0'
+			},
+			{
+				opacity: '1'
+			}
+		], {
+			duration: 700,
+			fill: 'both',
+			easing: 'ease-in-out'
+			// iterations: Infinity
+			
+		});
+		setTimeout(() => {
+			qs('.newJoinMeetingPage').remove()
+		roomPage.style.position = 'static'
+		}, 1000)
+
 		//get collection data
 
 		// getDocs(collection(db, `ROOMS`))
