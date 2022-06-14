@@ -211,12 +211,12 @@
 	.pageOfMeeting {
 		& .videoSectionAndPanel {
 			/* NOTE CHNAGE widht to change page in small screen */
-			/* width: 95%; */
-			width: 0%;
+			width: 95%;
+			/* width: 0%; */
 
 			& .panel {
 				/* NOTE  display one */
-				display: none;
+				/* display: none; */
 				width: 99%;
 				Bottom: 0;
 
@@ -227,14 +227,14 @@
 
 		& .rightSideSectionChatsAndParticipants {
 			/* NOTE CHNAGE widht to change page in small screen */
-			/* width: 5%; */
-			width: 100%;
+			width: 5%;
+			/* width: 100%; */
 			background: var(--clr_Gradiant_blue_gray);
 			padding-left: 3%;
 			& .typeAGeneralChatTemplate{
 				width: 97% !important;
 				/* NOTE display none */
-				/* display:none; */
+				display:none;
 			}
 			& .typeAGeneralChatTemplateInput {
 				display:inline-block;
@@ -245,7 +245,7 @@
 			}
 			& .groupButtonChatAndParticipant {
 				/* NOTE display none */
-				/* display: none; */
+				display: none;
 			}
 
 		}

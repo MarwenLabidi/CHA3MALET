@@ -1,0 +1,19 @@
+.videoCard{
+	position:relative;
+	background-color: red;
+	width:200px;
+	height:200px;
+	& video{
+		width:100px;
+		height:100px;
+
+
+	}
+	& .hideCard{
+		position:absolute;
+		background-color: green;
+		& img{
+
+		}
+	}
+}

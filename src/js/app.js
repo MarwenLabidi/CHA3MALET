@@ -373,24 +373,28 @@ const createPageStructure = (() => {
 	//-[]                                                                   
 	//---> create a video card : should have a seconde div to close it or stop it and show the icon
 	function _createVideoCard(idName, mediaStream) {
+		//delete space
+		let name=idName.replace(/\s+/g, '')
+
 		let videoCard = createElement('div', {
-			id: `videoCard${idName}`
+			id: `videoCard${name}`,
+			class: 'videoCard'
 		})
 
 		let video = createElement('video', {
-			class: `video${idName}`,
-			id: idName,
+			class: `video${name}`,
+			id: name,
 			autoplay: true,
 			playsinline: true
 		})
 		//NOTE uncomment me 
-		// video.srcObject = mediaStream
+		video.srcObject = mediaStream
 		videoCard.appendChild(video)
 		let hideCard = createElement('div', {
-			class: `hideCard${idName}`
+			class: `hideCard`
 		})
 		let iconDisableVideo = createElement('img', {
-			class: `iconDisableVideo${idName}`,
+			class: `iconDisableVideo${name}`,
 			src: '/assets/icons/no-videocam.svg'
 		})
 		hideCard.appendChild(iconDisableVideo)
@@ -2310,6 +2314,13 @@ const createPageFunctionality = (() => {
 			//-[] add participants to the section
 			// let participants=createPageStructure._createAccountImageAndName(`Marwen Labidi`,`/assets/icons/user-two.svg`)
 			// _addParticipantToTheSectionParticipants(participants)
+			//-[] add video card	
+			navigator.mediaDevices.getUserMedia({video: true, audio: true})
+			.then(stream => {
+				let videoCard= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+				_addVideoToVideoGroup(videoCard)
+			})
+
 		}
 
 		// //create two subCollection
