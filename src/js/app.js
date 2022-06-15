@@ -619,19 +619,10 @@ const createPageStructure = (() => {
 		})
 		let panel = _createPanel()
 		let createVideoPageGroup = _createVideoPageGroup()
-		let leftArrowCarrousel = createElement('img', {
-			class: 'leftArrowCarrousel',
-			src: '/assets/icons/carrousel-arrow.png'
-		})
-		let rightArrowCarrousel = createElement('img', {
-			class: 'rightArrowCarrousel',
-			src: '/assets/icons/carrousel-arrow.png'
-		})
+	
 		let showBigVideo= createElement('div', {
 			class: 'showBigVideo',
 		})
-		createVideoPageGroup.appendChild(leftArrowCarrousel)
-		createVideoPageGroup.appendChild(rightArrowCarrousel)
 		videoSectionAndPanel.appendChild(showBigVideo)
 		videoSectionAndPanel.appendChild(createVideoPageGroup)
 		videoSectionAndPanel.appendChild(panel)
@@ -2348,7 +2339,6 @@ const createPageFunctionality = (() => {
 				_addVideoToVideoGroup(videoCard2)
 			})
 			//TODO create the functionality to bigger the video
-			//FIXME add big video section in the meeting video section
 
 		}
 
