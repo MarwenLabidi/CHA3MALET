@@ -7,13 +7,63 @@
 	width: 100%;
 	height: 100vh;
 	display: flex;
-	transition: opacity 0.5s ease-in-out;
+	transition:  0.5s ease-in-out;
 
 	& .videoSectionAndPanel {
 		background: var(--clr_Gradiant_blue_gray);
 		overflow-y: scroll;
 		overflow-x: hidden;
 		scroll-behavior: smooth;
+		& .showBigVideo{
+			background-color: red;
+			/* NOTE CHANGE HEIGH TO MAKE VIDEO BIG */
+			/* height: 100%; */
+			/* TODO change the vide goup to flex resize the vide card to small and translate to the top alittle bit and show left arrow and right arro carrousel  */
+		}
+
+		& .videoPageGroup{
+			position:relative;
+			& .leftArrowCarrousel{
+				/* NOTE DISPLAY NONE */
+				display: none;
+				transition:  0.5s ease-in-out;
+				position: absolute;
+				top: 50%;
+				left:0;
+				height: 50px;
+				width: 50px;
+				z-index:2;
+				transform:rotate(180deg);
+			}
+			& .rightArrowCarrousel{
+				/* NOTE DISPLAY NONE */
+				display: none;
+				transition:  0.5s ease-in-out;
+
+				position: absolute;
+				top: 50%;
+				right:0;
+				height: 50px;
+				width: 50px;
+				z-index:2;
+			}
+			& .leftArrowCarrousel:hover{
+				cursor: pointer;
+				transform:rotate(180deg) scale(1.2);
+			}
+			& .rightArrowCarrousel:hover{
+				cursor: pointer;
+				transform: scale(1.2);
+			}
+			& .leftArrowCarrousel:active{
+				transform:rotate(180deg) scale(1);
+
+			}
+			& .rightArrowCarrousel:active{
+				transform: scale(1);
+
+			}
+		}
 
 
 		& .panel {
@@ -38,6 +88,10 @@
 
 			& img:active {
 				transform: scale(1);
+			}
+			& .iconShareScreen{
+				width: 35px;
+				height: 35px;
 			}
 		}
 
