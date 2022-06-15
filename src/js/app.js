@@ -385,9 +385,19 @@ const createPageStructure = (() => {
 			autoplay: true,
 			playsinline: true
 		})
+		let backArrow = createElement('img', {
+			class: 'backArrow',
+			src: '/assets/icons/back-arrow-black.svg'
+		})
+		let iconMuted = createElement('img', {
+			class: 'iconMuted',
+			src: '/assets/icons/muted.svg'
+		})
 		//NOTE uncomment me 
 		video.srcObject = mediaStream
 		videoCard.appendChild(video)
+		videoCard.appendChild(backArrow)
+		videoCard.appendChild(iconMuted)
 		let hideCard = createElement('div', {
 			class: `hideCard`
 		})
@@ -2301,8 +2311,7 @@ const createPageFunctionality = (() => {
 				qs('.newJoinMeetingPage').remove()
 			pageOfMeeting.style.position = 'static'
 			}, 1000)
-			//FIXME delete that after messages are implemented
-			//  -[] add message to the section
+			//-[] add message to the section
 			// let messageTemplate = createPageStructure._createMessageTemplate(`Welcome to the room this is my first message`, `/assets/icons/user-two.svg`, `Marwen Labidi`, `${new Date().toLocaleString()}`)
 			// let messageTemplateForMe=createPageStructure._createMessageTemplateForMe(`i sent this messg knowwh `)
 			// _addMessageToChatSection(messageTemplate)
@@ -2311,13 +2320,14 @@ const createPageFunctionality = (() => {
 			// let participants=createPageStructure._createAccountImageAndName(`Marwen Labidi`,`/assets/icons/user-two.svg`)
 			// _addParticipantToTheSectionParticipants(participants)
 			//-[] add video card	
-			// navigator.mediaDevices.getUserMedia({video: true, audio: true})
-			// .then(stream => {
-			// 	let videoCard= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-			// 	_addVideoToVideoGroup(videoCard)
-			// 	let videoCard2= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-			// 	_addVideoToVideoGroup(videoCard2)
-			// })
+			navigator.mediaDevices.getUserMedia({video: true, audio: true})
+			.then(stream => {
+				let videoCard= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+				_addVideoToVideoGroup(videoCard)
+				let videoCard2= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
+				_addVideoToVideoGroup(videoCard2)
+			})
+			//TODO create the functionality to bigger the video
 
 		}
 
@@ -2380,6 +2390,8 @@ const createPageFunctionality = (() => {
 		// let meetingCard8=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
 
 		// _addCardToRoomsPage(meetingCard1,meetingCard2,meetingCard3,meetingCard4,meetingCard5,meetingCard6,meetingCard7,meetingCard8)
+
+		// TODO create the animation to go to the video chat and text section
 
 
 		//get collection data

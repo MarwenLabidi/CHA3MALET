@@ -269,7 +269,6 @@
 	background: transparent;
 }
 
-/* TODO costomize thumb and thumb hover */
 ::-webkit-scrollbar-thumb {
 	background: var(--clr_White-opacity-25);
 	border-radius: 10px;

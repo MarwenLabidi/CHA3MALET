@@ -9,6 +9,36 @@
 	border-radius:30px;
 	box-shadow: 0px 0px 15px #000;
 	transition: all 0.5s ease-in-out;
+	& .backArrow{
+		/* NOTE diplay none */
+		display:none;
+		position:absolute;
+		top:10px;
+		left:10px;
+		width:50px;
+		height:50px;
+		z-index:1;
+		transition: all 0.5s ease-in-out;
+	}
+	& .backArrow:hover,& .backArrow:focus{
+		cursor:pointer;
+		/* background-color:white; */
+		border-radius:50%;
+		transform:scale(1.1);
+	}
+	& .backArrow:active{
+		transform:scale(1);
+	}
+	& .iconMuted{
+		/* NOTE diplay none */
+		display:none;
+		position:absolute;
+		top:10px;
+		right:5px;
+		width:50px;
+		height:50px;
+		z-index:1;
+	}
 	& video{
 		width:100%;
 		height:100%;
