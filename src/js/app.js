@@ -2399,7 +2399,7 @@ const createPageFunctionality = (() => {
 								} else {
 
 									qs('.showBigVideo>.videoCard').style.height = '32vh'
-									qs('.showBigVideo>.videoCard').style.width = '95vw'
+									qs('.showBigVideo>.videoCard').style.width = '95%'
 
 								}
 								qs('.showBigVideo>.videoCard').style.borderRadius = '30px'
