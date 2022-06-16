@@ -37,7 +37,8 @@ import {
 	getDoc,
 	doc,
 	query,
-	setDoc
+	setDoc,
+	onSnapshot
 } from "firebase/firestore";
 import {
 	getStorage,
@@ -2397,7 +2398,7 @@ const createPageFunctionality = (() => {
 							}).catch(error => {
 								console.error("Error adding document: ", error);
 							})
-						}else{
+						} else {
 							console.log(`no ice candiate`);
 						}
 					};
@@ -2420,11 +2421,39 @@ const createPageFunctionality = (() => {
 							}).catch(error => {
 								console.error("Error adding document: ", error);
 							})
-							
+
 						})
 					})
 
-			
+					//-[] Listen for remote answer
+					const docRef = doc(db, `ROOMS`, roomName);
+					const docSubcollectionRef = collection(docRef, 'callDoc');
+					onSnapshot(docSubcollectionRef,(snapshot) => {
+						snapshot.forEach((doc) => {
+							const data=doc.data()
+							console.log('data: ', data);
+							if (!pc.currentRemoteDescription && data ?.answer) {
+								const answerDescription = new RTCSessionDescription(data.answer);
+								pc.setRemoteDescription(answerDescription);
+							}
+						    });
+						
+					});
+
+					//-[] Listen for remote ICE candidates
+					const docRefs = doc(db, `ROOMS`, roomName);
+					const docSubcollectionRefss = collection(docRefs, 'ICE_CANDIDATES');
+					onSnapshot(docSubcollectionRefss,snapshot => {
+						console.log('snapshot:ice candidate ', snapshot);
+						snapshot.docChanges().forEach((change) => {
+							if (change.type === 'added') {
+								const candidate = new RTCIceCandidate(change.doc.data());
+								pc.addIceCandidate(candidate);
+							}
+						});
+					});
+
+
 
 					//-[] create the functionality to bigger the video
 					let allVideos = qsa('.videoCard')
