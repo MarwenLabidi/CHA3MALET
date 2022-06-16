@@ -75,6 +75,17 @@ let USERNAME = null
 let EMAIL = null
 let PHOTO_URL = null
 
+// rtc connection 
+const servers = {
+	iceServers: [{
+		urls: ['stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'],
+	}, ],
+	iceCandidatePoolSize: 10,
+};
+const pc = new RTCPeerConnection(servers);
+let localStream = null;
+let remoteStream = null;
+let allRemoteStreams = []
 
 
 
@@ -2331,16 +2342,37 @@ const createPageFunctionality = (() => {
 			//-[] add participants to the section
 			// let participants=createPageStructure._createAccountImageAndName(`Marwen Labidi`,`/assets/icons/user-two.svg`)
 			// _addParticipantToTheSectionParticipants(participants)
+			// TODO rtcp connection 
+
+
+
 			//-[] add video card	
 			navigator.mediaDevices.getUserMedia({
 					video: true,
 					audio: true
 				})
 				.then(stream => {
-					let videoCard = createPageStructure._createVideoCard(`Marwen Labidi`, stream)
+					//---> local stream
+					localStream = stream;
+					// Push tracks from local stream to peer connection
+					localStream.getTracks().forEach((track) => {
+						pc.addTrack(track, localStream);
+					});
+					let videoCard = createPageStructure._createVideoCard(`Marwen Labidi`, localStream)
 					_addVideoToVideoGroup(videoCard)
-					let videoCard2 = createPageStructure._createVideoCard(`bababa Labidi`, stream)
-					_addVideoToVideoGroup(videoCard2)
+					//---> remote stream
+					remoteStream = new MediaStream();
+
+					// Pull tracks from remote stream, add to video stream
+					pc.ontrack = event => {
+						event.streams[0].getTracks().forEach(track => {
+							remoteStream.addTrack(track);
+						});
+					};
+
+					let remoteVideoCard = createPageStructure._createVideoCard(`Marwen Labidi`, remoteStream)
+					_addVideoToVideoGroup(remoteVideoCard)
+
 					//-[] create the functionality to bigger the video
 					let allVideos = qsa('.videoCard')
 					allVideos.forEach(video => {
@@ -2364,11 +2396,11 @@ const createPageFunctionality = (() => {
 
 									qs('.showBigVideo>.videoCard').style.height = '40vh'
 									qs('.showBigVideo>.videoCard').style.width = '30vw'
-								}else{
+								} else {
 
 									qs('.showBigVideo>.videoCard').style.height = '32vh'
 									qs('.showBigVideo>.videoCard').style.width = '95vw'
-									
+
 								}
 								qs('.showBigVideo>.videoCard').style.borderRadius = '30px'
 								qs('.showBigVideo>.videoCard').style.margin = '10px'
@@ -2378,7 +2410,7 @@ const createPageFunctionality = (() => {
 								qs('.showBigVideo').innerHTML = ``
 								qs('.showBigVideo').style.height = '0'
 								qs('.videoPageGroup').style.display = 'grid'
-							},)
+							}, )
 
 						})
 					})
@@ -2446,7 +2478,6 @@ const createPageFunctionality = (() => {
 
 		// _addCardToRoomsPage(meetingCard1,meetingCard2,meetingCard3,meetingCard4,meetingCard5,meetingCard6,meetingCard7,meetingCard8)
 
-		// TODO create the animation to go to the video chat and text section
 
 
 		//get collection data
