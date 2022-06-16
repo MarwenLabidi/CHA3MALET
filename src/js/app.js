@@ -2383,7 +2383,7 @@ const createPageFunctionality = (() => {
 					//FIXME DELETE IT
 					roomName = 'test'
 					pc.onicecandidate = event => {
-						console.log('event: ice condidate ', event);
+						console.log('event: Onicecondidate ', event);
 						if (event.candidate) {
 							//FIXME NO ICE CANIDATE FOOUND
 							let iceCandidate = event.candidate.toJSON();
@@ -2399,7 +2399,7 @@ const createPageFunctionality = (() => {
 								console.error("Error adding document: ", error);
 							})
 						} else {
-							console.log(`no ice candiate`);
+							console.log(`event.candiate is null : made search about it`);
 						}
 					};
 					//-[] create offer
