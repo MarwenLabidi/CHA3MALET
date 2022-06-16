@@ -318,7 +318,7 @@ const createPageStructure = (() => {
 		APP.append(newJoinMeetingPage)
 	}
 	//---> create a meeting card
-	function _createMeetingCard(name, locked=false, ...profilePhotos) {
+	function _createMeetingCard(name, locked = false, ...profilePhotos) {
 		let card = createElement('div', {
 			class: 'card'
 		})
@@ -372,7 +372,7 @@ const createPageStructure = (() => {
 	//---> create a video card : should have a seconde div to close it or stop it and show the icon
 	function _createVideoCard(idName, mediaStream) {
 		//delete space
-		let name=idName.replace(/\s+/g, '')
+		let name = idName.replace(/\s+/g, '')
 
 		let videoCard = createElement('div', {
 			id: `videoCard${name}`,
@@ -482,7 +482,7 @@ const createPageStructure = (() => {
 		return accountImageAndName
 	}
 	//---> create a message template for the user
-	function _createMessageTemplate(messageContent, userAccountImagePath,userAccountNameTxt, dateOfMessagesO) {
+	function _createMessageTemplate(messageContent, userAccountImagePath, userAccountNameTxt, dateOfMessagesO) {
 		let messageTemplate = createElement('div', {
 			class: 'messageTemplate'
 		})
@@ -493,8 +493,8 @@ const createPageStructure = (() => {
 			class: 'messageTemplateMessageContent',
 			text: messageContent
 		})
-	
-		let userAccountImageAndName= createElement('div', {
+
+		let userAccountImageAndName = createElement('div', {
 			class: 'userAccountImageAndName',
 		})
 		let userAccountImage = createElement('img', {
@@ -521,7 +521,8 @@ const createPageStructure = (() => {
 
 		return messageTemplate
 	}
-	function _createMessageTemplateForMe(messageContent){
+
+	function _createMessageTemplateForMe(messageContent) {
 		let messageTemplateMessageContentForMe = createElement('p', {
 			class: 'messageTemplateMessageContentForMe',
 			text: messageContent
@@ -619,8 +620,8 @@ const createPageStructure = (() => {
 		})
 		let panel = _createPanel()
 		let createVideoPageGroup = _createVideoPageGroup()
-	
-		let showBigVideo= createElement('div', {
+
+		let showBigVideo = createElement('div', {
 			class: 'showBigVideo',
 		})
 		videoSectionAndPanel.appendChild(showBigVideo)
@@ -2316,11 +2317,11 @@ const createPageFunctionality = (() => {
 				fill: 'both',
 				easing: 'ease-in-out'
 				// iterations: Infinity
-				
+
 			});
 			setTimeout(() => {
 				qs('.newJoinMeetingPage').remove()
-			pageOfMeeting.style.position = 'static'
+				pageOfMeeting.style.position = 'static'
 			}, 1000)
 			//-[] add message to the section
 			// let messageTemplate = createPageStructure._createMessageTemplate(`Welcome to the room this is my first message`, `/assets/icons/user-two.svg`, `Marwen Labidi`, `${new Date().toLocaleString()}`)
@@ -2331,14 +2332,57 @@ const createPageFunctionality = (() => {
 			// let participants=createPageStructure._createAccountImageAndName(`Marwen Labidi`,`/assets/icons/user-two.svg`)
 			// _addParticipantToTheSectionParticipants(participants)
 			//-[] add video card	
-			navigator.mediaDevices.getUserMedia({video: true, audio: true})
-			.then(stream => {
-				let videoCard= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-				_addVideoToVideoGroup(videoCard)
-				let videoCard2= createPageStructure._createVideoCard(`Marwen Labidi`,stream)
-				_addVideoToVideoGroup(videoCard2)
-			})
-			//TODO create the functionality to bigger the video
+			navigator.mediaDevices.getUserMedia({
+					video: true,
+					audio: true
+				})
+				.then(stream => {
+					let videoCard = createPageStructure._createVideoCard(`Marwen Labidi`, stream)
+					_addVideoToVideoGroup(videoCard)
+					let videoCard2 = createPageStructure._createVideoCard(`bababa Labidi`, stream)
+					_addVideoToVideoGroup(videoCard2)
+					//-[] create the functionality to bigger the video
+					let allVideos = qsa('.videoCard')
+					allVideos.forEach(video => {
+						addEventListener(video, 'click', function () {
+							console.log(`click`)
+							qs('.showBigVideo').style.height = '100%'
+							qs('.showBigVideo').innerHTML = ``
+							qs('.showBigVideo').appendChild(this)
+							qs('.showBigVideo>.videoCard').style.height = '100%'
+							qs('.showBigVideo>.videoCard').style.width = '100%'
+							qs('.showBigVideo>.videoCard').style.borderRadius = '0'
+							qs('.showBigVideo>.videoCard').style.margin = '0'
+							qs('.showBigVideo>.videoCard').classList.add('noHover')
+							qs('.videoPageGroup').style.display = 'none'
+							qs('.showBigVideo>.videoCard>.backArrow').style.display = 'block'
+							qs('.showBigVideo>.videoCard>.backArrow').addEventListener('click', function (e) {
+								console.log('back ')
+								e.stopPropagation();
+								qs('.showBigVideo>.videoCard>.backArrow').style.display = 'none'
+								if (window.innerWidth > 900) {
+
+									qs('.showBigVideo>.videoCard').style.height = '40vh'
+									qs('.showBigVideo>.videoCard').style.width = '30vw'
+								}else{
+
+									qs('.showBigVideo>.videoCard').style.height = '32vh'
+									qs('.showBigVideo>.videoCard').style.width = '95vw'
+									
+								}
+								qs('.showBigVideo>.videoCard').style.borderRadius = '30px'
+								qs('.showBigVideo>.videoCard').style.margin = '10px'
+								qs('.showBigVideo>.videoCard').style.marginTop = '25px'
+								qs('.showBigVideo>.videoCard').classList.remove('noHover')
+								qs('.videoPageGroup').prepend(qs('.showBigVideo>.videoCard'))
+								qs('.showBigVideo').innerHTML = ``
+								qs('.showBigVideo').style.height = '0'
+								qs('.videoPageGroup').style.display = 'grid'
+							},)
+
+						})
+					})
+				})
 
 		}
 
@@ -2363,7 +2407,7 @@ const createPageFunctionality = (() => {
 		// ).catch(error => {
 		// 	console.error("Error adding document: ", error);
 		// }	)
-	}				
+	}
 	//TODO join room
 	function joinNewMeetingRoom() {
 		console.log(`joinNewMeetingRoom`);
@@ -2384,11 +2428,11 @@ const createPageFunctionality = (() => {
 			fill: 'both',
 			easing: 'ease-in-out'
 			// iterations: Infinity
-			
+
 		});
 		setTimeout(() => {
 			qs('.newJoinMeetingPage').remove()
-		roomPage.style.position = 'static'
+			roomPage.style.position = 'static'
 		}, 1000)
 		//-[] add meeting cards
 		// let meetingCard1=createPageStructure._createMeetingCard(`Marwen Labidi`,false,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
