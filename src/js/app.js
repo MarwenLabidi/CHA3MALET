@@ -2399,7 +2399,7 @@ const createPageFunctionality = (() => {
 								console.error("Error adding document: ", error);
 							})
 						} else {
-							console.log(`event.candiate is null : made search about it`);
+							console.error(`event.candiate is null : made search about it`);
 						}
 					};
 					//-[] create offer
