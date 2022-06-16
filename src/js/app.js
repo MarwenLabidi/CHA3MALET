@@ -2248,6 +2248,8 @@ const createPageFunctionality = (() => {
 	}
 	//TODO create new room
 	function createNewMeetingRoom() {
+		let roomName = null
+		let roomInfo = null
 		console.log(`createNewMeetingRoom`);
 		showMeDialogBox('createNewRoom')
 		addEventListener(qs('.checkBox'), 'click', checkBoxF)
@@ -2275,8 +2277,7 @@ const createPageFunctionality = (() => {
 		}
 
 		function createRoom() {
-			let roomName = qs('.inputNameroom').value
-			let roomInfo = null
+			roomName = qs('.inputNameroom').value
 			if (!qs('.inputNameroom').value) {
 				return
 			}
@@ -2353,18 +2354,23 @@ const createPageFunctionality = (() => {
 				})
 				.then(stream => {
 					//---> local stream
+
 					localStream = stream;
+					console.log('localStream: ', localStream);
 					// Push tracks from local stream to peer connection
 					localStream.getTracks().forEach((track) => {
+						console.log('add track: ', track);
 						pc.addTrack(track, localStream);
 					});
 					let videoCard = createPageStructure._createVideoCard(`Marwen Labidi`, localStream)
 					_addVideoToVideoGroup(videoCard)
 					//---> remote stream
 					remoteStream = new MediaStream();
+					console.log('remoteStream: ', remoteStream);
 
 					// Pull tracks from remote stream, add to video stream
 					pc.ontrack = event => {
+						console.log('on track event: ', event);
 						event.streams[0].getTracks().forEach(track => {
 							remoteStream.addTrack(track);
 						});
@@ -2372,6 +2378,53 @@ const createPageFunctionality = (() => {
 
 					let remoteVideoCard = createPageStructure._createVideoCard(`Marwen Labidi`, remoteStream)
 					_addVideoToVideoGroup(remoteVideoCard)
+					//-[] create the functionality of adding ice candidate
+					//FIXME DELETE IT
+					roomName = 'test'
+					pc.onicecandidate = event => {
+						console.log('event: ice condidate ', event);
+						if (event.candidate) {
+							//FIXME NO ICE CANIDATE FOOUND
+							let iceCandidate = event.candidate.toJSON();
+							console.log('iceCandidate: ', iceCandidate);
+							//create  subCollection
+							const docRef = doc(db, `ROOMS`, roomName);
+							const docSubcollectionRef = collection(docRef, 'ICE_CANDIDATES');
+							addDoc(docSubcollectionRef, {
+								iceCandidate
+							}).then(response => {
+								console.log("Document written with ID: ", response);
+							}).catch(error => {
+								console.error("Error adding document: ", error);
+							})
+						}else{
+							console.log(`no ice candiate`);
+						}
+					};
+					//-[] create offer
+					// Create offer
+					pc.createOffer().then(offerDescription => {
+
+						pc.setLocalDescription(offerDescription).then(() => {
+							console.log('offerDescription: ', offerDescription);
+							const offer = {
+								sdp: offerDescription.sdp,
+								type: offerDescription.type,
+							};
+							const docRef = doc(db, `ROOMS`, roomName);
+							const docSubcollectionRef = collection(docRef, 'callDoc');
+							addDoc(docSubcollectionRef, {
+								offer
+							}).then(response => {
+								console.log("Document written with ID: ", response);
+							}).catch(error => {
+								console.error("Error adding document: ", error);
+							})
+							
+						})
+					})
+
+			
 
 					//-[] create the functionality to bigger the video
 					let allVideos = qsa('.videoCard')
@@ -2414,6 +2467,8 @@ const createPageFunctionality = (() => {
 
 						})
 					})
+
+
 				})
 
 		}
