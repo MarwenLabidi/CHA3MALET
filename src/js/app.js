@@ -2317,6 +2317,10 @@ const createPageFunctionality = (() => {
 
 		function getVideoAndTextChatRoomPage() {
 			let roomName='test'//FIXME remove this
+			const docRef = doc(db, `ROOMS`, roomName);
+			const docSubcollectionCALLS = collection(docRef, 'CALLS');
+			const docSubcollectionMESSAGES = collection(docRef, 'MESSAGES');
+			const docSubcollectionJOINED_USERS = collection(docRef, 'JOINED_USERS');
 			console.log(`getVideoAndTextChatRoomPage`);
 			qs('.dialogBox').remove()
 
@@ -2608,6 +2612,11 @@ const createPageFunctionality = (() => {
 	}
 	//TODO join room
 	function joinNewMeetingRoom() {
+		let roomName='test'//FIXME remove this
+		const docRef = doc(db, `ROOMS`, roomName);
+		const docSubcollectionCALLS = collection(docRef, 'CALLS');
+		const docSubcollectionMESSAGES = collection(docRef, 'MESSAGES');
+		const docSubcollectionJOINED_USERS = collection(docRef, 'JOINED_USERS');
 		console.log(`joinNewMeetingRoom`);
 		//_createRoomsPage()
 		createPageStructure._createRoomsPage()
