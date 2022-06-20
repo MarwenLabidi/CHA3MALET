@@ -47,7 +47,6 @@ import {
 	uploadBytesResumable,
 	getDownloadURL
 } from "firebase/storage";
-// import { create } from "tar";
 
 
 
@@ -86,7 +85,6 @@ const servers = {
 const pc = new RTCPeerConnection(servers);
 let localStream = null;
 let remoteStream = null;
-let allRemoteStreams = []
 
 
 
@@ -2251,6 +2249,8 @@ const createPageFunctionality = (() => {
 	function createNewMeetingRoom() {
 		let roomName = null
 		let roomInfo = null
+		let photoAccountCardimgae = qs('.iconAccount').src;
+
 		console.log(`createNewMeetingRoom`);
 		showMeDialogBox('createNewRoom')
 		addEventListener(qs('.checkBox'), 'click', checkBoxF)
@@ -2295,11 +2295,17 @@ const createPageFunctionality = (() => {
 					password: ``
 				}
 			}
+			let ADMIN = {
+				USERNAME,
+				EMAIL,
+				PHOTO_URL: photoAccountCardimgae
+			}
 			//create a collection
 			try {
 				// Add a new document in collection "cities"
 				setDoc(doc(db, "ROOMS", roomName), {
-					roomInfo
+					roomInfo,
+					ADMIN
 				}).then(response => {
 					console.log("Document written with ID: ", response);
 					getVideoAndTextChatRoomPage()
@@ -2310,7 +2316,7 @@ const createPageFunctionality = (() => {
 		}
 
 		function getVideoAndTextChatRoomPage() {
-			//TODO bring the video and text page
+			let roomName='test'//FIXME remove this
 			console.log(`getVideoAndTextChatRoomPage`);
 			qs('.dialogBox').remove()
 
@@ -2336,193 +2342,269 @@ const createPageFunctionality = (() => {
 				qs('.newJoinMeetingPage').remove()
 				pageOfMeeting.style.position = 'static'
 			}, 1000)
-			//-[] add message to the section
-			// let messageTemplate = createPageStructure._createMessageTemplate(`Welcome to the room this is my first message`, `/assets/icons/user-two.svg`, `Marwen Labidi`, `${new Date().toLocaleString()}`)
-			// let messageTemplateForMe=createPageStructure._createMessageTemplateForMe(`i sent this messg knowwh `)
-			// _addMessageToChatSection(messageTemplate)
-			// _addMessageToChatSection(messageTemplateForMe)
-			//-[] add participants to the section
-			// let participants=createPageStructure._createAccountImageAndName(`Marwen Labidi`,`/assets/icons/user-two.svg`)
-			// _addParticipantToTheSectionParticipants(participants)
-			// TODO rtcp connection 
-
-
-
-			//-[] add video card	
-			navigator.mediaDevices.getUserMedia({
-					video: true,
-					audio: true
-				})
-				.then(stream => {
-					//---> local stream
-
-					localStream = stream;
-					console.log('localStream: ', localStream);
-					// Push tracks from local stream to peer connection
-					localStream.getTracks().forEach((track) => {
-						console.log('add track: ', track);
-						pc.addTrack(track, localStream);
-					});
-					let videoCard = createPageStructure._createVideoCard(`Marwen Labidi`, localStream)
-					_addVideoToVideoGroup(videoCard)
-					//---> remote stream
-					remoteStream = new MediaStream();
-					console.log('remoteStream: ', remoteStream);
-
-					// Pull tracks from remote stream, add to video stream
-					pc.ontrack = event => {
-						console.log('on track event: ', event);
-						event.streams[0].getTracks().forEach(track => {
-							remoteStream.addTrack(track);
-						});
-					};
-
-					let remoteVideoCard = createPageStructure._createVideoCard(`Marwen Labidi`, remoteStream)
-					_addVideoToVideoGroup(remoteVideoCard)
-					//-[] create the functionality of adding ice candidate
-					//FIXME DELETE IT
-					roomName = 'test'
-					pc.onicecandidate = event => {
-						console.log('event: Onicecondidate ', event);
-						if (event.candidate) {
-							//FIXME NO ICE CANIDATE FOOUND
-							let iceCandidate = event.candidate.toJSON();
-							console.log('iceCandidate: ', iceCandidate);
-							//create  subCollection
-							const docRef = doc(db, `ROOMS`, roomName);
-							const docSubcollectionRef = collection(docRef, 'ICE_CANDIDATES');
-							addDoc(docSubcollectionRef, {
-								iceCandidate
-							}).then(response => {
-								console.log("Document written with ID: ", response);
-							}).catch(error => {
-								console.error("Error adding document: ", error);
-							})
-						} else {
-							console.error(`event.candiate is null : made search about it`);
-						}
-					};
-					//-[] create offer
-					// Create offer
-					pc.createOffer().then(offerDescription => {
-
-						pc.setLocalDescription(offerDescription).then(() => {
-							console.log('offerDescription: ', offerDescription);
-							const offer = {
-								sdp: offerDescription.sdp,
-								type: offerDescription.type,
-							};
-							const docRef = doc(db, `ROOMS`, roomName);
-							const docSubcollectionRef = collection(docRef, 'callDoc');
-							addDoc(docSubcollectionRef, {
-								offer
-							}).then(response => {
-								console.log("Document written with ID: ", response);
-							}).catch(error => {
-								console.error("Error adding document: ", error);
-							})
-
-						})
-					})
-
-					//-[] Listen for remote answer
-					const docRef = doc(db, `ROOMS`, roomName);
-					const docSubcollectionRef = collection(docRef, 'callDoc');
-					onSnapshot(docSubcollectionRef,(snapshot) => {
-						snapshot.forEach((doc) => {
-							const data=doc.data()
-							console.log('data: ', data);
-							if (!pc.currentRemoteDescription && data ?.answer) {
-								const answerDescription = new RTCSessionDescription(data.answer);
-								pc.setRemoteDescription(answerDescription);
-							}
-						    });
-						
-					});
-
-					//-[] Listen for remote ICE candidates
-					const docRefs = doc(db, `ROOMS`, roomName);
-					const docSubcollectionRefss = collection(docRefs, 'ICE_CANDIDATES');
-					onSnapshot(docSubcollectionRefss,snapshot => {
-						console.log('snapshot:ice candidate ', snapshot);
-						snapshot.docChanges().forEach((change) => {
-							if (change.type === 'added') {
-								const candidate = new RTCIceCandidate(change.doc.data());
-								pc.addIceCandidate(candidate);
-							}
-						});
-					});
-
-
-
-					//-[] create the functionality to bigger the video
-					let allVideos = qsa('.videoCard')
-					allVideos.forEach(video => {
-						addEventListener(video, 'click', function () {
-							console.log(`click`)
-							qs('.showBigVideo').style.height = '100%'
-							qs('.showBigVideo').innerHTML = ``
-							qs('.showBigVideo').appendChild(this)
-							qs('.showBigVideo>.videoCard').style.height = '100%'
-							qs('.showBigVideo>.videoCard').style.width = '100%'
-							qs('.showBigVideo>.videoCard').style.borderRadius = '0'
-							qs('.showBigVideo>.videoCard').style.margin = '0'
-							qs('.showBigVideo>.videoCard').classList.add('noHover')
-							qs('.videoPageGroup').style.display = 'none'
-							qs('.showBigVideo>.videoCard>.backArrow').style.display = 'block'
-							qs('.showBigVideo>.videoCard>.backArrow').addEventListener('click', function (e) {
-								console.log('back ')
-								e.stopPropagation();
-								qs('.showBigVideo>.videoCard>.backArrow').style.display = 'none'
-								if (window.innerWidth > 900) {
-
-									qs('.showBigVideo>.videoCard').style.height = '40vh'
-									qs('.showBigVideo>.videoCard').style.width = '30vw'
-								} else {
-
-									qs('.showBigVideo>.videoCard').style.height = '32vh'
-									qs('.showBigVideo>.videoCard').style.width = '95%'
-
-								}
-								qs('.showBigVideo>.videoCard').style.borderRadius = '30px'
-								qs('.showBigVideo>.videoCard').style.margin = '10px'
-								qs('.showBigVideo>.videoCard').style.marginTop = '25px'
-								qs('.showBigVideo>.videoCard').classList.remove('noHover')
-								qs('.videoPageGroup').prepend(qs('.showBigVideo>.videoCard'))
-								qs('.showBigVideo').innerHTML = ``
-								qs('.showBigVideo').style.height = '0'
-								qs('.videoPageGroup').style.display = 'grid'
-							}, )
-
-						})
-					})
-
-
-				})
-
+			rtcFunctionality(roomName, USERNAME)
 		}
 
-		// //create two subCollection
-		// const docRef = doc(db, `ROOMS`, roomName);
-		// const docSubcollectionRef = collection(docRef, 'ICE_CANDIDATES');
-		// const docSubcollectionRef2 = collection(docRef, 'ICE_CANDIDATES-responce');
+		function rtcFunctionality(roomName, USERNAME) {
+			console.log('rtcFunctionality ');
+			console.log('USERNAME: ', USERNAME);
+			console.log('roomName: ', roomName);
+			// videoCallFunctionality()
+			function videoCallFunctionality() {
 
-		//TODO Add a new document in subcollection "ICE_CANDIDATES"
-		//NOTE use set if you want specigy the document name
-		// addDoc(docSubcollectionRef, {}).then(response => {
-		// 	console.log("Document written with ID: ", response);
-		// }	
-		// ).catch(error => {
-		// 	console.error("Error adding document: ", error);
-		// }	)
+				//-[] add video card	
+				navigator.mediaDevices.getUserMedia({
+						video: true,
+						audio: true
+					})
+					.then(stream => {
+						//---> local stream
 
-		// addDoc(docSubcollectionRef2, {})
-		// .then(response => {
-		// 	console.log("Document written with ID: ", response);
-		// }	
-		// ).catch(error => {
-		// 	console.error("Error adding document: ", error);
-		// }	)
+						localStream = stream;
+						console.log('localStream: ', localStream);
+						// Push tracks from local stream to peer connection
+						localStream.getTracks().forEach((track) => {
+							console.log('add track: ', track);
+							pc.addTrack(track, localStream);
+						});
+						let videoCard = createPageStructure._createVideoCard(`Marwen Labidi`, localStream)
+						_addVideoToVideoGroup(videoCard)
+						//---> remote stream
+						remoteStream = new MediaStream();
+						console.log('remoteStream: ', remoteStream);
+
+						// Pull tracks from remote stream, add to video stream
+						pc.ontrack = event => {
+							console.log('on track event: ', event);
+							event.streams[0].getTracks().forEach(track => {
+								remoteStream.addTrack(track);
+							});
+						};
+
+						let remoteVideoCard = createPageStructure._createVideoCard(`Marwen Labidi`, remoteStream)
+						_addVideoToVideoGroup(remoteVideoCard)
+						//-[] create the functionality of adding ice candidate
+						//FIXME DELETE IT
+						roomName = 'test'
+						pc.onicecandidate = event => {
+							console.log('event: Onicecondidate ', event);
+							if (event.candidate) {
+								//FIXME NO ICE CANIDATE FOOUND
+								let iceCandidate = event.candidate.toJSON();
+								console.log('iceCandidate: ', iceCandidate);
+								//create  subCollection
+								const docRef = doc(db, `ROOMS`, roomName);
+								const docSubcollectionRef = collection(docRef, 'ICE_CANDIDATES');
+								addDoc(docSubcollectionRef, {
+									iceCandidate
+								}).then(response => {
+									console.log("Document written with ID: ", response);
+								}).catch(error => {
+									console.error("Error adding document: ", error);
+								})
+							} else {
+								console.error(`event.candiate is null : made search about it`);
+							}
+						};
+						//-[] create offer
+						// Create offer
+						pc.createOffer().then(offerDescription => {
+
+							pc.setLocalDescription(offerDescription).then(() => {
+								console.log('offerDescription: ', offerDescription);
+								const offer = {
+									sdp: offerDescription.sdp,
+									type: offerDescription.type,
+								};
+								const docRef = doc(db, `ROOMS`, roomName);
+								const docSubcollectionRef = collection(docRef, 'callDoc');
+								addDoc(docSubcollectionRef, {
+									offer
+								}).then(response => {
+									console.log("Document written with ID: ", response);
+								}).catch(error => {
+									console.error("Error adding document: ", error);
+								})
+
+							})
+						})
+
+						//-[] Listen for remote answer
+						const docRef = doc(db, `ROOMS`, roomName);
+						const docSubcollectionRef = collection(docRef, 'callDoc');
+						onSnapshot(docSubcollectionRef, (snapshot) => {
+							snapshot.forEach((doc) => {
+								const data = doc.data() //NOTE DATA IS DOCS NOT COLLECTION
+								console.log('data: marwen labidi ', data);
+								if (!pc.currentRemoteDescription && data.answer) {
+									const answerDescription = new RTCSessionDescription(data.answer);
+									pc.setRemoteDescription(answerDescription);
+								}
+							});
+
+						});
+
+						//-[] Listen for remote ICE candidates
+						const docRefs = doc(db, `ROOMS`, roomName);
+						const docSubcollectionRefss = collection(docRefs, 'ICE_CANDIDATES');
+						onSnapshot(docSubcollectionRefss, snapshot => {
+							console.log('snapshot:ice candidate ', snapshot);
+							snapshot.docChanges().forEach((change) => {
+								if (change.type === 'added') {
+									const candidate = new RTCIceCandidate(change.doc.data());
+									pc.addIceCandidate(candidate);
+								}
+							});
+						});
+
+						//-[] Answer a Call
+						pc.onicecandidate = event => {
+							console.log('event: Onicecondidate ', event);
+							if (event.candidate) {
+								let iceCandidate = event.candidate.toJSON();
+								console.log('iceCandidate: ', iceCandidate);
+								//create  subCollection
+								const docRef = doc(db, `ROOMS`, roomName);
+								const docSubcollectionRef = collection(docRef, 'responce-ICE_CANDIDATES');
+								addDoc(docSubcollectionRef, {
+									iceCandidate
+								}).then(response => {
+									console.log("Document written with ID: ", response);
+								}).catch(error => {
+									console.error("Error adding document: ", error);
+								})
+							} else {
+								console.error(`event.candiate is null : made search about it`);
+							}
+						};
+						//TODO Fetch data, then set the offer & answer
+						//get subCollection data
+						const subColRef = collection(db, "ROOMS", "test", "callDoc"); //FIXME change test to name room
+						getDocs(subColRef)
+							.then(querySnapshot => {
+								querySnapshot.forEach((doc) => {
+									console.log(`${doc.id} => ${doc.data()}`);
+									const callData = doc.data()
+
+									const offerDescription = callData.offer;
+									pc.setRemoteDescription(new RTCSessionDescription(offerDescription)).then(() => {
+
+
+										pc.createAnswer().then(answerDescription => {
+											pc.setLocalDescription(answerDescription).then(() => {
+												const answer = {
+													type: answerDescription.type,
+													sdp: answerDescription.sdp,
+												};
+												// await callDoc.update({
+												// 	answer
+												// });
+												const docRef = doc(db, `ROOMS`, roomName);
+												const docSubcollectionRef = collection(docRef, 'callDoc');
+												// addDoc(docSubcollectionRef, {
+												// 	answer
+												// }).then(response => {
+												// 	console.log("Document written with ID: ", response);
+												// }).catch(error => {
+												// 	console.error("Error adding document: ", error);
+												// })
+												docSubcollectionRef.update({
+													answer
+												});
+											});
+
+										})
+
+									})
+
+
+
+
+								})
+							})
+							.catch(error => {
+								console.log('error: ', error);
+							});
+						// // Listen to offer candidates
+						const docRefsa = doc(db, `ROOMS`, roomName);
+						const docSubcollectionRefssa = collection(docRefsa, 'ICE_CANDIDATES');
+						onSnapshot(docSubcollectionRefssa, snapshot => {
+							console.log('snapshot:ice candidate ', snapshot);
+							snapshot.docChanges().forEach((change) => {
+								if (change.type === 'added') {
+									let data = change.doc.data();
+									pc.addIceCandidate(new RTCIceCandidate(data));
+								}
+							});
+						});
+
+
+
+						//-[] create the functionality to bigger the video
+						biggerTheVideo()
+						function biggerTheVideo(){
+							let allVideos = qsa('.videoCard')
+						allVideos.forEach(video => {
+							addEventListener(video, 'click', function () {
+								console.log(`click`)
+								qs('.showBigVideo').style.height = '100%'
+								qs('.showBigVideo').innerHTML = ``
+								qs('.showBigVideo').appendChild(this)
+								qs('.showBigVideo>.videoCard').style.height = '100%'
+								qs('.showBigVideo>.videoCard').style.width = '100%'
+								qs('.showBigVideo>.videoCard').style.borderRadius = '0'
+								qs('.showBigVideo>.videoCard').style.margin = '0'
+								qs('.showBigVideo>.videoCard').classList.add('noHover')
+								qs('.videoPageGroup').style.display = 'none'
+								qs('.showBigVideo>.videoCard>.backArrow').style.display = 'block'
+								qs('.showBigVideo>.videoCard>.backArrow').addEventListener('click', function (e) {
+									console.log('back ')
+									e.stopPropagation();
+									qs('.showBigVideo>.videoCard>.backArrow').style.display = 'none'
+									if (window.innerWidth > 900) {
+
+										qs('.showBigVideo>.videoCard').style.height = '40vh'
+										qs('.showBigVideo>.videoCard').style.width = '30vw'
+									} else {
+
+										qs('.showBigVideo>.videoCard').style.height = '32vh'
+										qs('.showBigVideo>.videoCard').style.width = '95%'
+
+									}
+									qs('.showBigVideo>.videoCard').style.borderRadius = '30px'
+									qs('.showBigVideo>.videoCard').style.margin = '10px'
+									qs('.showBigVideo>.videoCard').style.marginTop = '25px'
+									qs('.showBigVideo>.videoCard').classList.remove('noHover')
+									qs('.videoPageGroup').prepend(qs('.showBigVideo>.videoCard'))
+									qs('.showBigVideo').innerHTML = ``
+									qs('.showBigVideo').style.height = '0'
+									qs('.videoPageGroup').style.display = 'grid'
+								}, )
+
+							})
+						})
+
+						}
+						
+
+
+					})
+			}
+
+			function messageParticipantFunctionality() {
+				//-[] add message to the section
+				// let messageTemplate = createPageStructure._createMessageTemplate(`Welcome to the room this is my first message`, `/assets/icons/user-two.svg`, `Marwen Labidi`, `${new Date().toLocaleString()}`)
+				// let messageTemplateForMe=createPageStructure._createMessageTemplateForMe(`i sent this messg knowwh `)
+				// _addMessageToChatSection(messageTemplate)
+				// _addMessageToChatSection(messageTemplateForMe)
+				//-[] add participants to the section
+				// let participants=createPageStructure._createAccountImageAndName(`Marwen Labidi`,`/assets/icons/user-two.svg`)
+				// _addParticipantToTheSectionParticipants(participants)
+
+
+			}
+		}
+
 	}
 	//TODO join room
 	function joinNewMeetingRoom() {
@@ -2550,45 +2632,20 @@ const createPageFunctionality = (() => {
 			qs('.newJoinMeetingPage').remove()
 			roomPage.style.position = 'static'
 		}, 1000)
-		//-[] add meeting cards
-		// let meetingCard1=createPageStructure._createMeetingCard(`Marwen Labidi`,false,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		// let meetingCard2=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		// let meetingCard3=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		// let meetingCard4=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		// let meetingCard5=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		// let meetingCard6=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		// let meetingCard7=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
-		// let meetingCard8=createPageStructure._createMeetingCard(`Marwen Labidi`,true,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`,`/assets/icons/user-two.svg`)
+		addMeetingCard()
 
-		// _addCardToRoomsPage(meetingCard1,meetingCard2,meetingCard3,meetingCard4,meetingCard5,meetingCard6,meetingCard7,meetingCard8)
-
-
-
-		//get collection data
-
-		// getDocs(collection(db, `ROOMS`))
-		// 	.then(querySnapshot => {
-		// 		querySnapshot.forEach((doc) => {
-		// 			// console.log(`${doc.id} => ${doc.data().name}`);
-		// 			console.log(`${doc.id} => ${doc.data().roomInfo.privateRoom}`);
-		// 		});
-		// 	})
-		// 	.catch(error => {
-		// 		console.log('error: ', error);
-		// 	});
-
-		//get subCollection data
-		// const subColRef = collection(db, "ROOMS", "rooomo namou", "ICE_CANDIDATES");
-		// getDocs(subColRef)
-		// 	.then(querySnapshot => {
-		// 		querySnapshot.forEach((doc) => {
-		// 			console.log(`${doc.id} => ${doc.data()}`);
-		// 		});
-		// 	})
-		// 	.catch(error => {
-		// 		console.log('error: ', error);
-		// 	});
-
+		function addMeetingCard() {
+			//-[] add meeting cards
+			let meetingCard1 = createPageStructure._createMeetingCard(`Marwen Labidi`, false, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`)
+			let meetingCard2 = createPageStructure._createMeetingCard(`Marwen Labidi`, true, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`)
+			let meetingCard3 = createPageStructure._createMeetingCard(`Marwen Labidi`, true, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`)
+			let meetingCard4 = createPageStructure._createMeetingCard(`Marwen Labidi`, true, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`)
+			let meetingCard5 = createPageStructure._createMeetingCard(`Marwen Labidi`, true, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`)
+			let meetingCard6 = createPageStructure._createMeetingCard(`Marwen Labidi`, true, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`)
+			let meetingCard7 = createPageStructure._createMeetingCard(`Marwen Labidi`, true, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`)
+			let meetingCard8 = createPageStructure._createMeetingCard(`Marwen Labidi`, true, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`, `/assets/icons/user-two.svg`)
+			_addCardToRoomsPage(meetingCard1, meetingCard2, meetingCard3, meetingCard4, meetingCard5, meetingCard6, meetingCard7, meetingCard8)
+		}
 	}
 	return {
 		_addAuthenticationEventListeners,
