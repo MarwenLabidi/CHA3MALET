@@ -22,3 +22,6 @@
 ## API :
 - WebRTC API	
 - GIPHY API
+
+
+### [LICENCE](LICENCE.md)
