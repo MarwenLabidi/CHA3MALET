@@ -2257,8 +2257,8 @@ const createPageFunctionality = (() => {
 
 		//NOTE uncommen the first and delete the seconde
 
-		// addEventListener(qs('.createRoomButton'), 'click', createRoom)
-		addEventListener(qs('.createRoomButton'), 'click', getVideoAndTextChatRoomPage)
+		addEventListener(qs('.createRoomButton'), 'click', createRoom)
+		// addEventListener(qs('.createRoomButton'), 'click', getVideoAndTextChatRoomPage)
 
 
 
@@ -2304,10 +2304,219 @@ const createPageFunctionality = (() => {
 			try {
 				// Add a new document in collection "cities"
 				setDoc(doc(db, "ROOMS", roomName), {
-					roomInfo,
-					ADMIN
+					roomInfo
 				}).then(response => {
 					console.log("Document written with ID: ", response);
+					// subcollection ice candidate
+					const docRef = doc(db, `ROOMS`, roomName);
+					const docSubcollectionCALLS = collection(docRef, 'CALLS');
+					const docSubcollectionMESSAGES = collection(docRef, 'MESSAGES');
+					const docSubcollectionJOINED_USERS = collection(docRef, 'JOINED_USERS');
+
+					const docReficecandidate1 = doc(db, `ROOMS`, roomName,'CALLS',`call_1`);
+					const docSubcollectionICE_CANDIDATE1 = collection(docReficecandidate1, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE1 = collection(docReficecandidate1, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate2 = doc(db, `ROOMS`, roomName,'CALLS',`call_2`);
+					const docSubcollectionICE_CANDIDATE2 = collection(docReficecandidate2, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE2 = collection(docReficecandidate2, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate3 = doc(db, `ROOMS`, roomName,'CALLS',`call_3`);
+					const docSubcollectionICE_CANDIDATE3 = collection(docReficecandidate3, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE3 = collection(docReficecandidate3, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate4 = doc(db, `ROOMS`, roomName,'CALLS',`call_4`);
+					const docSubcollectionICE_CANDIDATE4 = collection(docReficecandidate4, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE4 = collection(docReficecandidate4, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate5 = doc(db, `ROOMS`, roomName,'CALLS',`call_5`);
+					const docSubcollectionICE_CANDIDATE5 = collection(docReficecandidate5, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE5 = collection(docReficecandidate5, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate6 = doc(db, `ROOMS`, roomName,'CALLS',`call_6`);
+					const docSubcollectionICE_CANDIDATE6 = collection(docReficecandidate6, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE6 = collection(docReficecandidate6, 'RESPONCE_ICE_CANDIDATE');
+
+					const docReficecandidate1m = doc(db, `ROOMS`, roomName,'MESSAGES',`CHAT_1`);
+					const docSubcollectionICE_CANDIDATE1m = collection(docReficecandidate1m, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE1m = collection(docReficecandidate1m, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate2m = doc(db, `ROOMS`, roomName,'MESSAGES',`CHAT_2`);
+					const docSubcollectionICE_CANDIDATE2m = collection(docReficecandidate2m, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE2m = collection(docReficecandidate2m, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate3m = doc(db, `ROOMS`, roomName,'MESSAGES',`CHAT_3`);
+					const docSubcollectionICE_CANDIDATE3m = collection(docReficecandidate3m, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE3m = collection(docReficecandidate3m, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate4m = doc(db, `ROOMS`, roomName,'MESSAGES',`CHAT_4`);
+					const docSubcollectionICE_CANDIDATE4m = collection(docReficecandidate4m, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE4m = collection(docReficecandidate4m, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate5m = doc(db, `ROOMS`, roomName,'MESSAGES',`CHAT_5`);
+					const docSubcollectionICE_CANDIDATE5m = collection(docReficecandidate5m, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE5m = collection(docReficecandidate5m, 'RESPONCE_ICE_CANDIDATE');
+					const docReficecandidate6m = doc(db, `ROOMS`, roomName,'MESSAGES',`CHAT_6`);
+					const docSubcollectionICE_CANDIDATE6m = collection(docReficecandidate6m, 'ICE_CANDIDATE');
+					const docSubcollectionRESPONCE_ICE_CANDIDATE6m = collection(docReficecandidate6m, 'RESPONCE_ICE_CANDIDATE');
+					setDoc(doc(db, "ROOMS", roomName,'JOINED_USERS','ADMIN'), {ADMIN}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+
+
+					//ice candidiate
+					addDoc(docSubcollectionICE_CANDIDATE1, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE1, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE2, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE2, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE3, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE3, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE4, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE4, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE5, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE5, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE6, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE6, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+
+					addDoc(docSubcollectionICE_CANDIDATE1m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE1m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE2m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE2m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE3m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE3m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE4m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE4m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE5m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE5m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionICE_CANDIDATE6m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+					addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE6m, {}).then(response => {
+						console.log("Document written with ID: ", response);
+					}	
+					).catch(error => {
+						console.error("Error adding document: ", error);
+					}	)
+
+//FIXME ADD To the coall one collection
+					const docReficecandidate01 = doc(db, `ROOMS`, roomName,'CALLS');
+
+			 const docReficecandidate11 = collection(docReficecandidate01, 'call_1');
+			 addDoc(docReficecandidate11, {shoit:'shiiiit'}).then(response => {
+				console.log("Document written with ID: ", response);
+			}	
+			).catch(error => {
+				console.error("Error adding document: ", error);
+			}	)
+
+
 					getVideoAndTextChatRoomPage()
 				});
 			} catch (e) {
@@ -2316,11 +2525,6 @@ const createPageFunctionality = (() => {
 		}
 
 		function getVideoAndTextChatRoomPage() {
-			let roomName='test'//FIXME remove this
-			const docRef = doc(db, `ROOMS`, roomName);
-			const docSubcollectionCALLS = collection(docRef, 'CALLS');
-			const docSubcollectionMESSAGES = collection(docRef, 'MESSAGES');
-			const docSubcollectionJOINED_USERS = collection(docRef, 'JOINED_USERS');
 			console.log(`getVideoAndTextChatRoomPage`);
 			qs('.dialogBox').remove()
 
@@ -2346,14 +2550,25 @@ const createPageFunctionality = (() => {
 				qs('.newJoinMeetingPage').remove()
 				pageOfMeeting.style.position = 'static'
 			}, 1000)
-			rtcFunctionality(roomName, USERNAME)
+			roomName = 'test' //FIXME remove this and uncomment the note before
+			// rtcFunctionality(roomName, USERNAME)
 		}
 
 		function rtcFunctionality(roomName, USERNAME) {
+			
+			const docReficecandidate1 = doc(db, `ROOMS`, roomName,'CALLS',`call_1`);
+
+			
+			const docReficecandidate01 = doc(db, `ROOMS`, roomName,'CALLS');
+
+			 const docReficecandidate11 = collection(docReficecandidate01, 'call_1');
+
+			const docSubcollectionICE_CANDIDATE1 = collection(docReficecandidate1, 'ICE_CANDIDATE');
+			const docSubcollectionRESPONCE_ICE_CANDIDATE1 = collection(docReficecandidate1, 'RESPONCE_ICE_CANDIDATE');
 			console.log('rtcFunctionality ');
 			console.log('USERNAME: ', USERNAME);
 			console.log('roomName: ', roomName);
-			// videoCallFunctionality()
+			videoCallFunctionality()
 			function videoCallFunctionality() {
 
 				//-[] add video card	
@@ -2373,226 +2588,205 @@ const createPageFunctionality = (() => {
 						});
 						let videoCard = createPageStructure._createVideoCard(`Marwen Labidi`, localStream)
 						_addVideoToVideoGroup(videoCard)
-						//---> remote stream
-						remoteStream = new MediaStream();
-						console.log('remoteStream: ', remoteStream);
-
-						// Pull tracks from remote stream, add to video stream
-						pc.ontrack = event => {
-							console.log('on track event: ', event);
-							event.streams[0].getTracks().forEach(track => {
-								remoteStream.addTrack(track);
-							});
-						};
-
-						let remoteVideoCard = createPageStructure._createVideoCard(`Marwen Labidi`, remoteStream)
-						_addVideoToVideoGroup(remoteVideoCard)
-						//-[] create the functionality of adding ice candidate
-						//FIXME DELETE IT
-						roomName = 'test'
-						pc.onicecandidate = event => {
-							console.log('event: Onicecondidate ', event);
-							if (event.candidate) {
-								//FIXME NO ICE CANIDATE FOOUND
-								let iceCandidate = event.candidate.toJSON();
-								console.log('iceCandidate: ', iceCandidate);
-								//create  subCollection
-								const docRef = doc(db, `ROOMS`, roomName);
-								const docSubcollectionRef = collection(docRef, 'ICE_CANDIDATES');
-								addDoc(docSubcollectionRef, {
-									iceCandidate
-								}).then(response => {
-									console.log("Document written with ID: ", response);
-								}).catch(error => {
-									console.error("Error adding document: ", error);
-								})
-							} else {
-								console.error(`event.candiate is null : made search about it`);
-							}
-						};
-						//-[] create offer
-						// Create offer
-						pc.createOffer().then(offerDescription => {
-
-							pc.setLocalDescription(offerDescription).then(() => {
-								console.log('offerDescription: ', offerDescription);
-								const offer = {
-									sdp: offerDescription.sdp,
-									type: offerDescription.type,
-								};
-								const docRef = doc(db, `ROOMS`, roomName);
-								const docSubcollectionRef = collection(docRef, 'callDoc');
-								addDoc(docSubcollectionRef, {
-									offer
-								}).then(response => {
-									console.log("Document written with ID: ", response);
-								}).catch(error => {
-									console.error("Error adding document: ", error);
-								})
-
-							})
-						})
-
-						//-[] Listen for remote answer
-						const docRef = doc(db, `ROOMS`, roomName);
-						const docSubcollectionRef = collection(docRef, 'callDoc');
-						onSnapshot(docSubcollectionRef, (snapshot) => {
-							snapshot.forEach((doc) => {
-								const data = doc.data() //NOTE DATA IS DOCS NOT COLLECTION
-								console.log('data: marwen labidi ', data);
-								if (!pc.currentRemoteDescription && data.answer) {
-									const answerDescription = new RTCSessionDescription(data.answer);
-									pc.setRemoteDescription(answerDescription);
-								}
-							});
-
-						});
-
-						//-[] Listen for remote ICE candidates
-						const docRefs = doc(db, `ROOMS`, roomName);
-						const docSubcollectionRefss = collection(docRefs, 'ICE_CANDIDATES');
-						onSnapshot(docSubcollectionRefss, snapshot => {
-							console.log('snapshot:ice candidate ', snapshot);
-							snapshot.docChanges().forEach((change) => {
-								if (change.type === 'added') {
-									const candidate = new RTCIceCandidate(change.doc.data());
-									pc.addIceCandidate(candidate);
-								}
-							});
-						});
-
-						//-[] Answer a Call
-						pc.onicecandidate = event => {
-							console.log('event: Onicecondidate ', event);
-							if (event.candidate) {
-								let iceCandidate = event.candidate.toJSON();
-								console.log('iceCandidate: ', iceCandidate);
-								//create  subCollection
-								const docRef = doc(db, `ROOMS`, roomName);
-								const docSubcollectionRef = collection(docRef, 'responce-ICE_CANDIDATES');
-								addDoc(docSubcollectionRef, {
-									iceCandidate
-								}).then(response => {
-									console.log("Document written with ID: ", response);
-								}).catch(error => {
-									console.error("Error adding document: ", error);
-								})
-							} else {
-								console.error(`event.candiate is null : made search about it`);
-							}
-						};
-						//TODO Fetch data, then set the offer & answer
-						//get subCollection data
-						const subColRef = collection(db, "ROOMS", "test", "callDoc"); //FIXME change test to name room
-						getDocs(subColRef)
-							.then(querySnapshot => {
-								querySnapshot.forEach((doc) => {
-									console.log(`${doc.id} => ${doc.data()}`);
-									const callData = doc.data()
-
-									const offerDescription = callData.offer;
-									pc.setRemoteDescription(new RTCSessionDescription(offerDescription)).then(() => {
-
-
-										pc.createAnswer().then(answerDescription => {
-											pc.setLocalDescription(answerDescription).then(() => {
-												const answer = {
-													type: answerDescription.type,
-													sdp: answerDescription.sdp,
-												};
-												// await callDoc.update({
-												// 	answer
-												// });
-												const docRef = doc(db, `ROOMS`, roomName);
-												const docSubcollectionRef = collection(docRef, 'callDoc');
-												// addDoc(docSubcollectionRef, {
-												// 	answer
-												// }).then(response => {
-												// 	console.log("Document written with ID: ", response);
-												// }).catch(error => {
-												// 	console.error("Error adding document: ", error);
-												// })
-												docSubcollectionRef.update({
-													answer
-												});
-											});
-
-										})
-
-									})
-
-
-
-
-								})
-							})
-							.catch(error => {
-								console.log('error: ', error);
-							});
-						// // Listen to offer candidates
-						const docRefsa = doc(db, `ROOMS`, roomName);
-						const docSubcollectionRefssa = collection(docRefsa, 'ICE_CANDIDATES');
-						onSnapshot(docSubcollectionRefssa, snapshot => {
-							console.log('snapshot:ice candidate ', snapshot);
-							snapshot.docChanges().forEach((change) => {
-								if (change.type === 'added') {
-									let data = change.doc.data();
-									pc.addIceCandidate(new RTCIceCandidate(data));
-								}
-							});
-						});
-
-
-
-						//-[] create the functionality to bigger the video
 						biggerTheVideo()
-						function biggerTheVideo(){
-							let allVideos = qsa('.videoCard')
-						allVideos.forEach(video => {
-							addEventListener(video, 'click', function () {
-								console.log(`click`)
-								qs('.showBigVideo').style.height = '100%'
-								qs('.showBigVideo').innerHTML = ``
-								qs('.showBigVideo').appendChild(this)
-								qs('.showBigVideo>.videoCard').style.height = '100%'
-								qs('.showBigVideo>.videoCard').style.width = '100%'
-								qs('.showBigVideo>.videoCard').style.borderRadius = '0'
-								qs('.showBigVideo>.videoCard').style.margin = '0'
-								qs('.showBigVideo>.videoCard').classList.add('noHover')
-								qs('.videoPageGroup').style.display = 'none'
-								qs('.showBigVideo>.videoCard>.backArrow').style.display = 'block'
-								qs('.showBigVideo>.videoCard>.backArrow').addEventListener('click', function (e) {
-									console.log('back ')
-									e.stopPropagation();
-									qs('.showBigVideo>.videoCard>.backArrow').style.display = 'none'
-									if (window.innerWidth > 900) {
-
-										qs('.showBigVideo>.videoCard').style.height = '40vh'
-										qs('.showBigVideo>.videoCard').style.width = '30vw'
-									} else {
-
-										qs('.showBigVideo>.videoCard').style.height = '32vh'
-										qs('.showBigVideo>.videoCard').style.width = '95%'
-
-									}
-									qs('.showBigVideo>.videoCard').style.borderRadius = '30px'
-									qs('.showBigVideo>.videoCard').style.margin = '10px'
-									qs('.showBigVideo>.videoCard').style.marginTop = '25px'
-									qs('.showBigVideo>.videoCard').classList.remove('noHover')
-									qs('.videoPageGroup').prepend(qs('.showBigVideo>.videoCard'))
-									qs('.showBigVideo').innerHTML = ``
-									qs('.showBigVideo').style.height = '0'
-									qs('.videoPageGroup').style.display = 'grid'
-								}, )
-
-							})
-						})
-
-						}
-						
-
 
 					})
+				//---> remote stream
+				remoteStream = new MediaStream();
+				console.log('remoteStream: ', remoteStream);
+
+				// Pull tracks from remote stream, add to video stream
+				pc.ontrack = event => {
+					console.log('on track event: ', event);
+					event.streams[0].getTracks().forEach(track => {
+						remoteStream.addTrack(track);
+					});
+				};
+
+				let remoteVideoCard = createPageStructure._createVideoCard(`Marwen Labidi`, remoteStream)
+				_addVideoToVideoGroup(remoteVideoCard)
+				//-[] create the functionality of adding ice candidate
+
+				pc.onicecandidate = event => {
+					console.log('event: Onicecondidate ', event);
+					if (event.candidate) {
+						let iceCandidate = event.candidate.toJSON();
+						console.log('iceCandidate: ', iceCandidate);
+						//create  subCollection
+						addDoc(docSubcollectionICE_CANDIDATE1, {iceCandidate})
+						.then(response => {
+							console.log("Document written with ID: ", response);
+						}).catch(error => {
+							console.error("Error adding document: ", error);
+						})
+					} else {
+						console.error(`event.candiate is null : made search about it`);
+					}
+				};
+				// //-[] create offer
+				// Create offer
+				pc.createOffer().then(offerDescription => {
+
+					pc.setLocalDescription(offerDescription).then(() => {
+						console.log('offerDescription: ', offerDescription);
+						const offer = {
+							sdp: offerDescription.sdp,
+							type: offerDescription.type,
+						};
+						addDoc(docReficecandidate11, {
+							offer
+						}).then(response => {
+							console.log("Document written with ID: ", response);
+						}).catch(error => {
+							console.error("Error adding document: ", error);
+						})
+					})
+				})
+
+				// //-[] Listen for remote answer
+				// onSnapshot(docReficecandidate1, (snapshot) => {
+				// 	snapshot.forEach((doc) => {
+				// 		const data = doc.data() 
+				// 		console.log('data ', data);
+				// 		if (!pc.currentRemoteDescription && data.answer) {
+				// 			const answerDescription = new RTCSessionDescription(data.answer);
+				// 			pc.setRemoteDescription(answerDescription);
+				// 		}
+				// 	});
+				// });
+
+				// //-[] Listen for remote ICE candidates
+				// onSnapshot(docSubcollectionICE_CANDIDATE1, snapshot => {
+				// 	console.log('snapshot:ice candidate ', snapshot);
+				// 	snapshot.docChanges().forEach((change) => {
+				// 		if (change.type === 'added') {
+				// 			const candidate = new RTCIceCandidate(change.doc.data());
+				// 			pc.addIceCandidate(candidate);
+				// 		}
+				// 	});
+				// });
+
+				// //-[] Answer a Call
+				// pc.onicecandidate = event => {
+				// 	console.log('event: Onicecondidate ', event);
+				// 	if (event.candidate) {
+				// 		let iceCandidate = event.candidate.toJSON();
+				// 		console.log('iceCandidate: ', iceCandidate);
+				// 		//create  subCollection
+				// 		addDoc(docSubcollectionRESPONCE_ICE_CANDIDATE1, {
+				// 			iceCandidate
+				// 		}).then(response => {
+				// 			console.log("Document written with ID: ", response);
+				// 		}).catch(error => {
+				// 			console.error("Error adding document: ", error);
+				// 		})
+				// 	} else {
+				// 		console.error(`event.candiate is null : made search about it`);
+				// 	}
+				// };
+				// //-[] Fetch data, then set the offer & answer
+				// //get subCollection data
+				// getDocs(docReficecandidate1)
+				// 	.then(querySnapshot => {
+				// 		querySnapshot.forEach((doc) => {
+				// 			console.log(`${doc.id} => ${doc.data()}`);
+				// 			const callData = doc.data()
+
+				// 			const offerDescription = callData.offer;
+				// 			pc.setRemoteDescription(new RTCSessionDescription(offerDescription)).then(() => {
+
+
+				// 				pc.createAnswer().then(answerDescription => {
+				// 					pc.setLocalDescription(answerDescription).then(() => {
+				// 						const answer = {
+				// 							type: answerDescription.type,
+				// 							sdp: answerDescription.sdp,
+				// 						};
+										
+				// 						addDoc(docReficecandidate1, {
+				// 							answer
+				// 						}).then(response => {
+				// 							console.log("Document written with ID: ", response);
+				// 						}).catch(error => {
+				// 							console.error("Error adding document: ", error);
+				// 						})
+										
+				// 					});
+
+				// 				})
+
+				// 			})
+
+
+
+
+				// 		})
+				// 	})
+				// 	.catch(error => {
+				// 		console.log('error: ', error);
+				// 	});
+				// // // Listen to offer candidates
+				// onSnapshot(docSubcollectionICE_CANDIDATE1, snapshot => {
+				// 	console.log('snapshot:ice candidate ', snapshot);
+				// 	snapshot.docChanges().forEach((change) => {
+				// 		if (change.type === 'added') {
+				// 			let data = change.doc.data();
+				// 			pc.addIceCandidate(new RTCIceCandidate(data));
+				// 		}
+				// 	});
+				// });
+
+
+
+				//-[] create the functionality to bigger the video
+				// biggerTheVideo()
+
+				function biggerTheVideo() {
+					let allVideos = qsa('.videoCard')
+					allVideos.forEach(video => {
+						addEventListener(video, 'click', function () {
+							console.log(`click`)
+							qs('.showBigVideo').style.height = '100%'
+							qs('.showBigVideo').innerHTML = ``
+							qs('.showBigVideo').appendChild(this)
+							qs('.showBigVideo>.videoCard').style.height = '100%'
+							qs('.showBigVideo>.videoCard').style.width = '100%'
+							qs('.showBigVideo>.videoCard').style.borderRadius = '0'
+							qs('.showBigVideo>.videoCard').style.margin = '0'
+							qs('.showBigVideo>.videoCard').classList.add('noHover')
+							qs('.videoPageGroup').style.display = 'none'
+							qs('.showBigVideo>.videoCard>.backArrow').style.display = 'block'
+							qs('.showBigVideo>.videoCard>.backArrow').addEventListener('click', function (e) {
+								console.log('back ')
+								e.stopPropagation();
+								qs('.showBigVideo>.videoCard>.backArrow').style.display = 'none'
+								if (window.innerWidth > 900) {
+
+									qs('.showBigVideo>.videoCard').style.height = '40vh'
+									qs('.showBigVideo>.videoCard').style.width = '30vw'
+								} else {
+
+									qs('.showBigVideo>.videoCard').style.height = '32vh'
+									qs('.showBigVideo>.videoCard').style.width = '95%'
+
+								}
+								qs('.showBigVideo>.videoCard').style.borderRadius = '30px'
+								qs('.showBigVideo>.videoCard').style.margin = '10px'
+								qs('.showBigVideo>.videoCard').style.marginTop = '25px'
+								qs('.showBigVideo>.videoCard').classList.remove('noHover')
+								qs('.videoPageGroup').prepend(qs('.showBigVideo>.videoCard'))
+								qs('.showBigVideo').innerHTML = ``
+								qs('.showBigVideo').style.height = '0'
+								qs('.videoPageGroup').style.display = 'grid'
+							}, )
+
+						})
+					})
+
+				}
+
+
+
 			}
 
 			function messageParticipantFunctionality() {
@@ -2612,11 +2806,7 @@ const createPageFunctionality = (() => {
 	}
 	//TODO join room
 	function joinNewMeetingRoom() {
-		let roomName='test'//FIXME remove this
-		const docRef = doc(db, `ROOMS`, roomName);
-		const docSubcollectionCALLS = collection(docRef, 'CALLS');
-		const docSubcollectionMESSAGES = collection(docRef, 'MESSAGES');
-		const docSubcollectionJOINED_USERS = collection(docRef, 'JOINED_USERS');
+		 roomName = 'test' //FIXME remove this
 		console.log(`joinNewMeetingRoom`);
 		//_createRoomsPage()
 		createPageStructure._createRoomsPage()

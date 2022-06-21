@@ -1,4 +1,4 @@
-	//get collection data
+	        <!-- get collection data -->
 
 		// getDocs(collection(db, `ROOMS`))
 		// 	.then(querySnapshot => {
@@ -22,7 +22,6 @@
 		// 	.catch(error => {
 		// 		console.log('error: ', error);
 		// 	});
-
 
 
 		// //create two subCollection
