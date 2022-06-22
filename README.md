@@ -15,7 +15,7 @@
 ## Tech Stack:
 - Html5 , Css3 , javaScript
 - Git , GitHub
-- Vite,esbuild, PostCss ,workBox,firebase
+- Vite,esbuild, PostCss ,workBox,firebase , socket.io
 - EmailJS ,emoji-picker-element
 
 
